@@ -11,7 +11,7 @@ link: landfill
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/0.2.9/d3.geo.projection.min.js"></script>
-<script src="http://d3js.org/queue.v1.min.js"></script>
+<script src="//d3js.org/queue.v1.min.js"></script>
 <script src="static/js/textures.min.js"></script>
 
 <div class="row">
