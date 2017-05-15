@@ -1,0 +1,64 @@
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.off {
+  display: None;
+}
+
+.background {
+  cursor: ew-resize !important;
+}
+
+text {
+  font-size: 12px;
+}
+.slider .handle {
+  /*fill: darkred;*/
+  fill-opacity: 0.5;
+  /*stroke: #000;*/
+  /*stroke-opacity: .5;*/
+  /*stroke-width: 1.25px;*/
+  pointer-events: none;
+}
+.playPause {
+  background: #ececec;
+  display: inline-block;
+  color: #777;
+  cursor: pointer;
+  /* margin-top: 5px; */
+  margin-right: 8px;
+  padding: 2px 4px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.playPause:hover, .playPause.playing {
+  color: #e1e1e1;
+  background-color: #999;
+}
+
+path.hover {
+  fill: #e1e1e1;
+}
+
+.content {
+  width: 80%;
+  margin: 10px auto;
+}
+
+.row:after {
+  clear: both;
+}
+
+.row>div {
+  float: left;
+}
+
+#B {
+  margin: 15px;
+}

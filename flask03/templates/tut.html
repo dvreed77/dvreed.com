@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='mcss/' + meta.mcss[0]) }}">
+{% endblock %}
+{% block title %}
+{{ meta.title[0] }}
+{% endblock %}
+{% block content %}
+{{ content }}
+{% endblock %}
+{% block footer %}
+<script>
+	$DATAFILES = [];
+	{% for df in meta.data %}
+    $DATAFILES.push("{{ url_for('static', filename='data/' + df) }}")
+	{% endfor %}
+</script>
+<script src="{{ url_for('static', filename='mjs/' + meta.mjs[0]) }}"></script>
+{% endblock %}

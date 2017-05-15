@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block head %}
+  {{ super() }}
+  <style>
+
+    .painting {
+      box-shadow: 2px 2px 11px #888888;
+      background-position: 50% 0%;
+      border: solid 1px #eee;
+      border-bottom: solid 1px #ccc;
+      box-sizing: border-box;
+      -o-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      display: inline-block;
+      float: left;
+      height: 80px;
+      line-height: normal;
+      margin: 0 10px 10px 0;
+      position: relative;
+      text-shadow: 0 1px 0 #fff;
+      transition: ease 750ms background-position;
+      -webkit-transition: ease 750ms background-position;
+      -moz-transition: ease 750ms background-position;
+      -ms-transition: ease 750ms background-position;
+      -o-transition: ease 750ms background-position;
+      width: 200px;
+      height: 200px;
+    }
+
+    .painting:hover, .painting:focus {
+      background-color: #eee;
+      background-position: 100% 100%;
+      text-decoration: none;
+    }
+
+  </style>
+{% endblock %}
+{% block content %}
+	<h1>Paintings</h1>
+  {% for d in data %}
+    <div style="float: left;">
+    <span class="date"></span>
+    <a href="{{ url_for('paintings', paint_id=loop.index0) }}">
+      <div>{{ d.title }}</div>
+      <div class="painting"  style="background-image: url({{ url_for('static', filename="media/thumbs/" + d.img + ".thumbnail.jpg") }});"></div>
+    </a>
+    </div>
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+	.overlay {
+		fill-opacity: 0.1;
+	}
+	circle {
+		fill: black;
+	}
+
+	circle.mean {
+		fill: red;
+	}
+
+	ellipse {
+		fill: orange;
+		stroke: orange;
+		fill-opacity: 0.3;
+	}
+</style>
+<body>
+<div id="get_data">
+	<a download="test_data.json" href="">Download Data!</a>	
+</div>
+<div class="out">
+</div>
+<div id="eig">
+	
+</div>
+<script type=text/javascript src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/science.v1.min.js') }}"></script>
+<script>
+
+function cov(data1, data2) {
+
+		// console.log(data1, data2);
+    var n = data1.length
+ 
+    var mean1 = d3.sum(data1)/n;
+    var mean2 = d3.sum(data2)/n ;     
+ 
+    var covariance = 0,
+    a,b;
+ 
+    d3.range(n).map(function(i) {
+        a = data1[i] - mean1;       
+        b = data2[i] - mean2;
+        covariance += a*b / (n-1);
+      });
+ 
+    return covariance
+  }
+
+var margin = {top: 10, bottom:10, left: 10, right: 10},
+width = 300,
+height = 300;
+
+var svg = d3.select("body")
+.append("svg")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom);
+
+var draw = svg.append("g")
+.attr("transform", "translate{" + margin.left + "," + margin.top + ")");
+
+var g = svg.append("g")
+.attr("transform", "translate{" + margin.left + "," + margin.top + ")");
+
+var data = [];
+
+var x = d3.scale.linear()
+.range([0, width])
+.domain([0, 1]);
+
+var y = d3.scale.linear()
+.range([height, 0])
+.domain([0, 1]);
+
+var mean_pt = draw.append("circle")
+.attr("class", "mean");
+
+var ellipse = draw.append("ellipse");
+
+var overlay = g.append("rect")
+.attr("class", "overlay")
+.attr("width", width)
+.attr("height", height)
+.on("click", function(d) {
+	data.push({
+		t: new Date(),
+		x: x.invert(d3.mouse(this)[0]), 
+		y: y.invert(d3.mouse(this)[1])
+	});
+	update();
+});
+
+function update() {
+	if (data.length > 1) {
+		d3.select(".out").html(
+			data[data.length-1].t - data[data.length-2].t
+			)
+	}
+	var pts = draw.selectAll("circle")
+	.data(data)
+	.enter()
+	.append("circle")
+	.attr("cx", function(d) { return x(d.x); })
+	.attr("cy", function(d) { return y(d.y); })
+	.attr("r", 3);
+
+	var mean = {
+		x: d3.mean(data, function(d) { return d.x; }),
+		y: d3.mean(data, function(d) { return d.y; })
+	}
+
+	ellipse
+	.attr("cx", function(d) { return x(mean.x); })
+	.attr("cy", function(d) { return y(mean.y); })
+	
+
+	$.getJSON($SCRIPT_ROOT + '/getdata', {
+				// x: [1,3,4],
+        x: data.map(function(d){ return d.x; }),
+        y: data.map(function(d){ return d.y; })
+      }, function(data) {
+	    	console.log(x(data.result.width/2), y(data.result.height/2))
+
+      	ellipse      	
+				.attr("rx", x(data.result.width/2))
+				.attr("ry", x(data.result.height/2))
+				.attr("transform", "rotate(-" + data.result.theta + ", " + x(mean.x) + ", " + y(mean.y) + ")");
+        $("#eig").text(data.result.width/2 + ", " + data.result.height/2);
+      });
+
+	console.log( cov(data.map(function(d){return d.x}), data.map(function(d){return d.y})))
+
+	mean_pt
+	.attr("cx", function(d) { return x(mean.x); })
+	.attr("cy", function(d) { return y(mean.y); })
+	.attr("r", 3);
+
+	var blob = new Blob([JSON.stringify(data)], {type: "application/json"});
+
+	d3.select("#get_data a")
+	.attr("href", URL.createObjectURL(blob))
+}
+
+</script>
+
+<script type=text/javascript>
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  $(function() {
+    $('a#calculate').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+        a: $('input[name="a"]').val(),
+        b: $('input[name="b"]').val()
+      }, function(data) {
+      	console.log(data);
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+</script>
+<h1>jQuery Example</h1>
+<p><input type=text size=5 name=a> +
+   <input type=text size=5 name=b> =
+   <span id="result">?</span>
+<p><a href=# id="calculate">calculate server side</a>
+</body>

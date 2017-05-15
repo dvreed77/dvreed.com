@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% block head %}
+    <script type=text/javascript src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tango.css') }}" />
+    <script>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+    <title>David Reed</title>
+    {% endblock %}
+</head>
+<body>
+	<a href="{{ url_for('index') }}">Home</a>
+    <div class="title">
+        <h1>{% block title %}{% endblock %}</h1>
+    </div>
+	<div>
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div class="footnote clearfix">
+    	
+    </div>
+</body>
+{% block footer %}
+{% endblock %}
