@@ -19,13 +19,6 @@ module.exports = {
     },
     `gatsby-plugin-resolve-src`,
     `gatsby-plugin-styled-components`,
-    // `gatsby-plugin-glamor`,
-    // {
-    //   resolve: `gatsby-plugin-typography`,
-    //   options: {
-    //     pathToConfigModule: `src/utils/typography`,
-    //   },
-    // },
     `gatsby-plugin-sharp`,
     // This plugin identifies file nodes that are images and
     // transforms these to create new “ImageSharp” nodes.

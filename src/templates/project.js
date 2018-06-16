@@ -152,8 +152,6 @@ const Project = ({data, location}) => {
 
   const markdownRemark = data.markdownRemark
 
-  console.log(markdownRemark)
-
   return (
     <div>
       <TitleAndMetaTags

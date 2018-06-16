@@ -19,6 +19,7 @@ module.exports = async ({graphql, boundActionCreators}) => {
   const docsTemplate = resolve(__dirname, '../src/templates/docs.js');
   const tutorialTemplate = resolve(__dirname, '../src/templates/tutorial.js');
   const projectTemplate = resolve(__dirname, '../src/templates/project.js');
+  const paintingTemplate = resolve(__dirname, '../src/templates/painting.js');
 
   // Redirect /index.html to root.
   createRedirect({
@@ -64,7 +65,8 @@ module.exports = async ({graphql, boundActionCreators}) => {
       slug.includes('docs/') ||
       slug.includes('tutorial/') ||
       slug.includes('warnings/') ||
-      slug.includes('projects/')
+      slug.includes('projects/') ||
+      slug.includes('paintings/')
     ) {
       let template;
       if (slug.includes('blog/')) {
@@ -81,6 +83,8 @@ module.exports = async ({graphql, boundActionCreators}) => {
         template = tutorialTemplate;
       } else if (slug.includes('projects/')) {
         template = projectTemplate;
+      } else if (slug.includes('paintings/')) {
+        template = paintingTemplate;
       }
 
       const createArticlePage = path =>
