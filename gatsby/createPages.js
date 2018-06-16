@@ -15,9 +15,6 @@ module.exports = async ({graphql, boundActionCreators}) => {
   const redirectToSlugMap = {};
 
   const blogTemplate = resolve(__dirname, '../src/templates/blog.js');
-  const communityTemplate = resolve(__dirname, '../src/templates/community.js');
-  const docsTemplate = resolve(__dirname, '../src/templates/docs.js');
-  const tutorialTemplate = resolve(__dirname, '../src/templates/tutorial.js');
   const projectTemplate = resolve(__dirname, '../src/templates/project.js');
   const paintingTemplate = resolve(__dirname, '../src/templates/painting.js');
 
@@ -60,27 +57,12 @@ module.exports = async ({graphql, boundActionCreators}) => {
       // (which gets created by Gatsby during a separate phase).
     } else if (
       slug.includes('blog/') ||
-      slug.includes('community/') ||
-      slug.includes('contributing/') ||
-      slug.includes('docs/') ||
-      slug.includes('tutorial/') ||
-      slug.includes('warnings/') ||
       slug.includes('projects/') ||
       slug.includes('paintings/')
     ) {
       let template;
       if (slug.includes('blog/')) {
         template = blogTemplate;
-      } else if (slug.includes('community/')) {
-        template = communityTemplate;
-      } else if (
-        slug.includes('contributing/') ||
-        slug.includes('docs/') ||
-        slug.includes('warnings/')
-      ) {
-        template = docsTemplate;
-      } else if (slug.includes('tutorial/')) {
-        template = tutorialTemplate;
       } else if (slug.includes('projects/')) {
         template = projectTemplate;
       } else if (slug.includes('paintings/')) {
