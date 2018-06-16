@@ -1,5 +1,5 @@
-const pathPrefix = `/dvreed.com`
-// const pathPrefix = `/`
+// const pathPrefix = `/dvreed.com`
+const pathPrefix = `/`
 
 module.exports = {
   pathPrefix,
@@ -26,6 +26,12 @@ module.exports = {
     //     pathToConfigModule: `src/utils/typography`,
     //   },
     // },
+    `gatsby-plugin-sharp`,
+    // This plugin identifies file nodes that are images and
+    // transforms these to create new “ImageSharp” nodes.
+    // With them you can resize images and
+    // generate responsive image thumbnails.
+    `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {

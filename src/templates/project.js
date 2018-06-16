@@ -1,14 +1,5 @@
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * @emails react-core
- */
-
-// import MarkdownPage from 'components/MarkdownPage';
 import PropTypes from 'prop-types';
 import React from 'react';
-// import {createLinkTutorial} from 'utils/createLink';
-// import {sectionListTutorial} from 'utils/sectionList';
 import styled from 'styled-components'
 import Helmet from 'react-helmet';
 import Link from 'gatsby-link';
@@ -17,6 +8,7 @@ const Img = styled.img`
   margin: 0 auto;
   display: block;
   max-width: 100%;
+  border: solid 1px #eee;
 `
 
 const Body = styled.div`
