@@ -3,8 +3,9 @@ import React from "react";
 // import { css } from "glamor";
 import Link from "gatsby-link";
 import styled from 'styled-components'
-require("prismjs/themes/prism-solarizedlight.css");
+// require("prismjs/themes/prism-solarizedlight.css");
 
+import 'css/my-prism-theme.css';
 import 'css/reset.css';
 
 

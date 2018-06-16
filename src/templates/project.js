@@ -26,6 +26,92 @@ const Body = styled.div`
     line-height: 1.7;
     // max-width: 42em;
   }
+
+  ul {
+    list-style: disc;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #1a1a1a;
+    padding-left: 20px;
+  }
+
+  ul li {
+    margin-top: 10px;
+  }
+
+  & h3 + p, & h3 + p:first-of-type {
+    margin-top: 20px;
+  }
+
+  & h1 {
+    line-height: 1.2;
+
+    // [media.size('xsmall')] {
+    //   fontSize: 30,
+    // },
+
+    // [media.between('small', 'large')]: {
+    //   fontSize: 45,
+    // },
+
+    // [media.greaterThan('xlarge')]: {
+    //   fontSize: 60,
+    // },
+  }
+
+  & h2 {
+    border-top: 1px solid black;
+    margin-top: 44px;
+    padding-top: 40px;
+    line-height: 1.2
+
+    :first-child {
+      border-top: 0;
+      margin-top: 0;
+      padding-top: 0;
+    };
+
+    [media.lessThan('large')]: {
+      fontSize: 20,
+    },
+    [media.greaterThan('xlarge')]: {
+      fontSize: 35,
+    },
+  },
+
+  & hr + h2 {
+    border-top: 0;
+    margin-top: 0;
+  }
+
+  & h3 {
+    padding-top: 45px;
+
+    [media.lessThan('small')]: {
+      wordBreak: 'break-all',
+    },
+
+    [media.greaterThan('xlarge')]: {
+      fontSize: 25,
+      lineHeight: 1.3,
+    }
+  }
+
+  & h2 + h3, & h2 + h3:first-of-type {
+    padding-top: 30px;
+  }
+
+  & h4 {
+    font-size: 20px;
+    color: black;
+    line-height: 1.3;
+    margin-top: 50px;
+    font-weight: 400,
+  }
+
+  & h4 + p {
+    margin-top: 20px;
+  }
 `
 
 const TitleAndMetaTags = ({title, ogDescription, ogUrl}) => {
@@ -88,7 +174,12 @@ const Project = ({data, location}) => {
         {markdownRemark.frontmatter.startDate} to {markdownRemark.frontmatter.endDate}
       </div>
       
-      <Img src={markdownRemark.frontmatter.images[0].publicURL} alt=""/>
+      <a 
+        href={markdownRemark.frontmatter.projectURL}
+        target="_blank"
+      >
+        <Img src={markdownRemark.frontmatter.images[0].publicURL} alt=""/>
+      </a>      
       
       <Body
         dangerouslySetInnerHTML={{__html: markdownRemark.html}}
