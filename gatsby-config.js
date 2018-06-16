@@ -1,4 +1,4 @@
-const pathPrefix = `/members/dreed/`
+const pathPrefix = `/dvreed.com`
 // const pathPrefix = `/`
 
 module.exports = {
