@@ -32,7 +32,7 @@ Original data was sourced here, a GIF image: http://www.bc.edu/bc_org/avp/cas/fn
 
 ## Key Lessons Learned
 ### Read GIF in Python
-A colored GIF is just a F x M x N x C array, where F is the number of frames, M and N are the height and width, and C=3 are the 3 RGB channels.
+A colored GIF is just a `F x M x N x C` tensor, where `F` is the number of frames, `M` and `N` are the height and width, and `C=3` are the 3 RGB channels.
 
 Easy to read image (and make Greyscale):
 
@@ -40,7 +40,7 @@ Easy to read image (and make Greyscale):
 from skimage.io import imread
 from skimage.color import rgb2gray
 
-image = rgb2gray(imread(fname))
+image = rgb2gray(imread('img.gif'))
 ```
 
 ### Basic Image Processing
@@ -135,7 +135,6 @@ from xml.dom import minidom, Node
 from svg.path import parse_path as parse_svg_path
 
 svg_doc = minidom.parse("data/svg_out.svg")
-
 
 def parse_path(path):
     points = map(lambda x: (x.start.real, x.start.imag), parse_svg_path(path.getAttribute('d')))

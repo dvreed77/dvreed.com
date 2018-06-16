@@ -28,18 +28,6 @@ cyan      #2aa198
 green     #859900
 */
 
-pre[class*="language-"] {
-    border-left: 2px solid #b7d6ec;
-    /* position: relative; */
-    /* border-left: 10px solid #358ccb; */
-    /* box-shadow: -1px 0px 0px 0px #358ccb, 0px 0px 0px 1px #dfdfdf;
-    background-color: #fdfdfd;
-    background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
-    background-size: 3em 3em;
-    background-origin: content-box;
-    background-attachment: local; */
-}
-
 code[class*="language-"],
 pre[class*="language-"] {
 	color: #34525d; /* base00 */
@@ -65,20 +53,21 @@ pre[class*="language-"] {
 
 pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
 code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
-	background: #073642; /* base02 */
+	background: #e7faff; /* base02 */
 }
 
 pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
 code[class*="language-"]::selection, code[class*="language-"] ::selection {
-	background: #073642; /* base02 */
+	background: #e7faff; /* base02 */
 }
 
 /* Code blocks */
 pre[class*="language-"] {
 	padding: 1em;
 	margin: .5em 0;
-	overflow: auto;
-	/* border-radius: 0.3em; */
+    overflow: auto;
+    margin-left: -18px;
+    border-left: 2px solid #b7d6ec;
 }
 
 :not(pre) > code[class*="language-"],

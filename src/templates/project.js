@@ -16,9 +16,27 @@ import Link from 'gatsby-link';
 const Img = styled.img`
   margin: 0 auto;
   display: block;
+  max-width: 100%;
 `
 
 const Body = styled.div`
+
+  a {
+    color: steelblue;
+
+    :hover {
+      text-decoration: underline;
+    }
+  }
+
+  a.anchor {
+    color: inherit;
+    fill: steelblue;
+    text-decoration: none;
+    border-bottom: none;
+    box-shadow: none;
+  }
+
   p {
     margin: 0 auto;
     margin-top: 30px;
