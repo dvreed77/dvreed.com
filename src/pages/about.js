@@ -2,10 +2,8 @@ import React from "react";
 
 export default ({data}) => (
   <div>
-    <h1>About {data.site.siteMetadata.title}</h1>
     <p>
-      We're the only site running on your computer dedicated to showing the best
-      photos and videos of pandas eating lots of food.
+      Hi! Im Dave. I am a data scientist at Thomson Reuters and ...
     </p>
   </div>
 );

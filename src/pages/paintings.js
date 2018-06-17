@@ -1,13 +1,26 @@
 import React from "react";
+import Gallery from '../components/Gallery'
+import Helmet from 'react-helmet';
+import Img from "gatsby-image";
 
 export default ({ data }) => (
   <div>
-    <h1>All My Paintings</h1>
-    {data.allMarkdownRemark.edges.map(({ node }) =>
+    <Helmet title={"Paintings"}/>
+    <Gallery
+      images={data.allMarkdownRemark.edges.map(({ node }) => ({
+        caption: `${node.frontmatter.title} - ${node.frontmatter.date}`,
+        thumb: node.frontmatter.image.childImageSharp.resize.src,
+        resolutions: node.frontmatter.image.childImageSharp.resolutions,
+        sizes: node.frontmatter.image.childImageSharp.sizes,
+        src: node.frontmatter.image.childImageSharp.original.src
+      }))}
+    />
+
+    {/* {data.allMarkdownRemark.edges.map(({ node }) =>
       <div key={node.id}>
         <div style={{ display: 'flex' }}>
           <div style={{ marginRight: 30 }}>
-            <img src={node.frontmatter.image.childImageSharp.resize.src} alt="" />
+            <Img resolutions={node.frontmatter.image.childImageSharp.resolutions} alt="" />
           </div>
           <div>
             <div>
@@ -20,7 +33,7 @@ export default ({ data }) => (
           </div>
         </div>
       </div>
-    )}
+    )} */}
   </div>
 );
 
@@ -36,8 +49,17 @@ export const query = graphql`
             date(formatString: "MMMM YYYY")
             image {
               childImageSharp {
-                resize(width: 100, height: 100, cropFocus: ENTROPY) {
+                original {
                   src
+                }
+                resize(width: 400, cropFocus: CENTER) {
+                  src
+                }
+                resolutions(width: 300) {
+                  ...GatsbyImageSharpResolutions
+                }
+                sizes(maxWidth: 600) {
+                  ...GatsbyImageSharpSizes_noBase64
                 }
               }
             }

@@ -4,9 +4,9 @@ export default ({ data }) => {
   const post = data.markdownRemark;
   return (
     <div>
-      Painting
-      <img src={data.markdownRemark.frontmatter.image.publicURL} alt=""/>
+      <img src={data.markdownRemark.frontmatter.image.childImageSharp.resize.src} alt=""/>
 
+      <a href={data.markdownRemark.frontmatter.image.publicURL}>LINK</a>
       <div
         dangerouslySetInnerHTML={{__html: data.markdownRemark.html}}
       />
@@ -24,6 +24,11 @@ export const pageQuery = graphql`
         date
         image {
           publicURL
+          childImageSharp {
+            resize(width: 800) {
+              src
+            }
+          }
         }
       }
       fields {

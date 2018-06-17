@@ -1,25 +1,7 @@
-import React from "react";
-import g from "glamorous";
-import Link from "gatsby-link";
-import styled from 'styled-components'
-import { rhythm } from "../utils/typography";
-import Helmet from 'react-helmet';
-
-const TitleAndMetaTags = ({ title, ogDescription, ogUrl }) => {
-  return (
-    <Helmet title={title}>
-      <meta property="og:title" content={title} />
-      <meta property="og:type" content="website" />
-      {ogUrl && <meta property="og:url" content={ogUrl} />}
-      <meta property="og:image" content="/logo-og.png" />
-      <meta
-        property="og:description"
-        content={ogDescription || defaultDescription}
-      />
-      <meta property="fb:app_id" content="623268441017527" />
-    </Helmet>
-  );
-};
+import React from "react"
+import { Link } from "gatsby"
+import Layout from "../layouts"
+import styled from "styled-components"
 
 const ProjectPanel = styled.div`
   margin-bottom: 30px;
@@ -36,18 +18,13 @@ const ProjectDate = styled.h4`
 const Excerpt = styled.p`
 `
 
-export default ({ data }) => {
-  return (
-    <div>
-      <TitleAndMetaTags
-        ogDescription={"dave"}
-        ogUrl={"dave"}
-        title={"Dave Reed"}
-      />
-      <h4>
-        {data.allMarkdownRemark.totalCount} Projects
-      </h4>
-      {data.allMarkdownRemark.edges.map(({ node }) =>
+class Index extends React.Component {
+  render() {
+    const projects = this.props.data.projects.edges
+
+    return (
+      <Layout location={this.props.location}>
+        {projects.map(({ node }) =>
         <ProjectPanel key={node.id}>
           <Link
             to={node.fields.slug}
@@ -69,59 +46,40 @@ export default ({ data }) => {
           </Link>
         </ProjectPanel>
       )}
-      {data.allMarkdownRemark.edges.map(({ node }) =>
-        <ProjectPanel key={node.id}>
-          <Link
-            to={node.fields.slug}
-          >
-            <div style={{ display: 'flex' }}>
-              <div style={{ marginRight: 30 }}>
-                <img src={node.frontmatter.images[0].childImageSharp.resize.src} alt="" />
-              </div>
-              <div>
-                <Title>
-                  {node.frontmatter.title}
-                </Title>
-                <ProjectDate color="#BBB">{node.frontmatter.startDate}</ProjectDate>
-                <Excerpt>
-                  {node.excerpt}
-                </Excerpt>
-              </div>
-            </div>
-          </Link>
-        </ProjectPanel>
-      )}
-    </div>
-  )
+      </Layout>
+    )
+  }
 }
 
-export const query = graphql`
-query IndexQuery {
-  allMarkdownRemark(
-    filter: {id: {regex: "/projects/"}}
-    sort: { fields: [frontmatter___startDate], order: DESC }
-  ) {
-    totalCount
-    edges {
-      node {
-        id
-        frontmatter {
-          title
-          startDate(formatString: "DD MMMM, YYYY")
-          images {
-            childImageSharp {
-              resize(width: 400, height: 100, cropFocus: ENTROPY) {
-                src
+export default Index
+
+export const pageQuery = graphql`
+  query IndexQuery2 {
+    projects: allMarkdownRemark(
+      filter: {fileAbsolutePath: {regex: "/projects/"}}
+      sort: { fields: [frontmatter___startDate], order: DESC }
+    ) {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            startDate(formatString: "DD MMMM, YYYY")
+            images {
+              childImageSharp {
+                resize(width: 400, height: 100, cropFocus: ENTROPY) {
+                  src
+                }
               }
             }
           }
+          fields {
+            slug
+          }
+          excerpt
         }
-        fields {
-          slug
-        }
-        excerpt
       }
     }
   }
-}
 `

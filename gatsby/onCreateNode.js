@@ -10,8 +10,8 @@
 const BLOG_POST_FILENAME_REGEX = /([0-9]+)\-([0-9]+)\-([0-9]+)\-(.+)\.md$/;
 
 // Add custom fields to MarkdownRemark nodes.
-module.exports = exports.onCreateNode = ({node, boundActionCreators, getNode}) => {
-  const {createNodeField} = boundActionCreators;
+module.exports = exports.onCreateNode = ({node, actions, getNode}) => {
+  const {createNodeField} = actions;
 
   switch (node.internal.type) {
     case 'MarkdownRemark':

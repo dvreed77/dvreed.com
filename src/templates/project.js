@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components'
 import Helmet from 'react-helmet';
-import Link from 'gatsby-link';
+import { Link } from 'gatsby';
+import Layout from "../layouts"
 
 const Img = styled.img`
   margin: 0 auto;
@@ -131,10 +132,6 @@ const TitleAndMetaTags = ({title, ogDescription, ogUrl}) => {
       <meta property="og:type" content="website" />
       {ogUrl && <meta property="og:url" content={ogUrl} />}
       <meta property="og:image" content="/logo-og.png" />
-      <meta
-        property="og:description"
-        content={ogDescription || defaultDescription}
-      />
       <meta property="fb:app_id" content="623268441017527" />
     </Helmet>
   );
@@ -146,13 +143,14 @@ const Project = ({data, location}) => {
   // Or we might be using either library incorrectly.
   // For now this patch keeps the hash in sync by JIT copying it from window.
   // The undefined check prevents us from breaking on production build.
-  if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
-    location.hash = window.location.hash;
-  }
+  // if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
+  //   location.hash = window.location.hash;
+  // }
 
   const markdownRemark = data.markdownRemark
 
   return (
+    <Layout location={location}>
     <div>
       <TitleAndMetaTags
         ogDescription={"dave"}
@@ -194,6 +192,7 @@ const Project = ({data, location}) => {
       />
       
     </div>
+    </Layout>
   );
 };
 

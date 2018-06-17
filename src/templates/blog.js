@@ -18,10 +18,6 @@ const TitleAndMetaTags = ({title, ogDescription, ogUrl}) => {
       <meta property="og:type" content="website" />
       {ogUrl && <meta property="og:url" content={ogUrl} />}
       <meta property="og:image" content="/logo-og.png" />
-      <meta
-        property="og:description"
-        content={ogDescription || defaultDescription}
-      />
       <meta property="fb:app_id" content="623268441017527" />
     </Helmet>
   );
