@@ -8,9 +8,9 @@ images:
   - "../images/projects/boston-landfill.png"
 ---
 
-This is a project I became interested in a long time ago.  I have been in Boston for over 12 years, and knew that Boston was built over time from a sequence of landfill projects.  I was interested in creating an app that allowed the user to scrub through time and see what parts of Boston were changed and when.  
+This is a project I became interested in a long time ago.  I have been in Boston for over 12 years, and knew that Boston was built over time from a series of landfill projects.  I was interested in creating an app that allowed a user to scrub through time and see what parts of Boston were changed and when.  
 
-After a little bit of digging, I found the best dataset [here][1], a crappy GIF.  I probably could have emailed the professor for something of higher quality, but since I am always up for a challenge, I wanted to use this to practice a variety of skills:
+After a little bit of digging, I found this dataset [here][1], an extremely poor quality GIF.  I probably could have emailed the professor for something of higher quality, but since I am always up for a challenge, I wanted to use this to practice a variety of skills:
 
 * Understand GIFs in Python
 * Some basic image processing: dilation/erosion, thresholding, smoothing, etc.
@@ -23,7 +23,6 @@ After a little bit of digging, I found the best dataset [here][1], a crappy GIF.
 
 
 [1]: http://www.bc.edu/bc_org/avp/cas/fnart/fa267/sequence.html
-
 [0]: http://scikit-image.org/docs/dev/auto_examples/xx_applications/plot_thresholding.html#bimodal-histogram
 
 ## Data

@@ -4,13 +4,14 @@ import styled from 'styled-components'
 import Helmet from 'react-helmet';
 import { Link } from 'gatsby';
 import Layout from "../layouts"
+import Img from "gatsby-image";
 
-const Img = styled.img`
-  margin: 0 auto;
-  display: block;
-  max-width: 100%;
-  border: solid 1px #eee;
-`
+// const Img = styled.img`
+//   margin: 0 auto;
+//   display: block;
+//   max-width: 100%;
+//   border: solid 1px #eee;
+// `
 
 const Body = styled.div`
 
@@ -137,6 +138,10 @@ const TitleAndMetaTags = ({title, ogDescription, ogUrl}) => {
   );
 };
 
+const HeroImg = styled.a`
+  border: solid 1px #eee;
+`
+
 const Project = ({data, location}) => {
   // HACK The injected location prop doesn't update when hash changes
   // This might be a gatsby issue, or a react-router/history issue,
@@ -180,12 +185,13 @@ const Project = ({data, location}) => {
         {markdownRemark.frontmatter.startDate} to {markdownRemark.frontmatter.endDate}
       </div>
       
-      <a 
+      <HeroImg 
         href={markdownRemark.frontmatter.projectURL}
         target="_blank"
       >
-        <Img src={markdownRemark.frontmatter.images[0].publicURL} alt=""/>
-      </a>      
+        {/* <Img src={markdownRemark.frontmatter.images[0].publicURL} alt=""/> */}
+        <Img fluid={markdownRemark.frontmatter.images[0].childImageSharp.fluid} alt=""/>
+      </HeroImg>      
       
       <Body
         dangerouslySetInnerHTML={{__html: markdownRemark.html}}
@@ -213,6 +219,16 @@ export const pageQuery = graphql`
         projectURL
         images {
           publicURL
+          childImageSharp {
+            fluid(
+              maxWidth: 1000
+              maxHeight: 500
+              quality: 80
+              traceSVG: { background: "#EDEEF0", color: "#FCCB0A" }
+            ) {
+              ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
         }
       }
       fields {

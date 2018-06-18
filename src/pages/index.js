@@ -2,9 +2,16 @@ import React from "react"
 import { Link } from "gatsby"
 import Layout from "../layouts"
 import styled from "styled-components"
+import Img from "gatsby-image";
 
 const ProjectPanel = styled.div`
   margin-bottom: 30px;
+
+  display: flex;
+  flex-direction: row;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `
 
 const Title = styled.h3`
@@ -14,6 +21,17 @@ const ProjectDate = styled.h4`
   color: #bbb;
   font-size: 0.8em;
   line-height: 0.8em;
+`
+
+const StyledImg = styled.div`
+  display: block;
+  width: 100%;
+  border: solid 1px #eee;
+  margin-right: 20px;
+  @media (max-width: 600px) {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 `
 const Excerpt = styled.p`
 `
@@ -25,14 +43,16 @@ class Index extends React.Component {
     return (
       <Layout location={this.props.location}>
         {projects.map(({ node }) =>
-        <ProjectPanel key={node.id}>
           <Link
             to={node.fields.slug}
           >
-            <div style={{ display: 'flex' }}>
-              <div style={{ marginRight: 30 }}>
-                <img src={node.frontmatter.images[0].childImageSharp.resize.src} alt="" />
-              </div>
+            <ProjectPanel key={node.id}>
+              <StyledImg>
+                <Img
+                  fluid={node.frontmatter.images[0].childImageSharp.fluid}
+                />
+              </StyledImg>
+
               <div>
                 <Title>
                   {node.frontmatter.title}
@@ -42,10 +62,10 @@ class Index extends React.Component {
                   {node.excerpt}
                 </Excerpt>
               </div>
-            </div>
+
+            </ProjectPanel>
           </Link>
-        </ProjectPanel>
-      )}
+        )}
       </Layout>
     )
   }
@@ -68,8 +88,13 @@ export const pageQuery = graphql`
             startDate(formatString: "DD MMMM, YYYY")
             images {
               childImageSharp {
-                resize(width: 400, height: 100, cropFocus: ENTROPY) {
-                  src
+                fluid(
+                  maxWidth: 500
+                  maxHeight: 200
+                  quality: 80
+                  traceSVG: { background: "#EDEEF0", color: "#FCCB0A" }
+                ) {
+                  ...GatsbyImageSharpFluid_tracedSVG
                 }
               }
             }

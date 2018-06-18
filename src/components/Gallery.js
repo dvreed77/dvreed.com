@@ -15,6 +15,59 @@ const Thumbnail = styled.a`
   }
   
 `
+
+const GalleryDiv = styled.div`
+  column-count: 1;
+  column-gap: 0;
+  max-width: 1360px;
+  margin: 0 auto;
+  
+  @media screen and (min-width: 400px) {
+    column-count: 2;
+  }
+  
+  @media screen and (min-width: 800px) {
+    column-count: 3;
+  }
+  
+  @media screen and (min-width: 1400px) {
+    column-count: 4;
+  }
+`
+
+const Image = styled.div`
+  border: 4px solid transparent;
+  break-inside: avoid;
+  position: relative;
+  cursor: pointer;
+
+  @media screen and (min-width: 400px) {
+    border-width: 1px;
+  }
+
+  @media screen and (min-width: 800px) {
+    border-width: 1px;
+  }
+  @media screen and (min-width: 1000px) {
+    border-width: 2px;
+  }
+
+  & img {
+    border-radius: 2px;
+  }
+
+  & .gatsby-image-wrapper:hover {
+    & div + img {
+      opacity: 1 !important;
+    }
+    & img + img {
+      opacity: 0 !important;
+    }
+    & span {
+      opacity: 1 !important;
+    }
+  }
+`
 class Gallery extends Component {
 	constructor () {
 		super();
@@ -85,9 +138,16 @@ class Gallery extends Component {
 		});
 
 		return (
-			<div style={{columnCount: 3, columnGap: 0}}>
-				{gallery}
-			</div>
+			<GalleryDiv>
+        {images.map((obj, index) => (
+          <Image 
+            key={index}
+            onClick={(e) => this.openLightbox(index, e)}
+          >
+            <Img fluid={obj.fluid} />
+          </Image>
+        ))}
+      </GalleryDiv>
 		);
 	}
 	render () {
