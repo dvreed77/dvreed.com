@@ -17,6 +17,7 @@ const Body = styled.div`
 
   a {
     color: steelblue;
+    font-weight: 500;
 
     :hover {
       text-decoration: underline;
@@ -142,7 +143,33 @@ const TitleAndMetaTags = ({title, ogDescription, ogUrl}) => {
 };
 
 const HeroImg = styled.a`
-  border: solid 1px #eee;
+  div {
+    border: solid 1px #f9f9f9;
+  }
+  
+`
+
+const Details = styled.div`
+  margin-bottom: 30px;
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  li {
+    span {
+      // text-transform: uppercase;
+      font-weight: 500;
+      margin-right: 10px;
+    }
+  }
+  a {
+    color: steelblue;
+    font-weight: 500;
+    :hover {
+      text-decoration: underline;
+    }
+  }
 `
 
 const Project = ({data, location}) => {
@@ -166,27 +193,18 @@ const Project = ({data, location}) => {
         title={"Projects"}
       />
 
-      <h1>
-        {markdownRemark.frontmatter.title}
-      </h1>    
+      <Details>
+        <h1>
+          {markdownRemark.frontmatter.title}
+        </h1>    
 
-      <a 
-        href={markdownRemark.frontmatter.repoURL}
-        target="_blank"
-      >
-        Repository
-      </a>
-
-      <a 
-        href={markdownRemark.frontmatter.projectURL}
-        target="_blank"
-      >
-        Project
-      </a>
-
-      <div>
-        {markdownRemark.frontmatter.startDate} to {markdownRemark.frontmatter.endDate}
-      </div>
+        <ul>
+          <li><span>Repository:</span><a href={markdownRemark.frontmatter.repoURL}>Link</a></li>
+          <li><span>Project:</span><a href={markdownRemark.frontmatter.projectURL}>Link</a></li>
+          <li><span>Time:</span>{markdownRemark.frontmatter.startDate} to {markdownRemark.frontmatter.endDate}</li>
+        </ul>
+      </Details>
+      
       
       <HeroImg 
         href={markdownRemark.frontmatter.projectURL}
@@ -216,8 +234,8 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        startDate
-        endDate
+        startDate(formatString: "D MMMM, YYYY")
+        endDate(formatString: "D MMMM, YYYY")
         repoURL
         projectURL
         images {

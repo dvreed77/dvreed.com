@@ -45,8 +45,9 @@ class Index extends React.Component {
         {projects.map(({ node }) =>
           <Link
             to={node.fields.slug}
+            key={node.id}
           >
-            <ProjectPanel key={node.id}>
+            <ProjectPanel >
               <StyledImg>
                 <Img
                   fluid={node.frontmatter.images[0].childImageSharp.fluid}
@@ -85,7 +86,7 @@ export const pageQuery = graphql`
           id
           frontmatter {
             title
-            startDate(formatString: "DD MMMM, YYYY")
+            startDate(formatString: "MMMM YYYY")
             images {
               childImageSharp {
                 fluid(
