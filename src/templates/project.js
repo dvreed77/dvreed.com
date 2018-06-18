@@ -72,9 +72,9 @@ const Body = styled.div`
   }
 
   & h2 {
-    border-top: 1px solid black;
+    border-bottom: 1px solid #ddd;
     margin-top: 44px;
-    padding-top: 40px;
+    padding-top: 10px;
     line-height: 1.2
 
     :first-child {
@@ -97,6 +97,8 @@ const Body = styled.div`
   }
 
   & h3 {
+    font-weight: 400;
+    font-size: 22px;
     padding-top: 45px;
 
     [media.lessThan('small')]: {
@@ -114,11 +116,12 @@ const Body = styled.div`
   }
 
   & h4 {
-    font-size: 20px;
-    color: black;
+    font-size: 18px;
+    color: #555;
     line-height: 1.3;
-    margin-top: 50px;
-    font-weight: 400,
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 200;
   }
 
   & h4 + p {
