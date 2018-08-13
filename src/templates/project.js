@@ -203,8 +203,7 @@ const Project = ({data, location}) => {
           <li><span>Project:</span><a href={markdownRemark.frontmatter.projectURL}>Link</a></li>
           <li><span>Time:</span>{markdownRemark.frontmatter.startDate} to {markdownRemark.frontmatter.endDate}</li>
         </ul>
-      </Details>
-      
+      </Details>      
       
       <HeroImg 
         href={markdownRemark.frontmatter.projectURL}
