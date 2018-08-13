@@ -1,8 +1,8 @@
+
 *.pyc
 .idea/
 .DS_Store
 
 node_modules/
-
 .cache/
 public/
