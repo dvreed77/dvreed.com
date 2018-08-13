@@ -1,6 +1,6 @@
 # dvreed.com
 
-## Deploy
-```
-npm run deploy
-```
+## Common Commands
+
+develop: `gatsby develop` 
+deploy: `npm run deploy`
