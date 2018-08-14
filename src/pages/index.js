@@ -76,7 +76,8 @@ class Index extends React.Component {
             key={node.id}
           >
             <div>
-              {node.frontmatter.title}
+              <h3>Blogs</h3>
+              {node.fields.date} - {node.frontmatter.title}
             </div>
           </Link>
         )}
@@ -133,7 +134,7 @@ export const pageQuery = graphql`
           }
           fields {
             slug
-            date
+            date(formatString: "DD MMMM YYYY")
           }
           excerpt
         }
