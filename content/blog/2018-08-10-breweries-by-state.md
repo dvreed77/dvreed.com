@@ -3,9 +3,39 @@ title: Breweries by State
 author: Dave
 ---
 
-I wanted to know about stuff
+**City**|**State**|**Count**
+:-----:|:-----:|:-----:
+Portland|Oregon|80
+Denver|Colorado|77
+San Diego|California|74
+Chicago|Illinois|69
+Seattle|Washington|67
+Austin|Texas|43
+Albuquerque|New Mexico|40
+San Francisco|California|37
+Minneapolis|Minnesota|36
+Indianapolis|Indiana|35
+Asheville|North Carolina|30
+Los Angeles|California|29
+Milwaukee|Wisconsin|28
+Brooklyn|New York|26
+Saint Louis|Missouri|26
+Cincinnati|Ohio|26
+Nashville|Tennessee|25
+Columbus|Ohio|25
+Colorado Springs|Colorado|25
 
-First, I need to get all the data
+
+----
+
+I was recently having a discussion with a friend about which city had the most breweries. I couldn't find anything on the internet that was able to answer that simple question. I decided to use this as an opportuntity for a little project. 
+
+## Gather Data
+
+I decided to use BeerAdvocate as my source. I was almost certain there was an API for BeerAdvocate, but there wasn't, so I had to scrap their listings page, which was easy enough.
+
+I saved off the HTML files, so I didn't have to scrape more than I needed to.
+
 ```python
 for p in range(1510):
     params = {
@@ -18,7 +48,7 @@ for p in range(1510):
         fid.write(str(page.content))
 ```
 
-Then, some xpath magic
+I then used lxml and some xpath magic to pull the relevant data.
 
 ```python
 get_name = lambda x: x[0].xpath('./td[1]')[0].text_content()
@@ -52,6 +82,8 @@ get_num_beers = lambda x: x[0].xpath('./td[5]')[0].text_content()
 print(tryf(get_num_beers, p))
 ```
 
+I then ran through all the files, pushing each brewery into a list and finally created a Pandas DataFrame.
+
 ```python
 out = []
 for page_num in range(1510):
@@ -74,27 +106,7 @@ for page_num in range(1510):
 df = pd.DataFrame(out)
 ```
 
+Getting the top 30 beer cities was as easy as ...
 ```python
 df[(df.num_beers != '-')].groupby(['city', 'state']).size().sort_values(ascending=False).head(30)
 ```
-**City**|**State**|**Count**
-:-----:|:-----:|:-----:
-Portland|Oregon|80
-Denver|Colorado|77
-San Diego|California|74
-Chicago|Illinois|69
-Seattle|Washington|67
-Austin|Texas|43
-Albuquerque|New Mexico|40
-San Francisco|California|37
-Minneapolis|Minnesota|36
-Indianapolis|Indiana|35
-Asheville|North Carolina|30
-Los Angeles|California|29
-Milwaukee|Wisconsin|28
-Brooklyn|New York|26
-Saint Louis|Missouri|26
-Cincinnati|Ohio|26
-Nashville|Tennessee|25
-Columbus|Ohio|25
-Colorado Springs|Colorado|25

@@ -38,7 +38,9 @@ const Excerpt = styled.p`
 
 class Index extends React.Component {
   render() {
-    const projects = this.props.data.projects.edges
+
+    const {blogs: {edges: blogs}, projects: {edges: projects}} = this.props.data
+
 
     return (
       <Layout location={this.props.location}>
@@ -65,6 +67,17 @@ class Index extends React.Component {
               </div>
 
             </ProjectPanel>
+          </Link>
+        )}
+
+        {blogs.map(({ node }) =>
+          <Link
+            to={node.fields.slug}
+            key={node.id}
+          >
+            <div>
+              {node.frontmatter.title}
+            </div>
           </Link>
         )}
       </Layout>
@@ -102,6 +115,25 @@ export const pageQuery = graphql`
           }
           fields {
             slug
+          }
+          excerpt
+        }
+      }
+    }
+    blogs: allMarkdownRemark(
+      filter: {fileAbsolutePath: {regex: "/blog/"}}
+      sort: { fields: [fields___date], order: DESC }
+    ) {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title            
+          }
+          fields {
+            slug
+            date
           }
           excerpt
         }

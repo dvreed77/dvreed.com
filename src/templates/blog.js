@@ -158,26 +158,54 @@ const Body = styled.div`
 //   },
 // ];
 
+const Details = styled.div`
+  margin-bottom: 30px;
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  li {
+    span {
+      // text-transform: uppercase;
+      font-weight: 500;
+      margin-right: 10px;
+    }
+  }
+  a {
+    color: steelblue;
+    font-weight: 500;
+    :hover {
+      text-decoration: underline;
+    }
+  }
+`
+
 const Blog = ({data, location}) => {
   console.log('Blog Data', data, location)
 
   const markdownRemark = data.markdownRemark
   return (
     <Layout location={location}>
-    <div>
-      <TitleAndMetaTags
-        ogDescription={"dave"}
-        ogUrl={"dave"}
-        title={"Blog"}
-      />
-
       <div>
+        <TitleAndMetaTags
+          ogDescription={"dave"}
+          ogUrl={"dave"}
+          title={"Blog"}
+        />
+
+        <Details>
+          <h1>
+            {markdownRemark.frontmatter.title}
+          </h1>
+        </Details>    
+
+        
         <Body
-        dangerouslySetInnerHTML={{__html: markdownRemark.html}}
-      />
+          dangerouslySetInnerHTML={{__html: markdownRemark.html}}/>
+        
+        
       </div>
-      Blog
-    </div>
     </Layout>
   )
 }
@@ -199,22 +227,6 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         path
         slug
-      }
-    }
-    allMarkdownRemark(
-      limit: 10
-      filter: {id: {regex: "/blog/"}}
-      sort: {fields: [fields___date], order: DESC}
-    ) {
-      edges {
-        node {
-          frontmatter {
-            title
-          }
-          fields {
-            slug
-          }
-        }
       }
     }
   }
