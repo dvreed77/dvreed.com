@@ -71,18 +71,6 @@ const Body = styled.div`
 
   & h1 {
     line-height: 1.2;
-
-    // [media.size('xsmall')] {
-    //   fontSize: 30,
-    // },
-
-    // [media.between('small', 'large')]: {
-    //   fontSize: 45,
-    // },
-
-    // [media.greaterThan('xlarge')]: {
-    //   fontSize: 60,
-    // },
   }
 
   & h2 {
@@ -140,6 +128,22 @@ const Body = styled.div`
 
   & h4 + p {
     margin-top: 20px;
+  }
+
+  table {
+    max-width: 80%;
+    margin: 2em auto;
+  }
+
+  thead {
+    background-color: #2aa198;
+    color: #fff;
+    padding: 2px;
+
+    th {
+      padding: .5em;
+      width: 100px;
+    }
   }
 `
 
