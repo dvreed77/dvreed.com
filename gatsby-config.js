@@ -17,7 +17,7 @@ module.exports = {
         path: `${__dirname}/content/`,
       },
     },
-    `gatsby-plugin-resolve-src`,
+    // `gatsby-plugin-resolve-src`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-sharp`,
     // This plugin identifies file nodes that are images and
@@ -63,6 +63,20 @@ module.exports = {
             },
           },
         ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-37466924-1",
+        // Puts tracking script in the head instead of the body
+        head: false,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+        // Avoids sending pageview hits from custom paths
+        // exclude: ["/preview/**", "/do-not-track/me/too/"],
       },
     },
     'gatsby-plugin-react-helmet',

@@ -6,14 +6,14 @@
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public -r git@github.com:dvreed77/dvreed77.github.io.git -b master"
+    "deploy": "gatsby build && cp ./src/CNAME public/ && gh-pages -d public -r git@github.com:dvreed77/dvreed77.github.io.git -b master"
   },
   "dependencies": {
     "babel-plugin-styled-components": "next",
     "gatsby": "^2.0.0-beta.99",
     "gatsby-image": "^2.0.0-beta.7",
+    "gatsby-plugin-google-analytics": "^1.0.31",
     "gatsby-plugin-react-helmet": "^3.0.0-beta.4",
-    "gatsby-plugin-resolve-src": "^1.1.4",
     "gatsby-plugin-sharp": "^2.0.0-beta.7",
     "gatsby-plugin-styled-components": "^3.0.0-beta.3",
     "gatsby-remark-autolink-headers": "^2.0.0-beta.5",
