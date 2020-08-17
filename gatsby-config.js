@@ -1,24 +1,5 @@
-// const pathPrefix = `/dvreed.com`
-const pathPrefix = `/`
-
 module.exports = {
-  pathPrefix,
-  siteMetadata: {
-    title: 'Dave Reed',
-    siteUrl: 'https://reactjs.org',
-    rssFeedTitle: 'React',
-    rssFeedDescription: 'A JavaScript library for building user interfaces',
-  },
   plugins: [
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'packages',
-        path: `${__dirname}/content/`,
-      },
-    },
-    // `gatsby-plugin-resolve-src`,
-    `gatsby-plugin-styled-components`,
     `gatsby-plugin-sharp`,
     // This plugin identifies file nodes that are images and
     // transforms these to create new “ImageSharp” nodes.
@@ -26,13 +7,49 @@ module.exports = {
     // generate responsive image thumbnails.
     `gatsby-transformer-sharp`,
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: `gatsby-source-filesystem`,
       options: {
-        plugins: [
-          `gatsby-remark-autolink-headers`,
+        name: `images`,
+        path: `${__dirname}/content/images/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `projects`,
+        path: `${__dirname}/content/projects/`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        defaultLayouts: {
+          default: require.resolve("./src/components/default-page-layout.tsx"),
+        },
+        gatsbyRemarkPlugins: [
           {
-            resolve: 'gatsby-remark-images',
-            pathPrefix: pathPrefix,
+            resolve: `gatsby-remark-katex`,
+            options: {
+              strict: `ignore`,
+            },
+          },
+          {
+            resolve: "gatsby-remark-images",
+            pathPrefix: `/`,
             options: {
               maxWidth: 840,
             },
@@ -65,6 +82,7 @@ module.exports = {
         ],
       },
     },
+    `gatsby-plugin-postcss`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -79,6 +97,5 @@ module.exports = {
         // exclude: ["/preview/**", "/do-not-track/me/too/"],
       },
     },
-    'gatsby-plugin-react-helmet',
   ],
-};
+}

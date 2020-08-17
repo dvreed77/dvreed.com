@@ -1,0 +1,93 @@
+---
+title: What About Other Distributions?
+date: 2019-01-29
+---
+
+import { Dave } from "../components/dave"
+import { MyF } from "../components/MyF"
+
+When you need to use randomness in your code, you only have a few tools at your disposal. Uniform sampling is built into Javascript with `Math.random()` and there are other libraries out there to get normally distributed random numbers, and more exotic distributions like Pareto, etc.
+
+What if you want to sample from something else, like a cubic function for example: $ f(x) = x^3 $? How do you that? The method required is called the [Inverse Transform Sampling Technique](https://en.wikipedia.org/wiki/Inverse_transform_sampling).
+
+For a given probability function $ f(x) $, if you integrate this function to get the cumulative distributions function $ F(x) $, you can then sample uniformily on the y-axis and the corresponding x position will be sampled from the original function.
+
+In the case of the commonly used probability functions, like Gaussian, etc, there is a nice closed form solution, but for other functions it makes more sense to do a lookup from samples of the CDF.
+
+The process is fairly simple:
+
+1. For the given function $ f(x) $ generate N samples
+2. Integrate the function to get the CDF $ F(x) $
+3. Generate a random variable $ y $ from the uniform distribution and do a lookup of the corresponding $x$ value
+
+## Uniform
+
+$$
+f(x) = 1
+$$
+
+The uniform distribution says all values between 0 and 1 are equally likely.
+
+<MyF f={x => 1} />
+
+---
+
+## Gaussian
+
+The Gaussian distribution is the range from -Infinity to Infinity and is most likely to occur around the mean
+
+<MyF className="mb-5" f={x => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)} />
+
+---
+
+## Linear
+
+$$
+f(x) = x
+$$
+
+<MyF className="mb-5" f={x => x} />
+
+---
+
+## Polynomials
+
+$$
+f(x) = x^3
+$$
+
+<MyF className="mb-5" f={x => x ** 3} />
+
+$$
+f(x) = x^3 + 0.2
+$$
+
+<MyF className="mb-5" f={x => x ** 3 + 0.2} />
+
+$$
+f(x) = x^2 + (1 - x)^{10}
+$$
+
+<MyF className="mb-5" f={x => x ** 2 + (1 - x) ** 10} />
+
+---
+
+## Pareto Distribution
+
+<MyF className="mb-5" f={x => (x > 0 ? x / x ** 2 : 0)} />
+
+---
+
+## Sinusoids
+
+$$
+f(x) = 1 + \cos(2\pi x)
+$$
+
+<MyF className="mb-5" f={x => 1 + Math.cos(2 * Math.PI * x)} />
+
+$$
+f(x) = 1 + \cos(2\pi x + \pi)
+$$
+
+<MyF className="mb-5" f={x => 1 + Math.cos(2 * Math.PI * x + Math.PI)} />

@@ -1,36 +1,55 @@
 {
   "name": "gatsby-starter-hello-world",
-  "description": "Gatsby hello world starter",
-  "license": "MIT",
+  "private": true,
+  "description": "A simplified bare-bones starter for Gatsby",
+  "version": "0.1.0",
+  "license": "0BSD",
   "scripts": {
-    "develop": "gatsby develop",
     "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "start": "npm run develop",
     "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "deploy": "gatsby build && cp ./src/CNAME public/ && gh-pages -d public -r git@github.com:dvreed77/dvreed77.github.io.git -b master"
   },
   "dependencies": {
-    "babel-plugin-styled-components": "next",
-    "gatsby": "^2.0.0-beta.99",
-    "gatsby-image": "^2.0.0-beta.7",
-    "gatsby-plugin-google-analytics": "^1.0.31",
-    "gatsby-plugin-react-helmet": "^3.0.0-beta.4",
-    "gatsby-plugin-sharp": "^2.0.0-beta.7",
-    "gatsby-plugin-styled-components": "^3.0.0-beta.3",
-    "gatsby-remark-autolink-headers": "^2.0.0-beta.5",
-    "gatsby-remark-images": "^2.0.1-beta.10",
-    "gatsby-remark-prismjs": "^3.0.0-beta.5",
-    "gatsby-source-filesystem": "^2.0.1-beta.10",
-    "gatsby-transformer-remark": "^2.1.1-beta.6",
-    "gatsby-transformer-sharp": "^2.1.1-beta.7",
-    "prismjs": "^1.14.0",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-helmet": "^5.2.0",
-    "react-images": "^0.5.19",
-    "styled-components": "^3.4.2",
-    "uglify-es": "^3.3.9"
+    "@material-ui/core": "^4.11.0",
+    "@mdx-js/mdx": "^1.6.16",
+    "@mdx-js/react": "^1.6.16",
+    "@types/d3": "^5.7.2",
+    "d3": "^5.16.0",
+    "gatsby": "^2.24.26",
+    "gatsby-image": "^2.4.16",
+    "gatsby-plugin-google-analytics": "^2.3.13",
+    "gatsby-plugin-mdx": "^1.2.34",
+    "gatsby-plugin-postcss": "^2.3.11",
+    "gatsby-plugin-purgecss": "^5.0.0",
+    "gatsby-plugin-sharp": "^2.6.27",
+    "gatsby-remark-images": "^3.3.25",
+    "gatsby-remark-katex": "^3.3.10",
+    "gatsby-remark-prismjs": "^3.5.10",
+    "gatsby-source-filesystem": "^2.3.24",
+    "gatsby-transformer-remark": "^2.8.28",
+    "gatsby-transformer-sharp": "^2.5.13",
+    "katex": "^0.12.0",
+    "prismjs": "^1.21.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "sharp": "^0.25.4",
+    "victory": "^35.0.8"
   },
   "devDependencies": {
-    "gh-pages": "^1.2.0"
+    "gh-pages": "^3.1.0",
+    "prettier": "2.0.5",
+    "tailwindcss": "^1.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }

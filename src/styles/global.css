@@ -1,0 +1,59 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400;500;600&display=swap");
+
+.home {
+  font-family: "Roboto Slab", serif;
+}
+
+.mdx h1 {
+  @apply font-bold text-2xl;
+}
+
+.mdx h2 {
+  @apply font-bold text-xl;
+}
+
+.mdx ol {
+  @apply pl-5 list-decimal my-4;
+}
+
+.mdx ul {
+  @apply pl-5 list-disc my-4;
+}
+
+.mdx ul ul {
+  @apply my-0;
+  list-style-type: circle;
+}
+
+.mdx ul ul ul {
+  list-style-type: square;
+}
+
+.mdx p {
+  @apply my-4;
+}
+
+/* .mdx :not(pre) code {
+  margin: 0 2px;
+  padding: 0px 5px;
+  background-color: #f8f8f8;
+  white-space: nowrap;
+} */
+
+.mdx a {
+  @apply text-blue-600;
+}
+
+.mdx a:hover {
+  @apply underline text-blue-800;
+}
+
+.mdx hr {
+  @apply my-5;
+}
