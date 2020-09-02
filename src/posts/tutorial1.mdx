@@ -1,10 +1,10 @@
 ---
 title: What About Other Distributions?
-date: 2019-01-29
+date: "2020-08-10"
 ---
 
-import { Dave } from "../components/dave"
-import { MyF } from "../components/MyF"
+import { Dave } from "../components/dave";
+import { MyF } from "../components/MyF";
 
 When you need to use randomness in your code, you only have a few tools at your disposal. Uniform sampling is built into Javascript with `Math.random()` and there are other libraries out there to get normally distributed random numbers, and more exotic distributions like Pareto, etc.
 
@@ -28,7 +28,7 @@ $$
 
 The uniform distribution says all values between 0 and 1 are equally likely.
 
-<MyF f={x => 1} />
+<MyF f={(x) => 1} />
 
 ---
 
@@ -36,7 +36,7 @@ The uniform distribution says all values between 0 and 1 are equally likely.
 
 The Gaussian distribution is the range from -Infinity to Infinity and is most likely to occur around the mean
 
-<MyF className="mb-5" f={x => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)} />
+<MyF className="mb-5" f={(x) => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)} />
 
 ---
 
@@ -46,7 +46,7 @@ $$
 f(x) = x
 $$
 
-<MyF className="mb-5" f={x => x} />
+<MyF className="mb-5" f={(x) => x} />
 
 ---
 
@@ -56,25 +56,25 @@ $$
 f(x) = x^3
 $$
 
-<MyF className="mb-5" f={x => x ** 3} />
+<MyF className="mb-5" f={(x) => x ** 3} />
 
 $$
 f(x) = x^3 + 0.2
 $$
 
-<MyF className="mb-5" f={x => x ** 3 + 0.2} />
+<MyF className="mb-5" f={(x) => x ** 3 + 0.2} />
 
 $$
 f(x) = x^2 + (1 - x)^{10}
 $$
 
-<MyF className="mb-5" f={x => x ** 2 + (1 - x) ** 10} />
+<MyF className="mb-5" f={(x) => x ** 2 + (1 - x) ** 10} />
 
 ---
 
 ## Pareto Distribution
 
-<MyF className="mb-5" f={x => (x > 0 ? x / x ** 2 : 0)} />
+<MyF className="mb-5" f={(x) => (x > 0 ? x / x ** 2 : 0)} />
 
 ---
 
@@ -84,10 +84,10 @@ $$
 f(x) = 1 + \cos(2\pi x)
 $$
 
-<MyF className="mb-5" f={x => 1 + Math.cos(2 * Math.PI * x)} />
+<MyF className="mb-5" f={(x) => 1 + Math.cos(2 * Math.PI * x)} />
 
 $$
 f(x) = 1 + \cos(2\pi x + \pi)
 $$
 
-<MyF className="mb-5" f={x => 1 + Math.cos(2 * Math.PI * x + Math.PI)} />
+<MyF className="mb-5" f={(x) => 1 + Math.cos(2 * Math.PI * x + Math.PI)} />

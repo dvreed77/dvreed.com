@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from "react";
+import { Link } from "gatsby";
 
 export function Layout({ children }) {
   return (
@@ -10,7 +10,7 @@ export function Layout({ children }) {
         </Link>
         <ul style={{ listStyle: `none`, float: `right` }}>
           <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-            <Link to={"about"}>About</Link>
+            <Link to={"/about"}>About</Link>
           </li>
           <li style={{ display: `inline-block`, marginRight: `1rem` }}>
             <Link to={"/paintings"}>Paintings</Link>
@@ -19,5 +19,5 @@ export function Layout({ children }) {
       </header>
       {children}
     </div>
-  )
+  );
 }

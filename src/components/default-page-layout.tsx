@@ -1,7 +1,10 @@
-import React from "react"
+import React from "react";
+import { Layout } from "./Layout";
 
 const DefaultMDXPage = ({ children }) => (
-  <div className="w-10/12 mx-auto mdx">{children}</div>
-)
+  <Layout>
+    <div className="mdx">{children}</div>
+  </Layout>
+);
 
-export default DefaultMDXPage
+export default DefaultMDXPage;
