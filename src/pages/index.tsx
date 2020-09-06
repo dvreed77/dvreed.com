@@ -42,12 +42,11 @@ export default function Home({ data }) {
         {posts.map(({ node: post }) => (
           <li key={post.id}>
             <Link to={post.fields.slug}>
-              <div className="flex flex-row">
-                <span className="text-gray-600 font-hairline">
+              <div className="flex flex-row items-baseline">
+                <span className="text-gray-600 font-hairline text-sm text-right w-1/5">
                   {post.frontmatter.date}
                 </span>
-                <span className="mx-5 text-gray-600 font-hairline">-</span>
-                <h2>{post.frontmatter.title}</h2>
+                <h2 className="w-4/5 ml-3">{post.frontmatter.title}</h2>
               </div>
             </Link>
           </li>

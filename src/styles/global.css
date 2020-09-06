@@ -4,8 +4,6 @@
 
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400;500;600&display=swap");
-
 .home {
   font-family: "Roboto Slab", serif;
 }
@@ -38,13 +36,6 @@
 .mdx p {
   @apply my-4;
 }
-
-/* .mdx :not(pre) code {
-  margin: 0 2px;
-  padding: 0px 5px;
-  background-color: #f8f8f8;
-  white-space: nowrap;
-} */
 
 .mdx a {
   @apply text-blue-600;

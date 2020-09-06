@@ -1,6 +1,6 @@
-import React from "react"
-import * as d3 from "d3"
-import { RandomViewer } from "./RandomViewer"
+import React from "react";
+import * as d3 from "d3";
+import { RandomViewer } from "./RandomViewer";
 import {
   VictoryChart,
   VictoryLine,
@@ -9,8 +9,8 @@ import {
   VictoryScatter,
   VictoryArea,
   VictoryContainer,
-} from "victory"
-import { randomF, random2 } from "../utils/randomF"
+} from "victory";
+import { randomF, random2 } from "../utils/randomF";
 
 // const f = x => x ** 2 + (1 - x) ** 10
 
@@ -19,8 +19,8 @@ import { randomF, random2 } from "../utils/randomF"
 // const f = x => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)
 
 function MyCat({ x, y, ...other }) {
-  const yRange = other.scale.y.range()
-  const midY = (yRange[0] + yRange[1]) / 2
+  const yRange = other.scale.y.range();
+  const midY = (yRange[0] + yRange[1]) / 2;
   return (
     <line
       x1={x}
@@ -30,30 +30,30 @@ function MyCat({ x, y, ...other }) {
       stroke={other.style.fill}
       opacity={other.style.opacity}
     />
-  )
+  );
 }
-export function MyF({ f = x => 1, className }) {
+export function MyF({ f = (x) => 1, className }) {
   const [dimensions, setDimensions] = React.useState({
     width: 800,
     height: 200,
-  })
+  });
 
-  const [pdfData, setPdfData] = React.useState([])
-  const [cdfData, setCdfData] = React.useState([])
-  const [randomData, setRandomData] = React.useState([1, 2, 3])
+  const [pdfData, setPdfData] = React.useState([]);
+  const [cdfData, setCdfData] = React.useState([]);
+  const [randomData, setRandomData] = React.useState([1, 2, 3]);
 
   const [scales, setScales] = React.useState({
     xScale: d3.scaleLinear(),
     yScale: d3.scaleLinear(),
-  })
+  });
 
   const [params, setParams] = React.useState({
     start: 0.5,
     end: 0.5,
-  })
+  });
 
   React.useEffect(() => {
-    const rGen = new random2(f)
+    const rGen = new random2(f);
     // const nPts = 1000
     // const dx = 1 / (nPts - 1)
 
@@ -69,23 +69,23 @@ export function MyF({ f = x => 1, className }) {
 
     // const maxD = d3.max(cdfData, d => d[1])
 
-    setPdfData(rGen.pdfData)
-    setCdfData(rGen.cdfData)
+    setPdfData(rGen.pdfData);
+    setCdfData(rGen.cdfData);
 
-    const r = []
+    const r = [];
     for (let i = 0; i < 1000; i++) {
-      r.push(rGen.sample())
+      r.push(rGen.sample());
     }
 
-    setRandomData(r)
-  }, [])
+    setRandomData(r);
+  }, []);
 
   React.useEffect(() => {
     setScales({
       xScale: d3.scaleLinear().domain([0, 1]).range([0, dimensions.width]),
       yScale: d3.scaleLinear().domain([0, 1]).range([dimensions.height, 0]),
-    })
-  }, [dimensions])
+    });
+  }, [dimensions]);
 
   return (
     <div className={className}>
@@ -97,15 +97,16 @@ export function MyF({ f = x => 1, className }) {
             domainPadding={{ y: 5 }}
             containerComponent={<VictoryContainer responsive={false} />}
           >
+            <VictoryLabel text="PDF" x={150} y={30} textAnchor="middle" />
             <VictoryArea
               style={{ data: { fill: "#bbb" } }}
               data={pdfData}
-              x={d => d[0]}
-              y={d => d[1]}
+              x={(d) => d[0]}
+              y={(d) => d[1]}
             />
             <VictoryLine
-              x={d => d[0]}
-              y={d => d[1]}
+              x={(d) => d[0]}
+              y={(d) => d[1]}
               data={pdfData}
               style={{
                 data: {
@@ -133,15 +134,16 @@ export function MyF({ f = x => 1, className }) {
             domainPadding={{ y: 5 }}
             containerComponent={<VictoryContainer responsive={false} />}
           >
+            <VictoryLabel text="CDF" x={150} y={30} textAnchor="middle" />
             <VictoryArea
               style={{ data: { fill: "#bbb" } }}
               data={cdfData}
-              x={d => d[0]}
-              y={d => d[1]}
+              x={(d) => d[0]}
+              y={(d) => d[1]}
             />
             <VictoryLine
-              x={d => d[0]}
-              y={d => d[1]}
+              x={(d) => d[0]}
+              y={(d) => d[1]}
               data={cdfData}
               style={{
                 data: {
@@ -163,11 +165,12 @@ export function MyF({ f = x => 1, className }) {
           </VictoryChart>
         </div>
         <div>
-          <svg width={300} height={50}>
+          <svg width={300} height={80}>
+            <VictoryLabel text="Samples" x={150} y={60} textAnchor="middle" />
             <VictoryScatter
               standalone={false}
-              x={d => d}
-              y={d => 1}
+              x={(d) => d}
+              y={(d) => 1}
               domain={{ y: [0, 2] }}
               size={3}
               style={{ data: { opacity: 0.1 } }}
@@ -181,5 +184,5 @@ export function MyF({ f = x => 1, className }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -10,17 +10,18 @@ export default ({ data: { allPaintings } }) => {
   console.log(paintings);
   return (
     <Layout>
-      dasdadas
       <SRLWrapper>
-        <img src="https://placekitten.com/g/200/300" alt="" />
-        {paintings.map((painting) => (
-          <Img
-            key={painting.node.id}
-            // fluid={painting.node.frontmatter.image.childImageSharp.fluid}
-            fixed={painting.node.frontmatter.image.childImageSharp.fixed}
-            alt="dasd"
-          />
-        ))}
+        <div className="flex flex-row flex-wrap">
+          {paintings.map((painting) => (
+            <Img
+              className="m-1 cursor-pointer"
+              key={painting.node.id}
+              // fluid={painting.node.frontmatter.image.childImageSharp.fluid}
+              fixed={painting.node.frontmatter.image.childImageSharp.fixed}
+              alt={painting.node.excerpt}
+            />
+          ))}
+        </div>
       </SRLWrapper>
     </Layout>
   );
@@ -34,6 +35,7 @@ export const query = graphql`
       edges {
         node {
           id
+          body
           excerpt
           fields {
             collection

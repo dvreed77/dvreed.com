@@ -18,18 +18,8 @@ export default function PageTemplate({ data: { mdx } }) {
       <div>
         <Img fluid={mdx.frontmatter.images[0].childImageSharp.fluid} />
 
-        <div className="flex flex-row my-5">
-          <div className="w-3/5 mr-5">
-            <h1 className="text-4xl font-bold border-b border-gray-300">
-              {mdx.frontmatter.title}
-            </h1>
-            <div className="mdx">
-              <MDXProvider components={shortcodes}>
-                <MDXRenderer>{mdx.body}</MDXRenderer>
-              </MDXProvider>
-            </div>
-          </div>
-          <aside className="w-2/5">
+        <div className="flex lg:flex-row-reverse flex-col my-5">
+          <aside className="lg:w-2/5">
             <div className="mb-3">
               <h2 className="text-gray-800 font-bold border-b border-gray-300">
                 Created
@@ -42,7 +32,6 @@ export default function PageTemplate({ data: { mdx } }) {
             </div>
 
             <div className="mb-3">
-              {" "}
               <h2 className="text-gray-800 font-bold border-b border-gray-300">
                 Code
               </h2>
@@ -62,6 +51,16 @@ export default function PageTemplate({ data: { mdx } }) {
               </div>
             </div>
           </aside>
+          <div className="lg:w-3/5 lg:mr-5">
+            <h1 className="lg:text-left text-center text-4xl font-bold border-b border-gray-300">
+              {mdx.frontmatter.title}
+            </h1>
+            <div className="mdx">
+              <MDXProvider components={shortcodes}>
+                <MDXRenderer>{mdx.body}</MDXRenderer>
+              </MDXProvider>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
