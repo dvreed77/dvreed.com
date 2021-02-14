@@ -16,6 +16,10 @@
   @apply font-bold text-xl;
 }
 
+.mdx h4 {
+  @apply font-medium text-lg text-gray-700 mb-1;
+}
+
 .mdx ol {
   @apply pl-5 list-decimal my-4;
 }
@@ -31,6 +35,10 @@
 
 .mdx ul ul ul {
   list-style-type: square;
+}
+
+.mdx blockquote {
+  @apply border-l-2 font-thin italic pl-5 text-gray-600 text-xl;
 }
 
 .mdx p {

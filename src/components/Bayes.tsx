@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { DataContext } from "./posts-page-layout";
+import Color from "color";
 
 export function Bayes() {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -50,27 +51,33 @@ export function Bayes() {
       onMouseMove={onMouseMove}
       onMouseUp={() => setActive(undefined)}
     >
-      <rect x={0} y={0} width={hWidth} height={size} fill="blue" />
+      <rect
+        x={0}
+        y={0}
+        width={hWidth}
+        height={size}
+        fill={Color("#264653").lighten(0.3).toString()}
+      />
       <rect
         x={hWidth}
         y={0}
         width={size - hWidth}
         height={size}
-        fill="orange"
+        fill={Color("#2A9D8F").lighten(0.3).toString()}
       />
       <rect
         x={0}
         y={size - evidenceGivenHHeight}
         width={hWidth}
         height={evidenceGivenHHeight}
-        fill="red"
+        fill="264653"
       />
       <rect
         x={hWidth}
         y={size - evidenceGivenNotHHeight}
         width={size - hWidth}
         height={evidenceGivenNotHHeight}
-        fill="green"
+        fill="#2A9D8F"
       />
 
       {/* Hypothesis */}

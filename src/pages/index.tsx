@@ -56,10 +56,14 @@ export default function Home({ data }) {
   );
 }
 
+console.log("dave");
 export const pageQuery = graphql`
   query {
     allPosts: allMdx(
-      filter: { fields: { collection: { eq: "posts" } } }
+      filter: {
+        fields: { collection: { eq: "posts" } }
+        frontmatter: { published: { eq: true } }
+      }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
       edges {

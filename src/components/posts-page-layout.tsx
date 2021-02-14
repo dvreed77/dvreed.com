@@ -13,6 +13,7 @@ export const DataContext = React.createContext<
 
 export default function PageTemplate({ data: { mdx } }) {
   const state = React.useState({});
+
   return (
     <Layout>
       <h1 className="text-3xl font-bold mb-4">{mdx.frontmatter.title}</h1>
