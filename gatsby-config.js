@@ -1,4 +1,7 @@
 module.exports = {
+  siteMetadata: {
+    siteUrl: "https://dvreed.com",
+  },
   plugins: [
     `gatsby-plugin-sharp`,
     // This plugin identifies file nodes that are images and
@@ -112,5 +115,6 @@ module.exports = {
         },
       },
     },
+    "gatsby-plugin-robots-txt",
   ],
 };
