@@ -312,7 +312,7 @@ export function Ratio() {
                   color={librarianColor}
                 />
               </span>
-              <span className="border-b-2 border-black"></span>
+              <span className="border-b border-black"></span>
               <span className="flex flex-row items-center">
                 <Rectangle
                   svgDims={{ width: 100, height: 100 }}
@@ -320,8 +320,6 @@ export function Ratio() {
                   color={librarianColor}
                 />
                 <span className="m-2">+</span>
-
-                {console.log(1 - p1 * svgSize, svgSize * pNotH)}
                 <Rectangle
                   svgDims={{ width: 100, height: 100 }}
                   rectDims={{
