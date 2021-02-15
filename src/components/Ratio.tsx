@@ -3,6 +3,29 @@ import { DataContext } from "./posts-page-layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTractor, faBookReader } from "@fortawesome/free-solid-svg-icons";
 import { cx, css } from "emotion";
+import Color from "color";
+
+function Rectangle({ svgDims, rectDims, color }) {
+  const { width: svgWidth, height: svgHeight } = svgDims;
+  const { width, height } = rectDims;
+  return (
+    <svg width={svgWidth} height={svgHeight}>
+      <g
+        transform={`translate(${svgWidth / 2}, ${
+          svgHeight / 2
+        }) scale(${svgWidth})`}
+      >
+        <rect
+          x={-width / 2}
+          y={-height / 2}
+          width={width}
+          height={height}
+          fill={color}
+        />
+      </g>
+    </svg>
+  );
+}
 
 export function Ratio() {
   const [value, setValue] = useState(0);
@@ -12,6 +35,11 @@ export function Ratio() {
 
   const ratio = value > 0 ? [1, Math.abs(value) + 1] : [Math.abs(value) + 1, 1];
 
+  const p1 = ratio[0] ** 2 / (ratio[0] ** 2 + ratio[1] ** 2);
+
+  const svgSize = 500;
+
+  console.log(p1);
   return (
     <div className="mt-5">
       <div style={{ minHeight: 250 }}>
@@ -222,6 +250,82 @@ export function Ratio() {
               <span className="text-blue-500">¬H</span> <span>)</span>
             </span>
           </span>
+        </div>
+        <div>
+          <svg width={svgSize} height={svgSize}>
+            <rect
+              x={0}
+              y={0}
+              width={p1 * svgSize}
+              height={svgSize}
+              fill={Color("#264653").lighten(0.5).toString()}
+            />
+            <rect
+              x={p1 * svgSize}
+              y={0}
+              width={svgSize - p1 * svgSize}
+              height={svgSize}
+              fill={Color("#2A9D8F").lighten(0.5).toString()}
+            />
+            <rect
+              x={0}
+              y={svgSize - svgSize * pH}
+              width={p1 * svgSize}
+              height={svgSize * pH}
+              fill="#264653"
+            />
+            <rect
+              x={p1 * svgSize}
+              y={svgSize - svgSize * pNotH}
+              width={svgSize - p1 * svgSize}
+              height={svgSize * pNotH}
+              fill="#2A9D8F"
+            />
+          </svg>
+          <div
+            className={cx(
+              "flex flex-row italic items-center text-3xl",
+              css`
+                font-family: "Times New Roman", Times, serif;
+              `
+            )}
+          >
+            <span>P</span>
+            <span>(</span>
+            <span className="text-yellow-500">H</span> <span>|</span>{" "}
+            <span className="text-blue-500">E</span> <span>)</span>
+            <span>=</span>
+            <span className="flex flex-col text-center">
+              <span className="flex flex-row items-center justify-center">
+                <Rectangle
+                  svgDims={{ width: 100, height: 100 }}
+                  rectDims={{ width: p1, height: pH }}
+                  color="#264653"
+                />
+              </span>
+              <span className="border-b-2 border-black"></span>
+              <span className="flex flex-row items-center">
+                <Rectangle
+                  svgDims={{ width: 100, height: 100 }}
+                  rectDims={{ width: p1, height: pH }}
+                  color="#264653"
+                />
+                <span className="m-2">+</span>
+
+                {console.log(1 - p1 * svgSize, svgSize * pNotH)}
+                <Rectangle
+                  svgDims={{ width: 100, height: 100 }}
+                  rectDims={{
+                    width: 1 - p1,
+                    height: pNotH,
+                  }}
+                  color="#2A9D8F"
+                />
+              </span>
+            </span>
+            <span>=</span>
+            {((p1 * pH) / (p1 * pH + (1 - p1) * pNotH)).toFixed(3)}
+          </div>
         </div>
       </div>
     </div>
