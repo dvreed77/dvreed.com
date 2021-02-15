@@ -39,7 +39,8 @@ export function Ratio() {
 
   const svgSize = 500;
 
-  console.log(p1);
+  const librarianColor = "#E76F51";
+  const farmerColor = "#2A9D8F";
   return (
     <div className="mt-5">
       <div style={{ minHeight: 250 }}>
@@ -62,7 +63,10 @@ export function Ratio() {
         </div>
         <div className="flex">
           <div className="flex flex-col mr-3 w-1/3">
-            <h4>Librarians</h4>
+            <h4>
+              Librarians{" "}
+              <span className="text-gray-700 font-thin">({ratio[0] ** 2})</span>
+            </h4>
             <div>
               {Array.from({ length: ratio[0] }).map((_, idx) => (
                 <div className="flex flex-row">
@@ -71,17 +75,19 @@ export function Ratio() {
                       key={idx}
                       className="m-1"
                       icon={faBookReader}
-                      color="#264653"
+                      color={librarianColor}
                       size="xs"
                     />
                   ))}
                 </div>
               ))}
             </div>
-            <div>{ratio[0] ** 2}</div>
           </div>
           <div className="flex flex-col ml-5 w-1/3">
-            <h4>Farmers</h4>
+            <h4>
+              Farmers{" "}
+              <span className="text-gray-700 font-thin">({ratio[1] ** 2})</span>
+            </h4>
             <div>
               {Array.from({ length: ratio[1] }).map((_, idx) => (
                 <div className="flex flex-row">
@@ -97,7 +103,6 @@ export function Ratio() {
                 </div>
               ))}
             </div>
-            <div>{ratio[1] ** 2}</div>
           </div>
           <div className="w-1/3">
             <div
@@ -124,11 +129,12 @@ export function Ratio() {
           </div>
         </div>
       </div>
+      <hr />
       <div className="mb-3">
-        <h4>
+        <h2>
           What is the Probability of Seeing this Evidence if Steve was a
           Librarian?
-        </h4>
+        </h2>
         <span className="text-sm font-light">
           Thinking of any interactions you have had with librarians, what
           percentage of librarians do you think match this description?
@@ -158,17 +164,17 @@ export function Ratio() {
         >
           <span>P</span>
           <span>(</span>
-          <span className="text-yellow-500">E</span> <span>|</span>{" "}
-          <span className="text-blue-500">H</span> <span>)</span>
+          <span>E</span> <span>|</span>{" "}
+          <span style={{ color: librarianColor }}>H</span> <span>)</span>
           <span>=</span>
           <span>{pH}</span>
         </div>
       </div>
-
+      <hr />
       <div className="mb-3">
-        <h4>
+        <h2>
           What is the Probability of Seeing this Evidence if Steve was a Farmer?
-        </h4>
+        </h2>
         <span className="text-sm font-light">
           Thinking of any interactions you have had with farmers, what
           percentage of farmers do you think match this description?
@@ -197,17 +203,18 @@ export function Ratio() {
         >
           <span>P</span>
           <span>(</span>
-          <span className="text-yellow-500">E</span> <span>|</span>{" "}
-          <span className="text-blue-500">¬H</span> <span>)</span>
+          <span>E</span> <span>|</span>{" "}
+          <span style={{ color: farmerColor }}>¬H</span> <span>)</span>
           <span>=</span>
           <span>{pNotH}</span>
         </div>
       </div>
+      <hr />
       <div>
         <h2>Putting it all together</h2>
         <div
           className={cx(
-            "flex flex-row italic items-center text-2xl",
+            "flex flex-row italic items-center text-2xl justify-center",
             css`
               font-family: "Times New Roman", Times, serif;
             `
@@ -215,76 +222,78 @@ export function Ratio() {
         >
           <span>P</span>
           <span>(</span>
-          <span className="text-yellow-500">H</span> <span>|</span>{" "}
-          <span className="text-blue-500">E</span> <span>)</span>
+          <span style={{ color: librarianColor }}>H</span> <span>|</span>{" "}
+          <span>E</span> <span>)</span>
           <span>=</span>
           <span className="flex flex-col text-center">
             <span className="flex flex-row items-center justify-center">
               <span>P</span>
               <span>(</span>
-              <span className="text-yellow-500">H</span>
+              <span style={{ color: librarianColor }}>H</span>
               <span>)</span>
               <span>P</span>
               <span>(</span>
-              <span className="text-yellow-500">E</span> <span>|</span>{" "}
-              <span className="text-blue-500">H</span> <span>)</span>
+              <span>E</span> <span>|</span>
+              <span style={{ color: librarianColor }}>H</span> <span>)</span>
             </span>
             <span className="border-b-2 border-black"></span>
             <span className="flex flex-row items-center">
               <span>P</span>
               <span>(</span>
-              <span className="text-yellow-500">H</span>
+              <span style={{ color: librarianColor }}>H</span>
               <span>)</span>
               <span>P</span>
               <span>(</span>
-              <span className="text-yellow-500">E</span> <span>|</span>{" "}
-              <span className="text-blue-500">H</span> <span>)</span>
+              <span>E</span> <span>|</span>{" "}
+              <span style={{ color: librarianColor }}>H</span> <span>)</span>
               <span className="m-2">+</span>
               <span>P</span>
               <span>(</span>
-              <span className="text-yellow-500">¬H</span>
+              <span style={{ color: farmerColor }}>¬H</span>
               <span>)</span>
               <span>P</span>
               <span>(</span>
-              <span className="text-yellow-500">E</span> <span>|</span>{" "}
-              <span className="text-blue-500">¬H</span> <span>)</span>
+              <span>E</span> <span>|</span>{" "}
+              <span style={{ color: farmerColor }}>¬H</span> <span>)</span>
             </span>
           </span>
         </div>
-        <div>
-          <svg width={svgSize} height={svgSize}>
+        <div className="flex flex-col justify-center">
+          <svg width={svgSize} height={svgSize} className="mx-auto">
+            {/* <g transform={`translate(${svgSize/2},${svgSize/2})`}> */}
             <rect
               x={0}
               y={0}
               width={p1 * svgSize}
               height={svgSize}
-              fill={Color("#264653").lighten(0.5).toString()}
+              fill={Color(librarianColor).lighten(0.5).toString()}
             />
             <rect
               x={p1 * svgSize}
               y={0}
               width={svgSize - p1 * svgSize}
               height={svgSize}
-              fill={Color("#2A9D8F").lighten(0.5).toString()}
+              fill={Color(farmerColor).lighten(0.5).toString()}
             />
             <rect
               x={0}
               y={svgSize - svgSize * pH}
               width={p1 * svgSize}
               height={svgSize * pH}
-              fill="#264653"
+              fill={librarianColor}
             />
             <rect
               x={p1 * svgSize}
               y={svgSize - svgSize * pNotH}
               width={svgSize - p1 * svgSize}
               height={svgSize * pNotH}
-              fill="#2A9D8F"
+              fill={farmerColor}
             />
+            {/* </g> */}
           </svg>
           <div
             className={cx(
-              "flex flex-row italic items-center text-3xl",
+              "flex flex-row italic items-center text-2xl justify-center",
               css`
                 font-family: "Times New Roman", Times, serif;
               `
@@ -292,15 +301,15 @@ export function Ratio() {
           >
             <span>P</span>
             <span>(</span>
-            <span className="text-yellow-500">H</span> <span>|</span>{" "}
-            <span className="text-blue-500">E</span> <span>)</span>
-            <span>=</span>
+            <span style={{ color: librarianColor }}>H</span> <span>|</span>{" "}
+            <span>E</span> <span>)</span>
+            <span className="mx-3">=</span>
             <span className="flex flex-col text-center">
               <span className="flex flex-row items-center justify-center">
                 <Rectangle
                   svgDims={{ width: 100, height: 100 }}
                   rectDims={{ width: p1, height: pH }}
-                  color="#264653"
+                  color={librarianColor}
                 />
               </span>
               <span className="border-b-2 border-black"></span>
@@ -308,7 +317,7 @@ export function Ratio() {
                 <Rectangle
                   svgDims={{ width: 100, height: 100 }}
                   rectDims={{ width: p1, height: pH }}
-                  color="#264653"
+                  color={librarianColor}
                 />
                 <span className="m-2">+</span>
 
@@ -319,11 +328,11 @@ export function Ratio() {
                     width: 1 - p1,
                     height: pNotH,
                   }}
-                  color="#2A9D8F"
+                  color={farmerColor}
                 />
               </span>
             </span>
-            <span>=</span>
+            <span className="mx-3">=</span>
             {((p1 * pH) / (p1 * pH + (1 - p1) * pNotH)).toFixed(3)}
           </div>
         </div>
