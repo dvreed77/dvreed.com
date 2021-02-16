@@ -4,7 +4,6 @@ import { Layout } from "../components/Layout";
 import Img from "gatsby-image";
 
 export default function Home({ data }) {
-  console.log(data);
   const { edges: posts } = data.allPosts;
   const { edges: projects } = data.allProjects;
 
@@ -56,7 +55,6 @@ export default function Home({ data }) {
   );
 }
 
-console.log("dave");
 export const pageQuery = graphql`
   query {
     allPosts: allMdx(
