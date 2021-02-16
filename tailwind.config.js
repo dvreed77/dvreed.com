@@ -1,5 +1,10 @@
 module.exports = {
-  purge: ["./src/**/*.html", "./src/**/*.tsx"],
+  purge: [
+    "./src/**/*.html",
+    "./src/**/*.tsx",
+    "./content/**/*.tsx",
+    "./content/**/*.mdx",
+  ],
   theme: {
     extend: {},
   },
@@ -7,4 +12,4 @@ module.exports = {
     textColor: ["responsive", "hover", "focus", "group-hover"],
   },
   plugins: [],
-}
+};
