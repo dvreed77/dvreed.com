@@ -8,9 +8,7 @@ import Img from "gatsby-image";
 
 const shortcodes = { Link }; // Provide common components here
 
-export default function PageTemplate({ data: { mdx } }) {
-  console.log(mdx);
-
+export default function ProjectPageTemplate({ data: { mdx } }) {
   return (
     <Layout>
       <div>

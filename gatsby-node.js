@@ -51,9 +51,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   const layoutMapping = {
-    posts: "posts-page-layout.tsx",
-    projects: "project-page-layout.tsx",
-    default: "default-page-layout.tsx",
+    posts: "PostPageTemplate.tsx",
+    projects: "ProjectPageTemplate.tsx",
+    default: "DefaultPageTemplate.tsx",
   };
   // Create blog post pages.
   const posts = result.data.allMdx.edges;

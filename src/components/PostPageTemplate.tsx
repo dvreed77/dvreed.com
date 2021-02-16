@@ -11,7 +11,7 @@ export const DataContext = React.createContext<
   [{ [key: string]: any }, React.Dispatch<React.SetStateAction<{}>>]
 >([{}, () => {}]);
 
-export default function PageTemplate({ data: { mdx } }) {
+export default function PostPageTemplate({ data: { mdx } }) {
   const state = React.useState({});
 
   return (
