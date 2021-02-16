@@ -8,9 +8,9 @@ import { DistributionViewer } from "./components/DistributionViewer";
 
 When you need to use randomness in your code, you only have a few tools at your disposal. Uniform sampling is built into Javascript with `Math.random()` and there are other libraries out there to get normally distributed random numbers, and more exotic distributions like Pareto, etc.
 
-What if you want to sample from something else, like a cubic function for example: $ f(x) = x^3 $? How do you that? The method required is called the [Inverse Transform Sampling Technique](https://en.wikipedia.org/wiki/Inverse_transform_sampling).
+What if you want to sample from something else, like a cubic function for example: $f(x) = x^3$? How do you that? The method required is called the [Inverse Transform Sampling Technique](https://en.wikipedia.org/wiki/Inverse_transform_sampling).
 
-For a given probability function $ f(x) $, if you integrate this function to get the cumulative distributions function $ F(x) $, you can then sample uniformily on the y-axis and the corresponding x position will be sampled from the original function.
+For a given probability function $f(x)$, if you integrate this function to get the cumulative distributions function $F(x)$, you can then sample uniformily on the y-axis and the corresponding x position will be sampled from the original function.
 
 In the case of the commonly used probability functions, like Gaussian, etc, there is a nice closed form solution, but for other functions it makes more sense to do a lookup from samples of the CDF.
 
@@ -18,9 +18,9 @@ In the case of the commonly used probability functions, like Gaussian, etc, ther
 
 The process is fairly simple:
 
-1. For the given Probability Density Function (PDF) $ f(x) $, generate N samples
-2. Integrate the function to get the Cumulative Density Function (CDF) $ F(x) $
-3. Generate a random variable $ y $ from the uniform distribution and do a lookup of the corresponding $x$ value
+1. For the given Probability Density Function (PDF) $f(x)$, generate N samples
+2. Integrate the function to get the Cumulative Density Function (CDF) $F(x)$
+3. Generate a random variable $y$ from the uniform distribution and do a lookup of the corresponding $x$ value
 
 # Code
 
