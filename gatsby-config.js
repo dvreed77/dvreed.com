@@ -74,6 +74,7 @@ module.exports = {
         defaultLayouts: {
           default: require.resolve("./src/components/DefaultPageTemplate.tsx"),
         },
+        remarkPlugins: [require("remark-math"), require("remark-html-katex")],
         gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-images",
@@ -104,12 +105,6 @@ module.exports = {
               // the language "sh" which will highlight using the
               // bash highlighter.
               aliases: {},
-            },
-          },
-          {
-            resolve: `gatsby-remark-katex`,
-            options: {
-              strict: `ignore`,
             },
           },
         ],
