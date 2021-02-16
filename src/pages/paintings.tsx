@@ -6,8 +6,6 @@ import { SRLWrapper } from "simple-react-lightbox";
 
 export default ({ data: { allPaintings } }) => {
   const { edges: paintings } = allPaintings;
-
-  console.log(paintings);
   return (
     <Layout>
       <SRLWrapper>

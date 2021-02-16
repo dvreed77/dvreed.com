@@ -11,8 +11,6 @@ const shortcodes = { Link }; // Provide common components here
 export default function PageTemplate({ data: { mdx } }) {
   console.log(mdx);
 
-  // let featuredImgFluid = mdx.frontmatter.featuredImage.childImageSharp.fluid
-
   return (
     <Layout>
       <div>

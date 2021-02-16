@@ -1,4 +1,13 @@
 {
   "css.validate": false, // Disable css built-in lint
-  "stylelint.enable": true // Enable sytlelint
+  "stylelint.enable": true,
+  "spellright.language": [
+    "en"
+  ],
+  "spellright.documentTypes": [
+    "plaintext",
+    "markdown",
+    "latex",
+    "mdx"
+  ] // Enable sytlelint
 }

@@ -4,8 +4,7 @@ date: "2020-08-10"
 published: true
 ---
 
-import { Dave } from "../components/dave";
-import { MyF } from "../components/MyF";
+import { DistributionViewer } from "../components/DistributionViewer";
 
 When you need to use randomness in your code, you only have a few tools at your disposal. Uniform sampling is built into Javascript with `Math.random()` and there are other libraries out there to get normally distributed random numbers, and more exotic distributions like Pareto, etc.
 
@@ -70,13 +69,16 @@ $$
 f(x) = 1
 $$
 
-<MyF f={(x) => 1} />
+<DistributionViewer f={(x) => 1} />
 
 ---
 
 ## Gaussian
 
-<MyF className="mb-5" f={(x) => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)} />
+<DistributionViewer
+  className="mb-5"
+  f={(x) => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)}
+/>
 
 ---
 
@@ -86,7 +88,7 @@ $$
 f(x) = x
 $$
 
-<MyF className="mb-5" f={(x) => x} />
+<DistributionViewer className="mb-5" f={(x) => x} />
 
 ---
 
@@ -96,25 +98,25 @@ $$
 f(x) = x^3
 $$
 
-<MyF className="mb-5" f={(x) => x ** 3} />
+<DistributionViewer className="mb-5" f={(x) => x ** 3} />
 
 $$
 f(x) = x^3 + 0.2
 $$
 
-<MyF className="mb-5" f={(x) => x ** 3 + 0.2} />
+<DistributionViewer className="mb-5" f={(x) => x ** 3 + 0.2} />
 
 $$
 f(x) = x^2 + (1 - x)^{10}
 $$
 
-<MyF className="mb-5" f={(x) => x ** 2 + (1 - x) ** 10} />
+<DistributionViewer className="mb-5" f={(x) => x ** 2 + (1 - x) ** 10} />
 
 ---
 
 ## Pareto Distribution
 
-<MyF className="mb-5" f={(x) => (x > 0 ? x / x ** 2 : 0)} />
+<DistributionViewer className="mb-5" f={(x) => (x > 0 ? x / x ** 2 : 0)} />
 
 ---
 
@@ -124,10 +126,13 @@ $$
 f(x) = 1 + \cos(2\pi x)
 $$
 
-<MyF className="mb-5" f={(x) => 1 + Math.cos(2 * Math.PI * x)} />
+<DistributionViewer className="mb-5" f={(x) => 1 + Math.cos(2 * Math.PI * x)} />
 
 $$
 f(x) = 1 + \cos(2\pi x + \pi)
 $$
 
-<MyF className="mb-5" f={(x) => 1 + Math.cos(2 * Math.PI * x + Math.PI)} />
+<DistributionViewer
+  className="mb-5"
+  f={(x) => 1 + Math.cos(2 * Math.PI * x + Math.PI)}
+/>

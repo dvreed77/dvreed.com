@@ -1,6 +1,5 @@
 import React from "react";
 import * as d3 from "d3";
-import { RandomViewer } from "./RandomViewer";
 import {
   VictoryChart,
   VictoryLine,
@@ -10,17 +9,10 @@ import {
   VictoryArea,
   VictoryContainer,
 } from "victory";
-import { randomF, random2 } from "../utils/randomF";
+import { random2 } from "../utils/randomF";
 
-// const f = x => x ** 2 + (1 - x) ** 10
-
-// const f = x => 1
-
-// const f = x => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)
-
-function MyCat({ x, y, ...other }) {
+function ScatterLine({ x, y, ...other }: { [key: string]: any }) {
   const yRange = other.scale.y.range();
-  const midY = (yRange[0] + yRange[1]) / 2;
   return (
     <line
       x1={x}
@@ -32,7 +24,8 @@ function MyCat({ x, y, ...other }) {
     />
   );
 }
-export function MyF({ f = (x) => 1, className }) {
+
+export function DistributionViewer({ f = (x) => 1, className }) {
   const [dimensions, setDimensions] = React.useState({
     width: 800,
     height: 200,
@@ -178,7 +171,7 @@ export function MyF({ f = (x) => 1, className }) {
               width={300}
               height={50}
               padding={10}
-              dataComponent={<MyCat />}
+              dataComponent={<ScatterLine />}
             />
           </svg>
         </div>
