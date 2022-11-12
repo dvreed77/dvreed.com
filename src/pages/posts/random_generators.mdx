@@ -70,14 +70,11 @@ $$
 f(x) = 1
 $$
 
-<DistributionViewer f={(x) => 1} />
+<DistributionViewer client:load f="f1" />
 
 ## Gaussian
 
-<DistributionViewer
-  className="mb-5"
-  f={(x) => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)}
-/>
+<DistributionViewer className="mb-5" f="fGaussian" client:load />
 
 ---
 
@@ -87,7 +84,7 @@ $$
 f(x) = x
 $$
 
-<DistributionViewer className="mb-5" f={(x) => x} />
+<DistributionViewer className="mb-5" f="f2" client:load />
 
 ---
 
@@ -97,25 +94,25 @@ $$
 f(x) = x^3
 $$
 
-<DistributionViewer className="mb-5" f={(x) => x ** 3} />
+<DistributionViewer className="mb-5" f="f3" client:load />
 
 $$
 f(x) = x^3 + 0.2
 $$
 
-<DistributionViewer className="mb-5" f={(x) => x ** 3 + 0.2} />
+<DistributionViewer className="mb-5" f="f4" client:load />
 
 $$
 f(x) = x^2 + (1 - x)^{10}
 $$
 
-<DistributionViewer className="mb-5" f={(x) => x ** 2 + (1 - x) ** 10} />
+<DistributionViewer className="mb-5" f="f5" client:load />
 
 ---
 
 ## Pareto Distribution
 
-<DistributionViewer className="mb-5" f={(x) => (x > 0 ? x / x ** 2 : 0)} />
+<DistributionViewer className="mb-5" f="f6" client:load />
 
 ---
 
@@ -125,13 +122,10 @@ $$
 f(x) = 1 + \cos(2\pi x)
 $$
 
-<DistributionViewer className="mb-5" f={(x) => 1 + Math.cos(2 * Math.PI * x)} />
+<DistributionViewer className="mb-5" f="f7" client:load />
 
 $$
 f(x) = 1 + \cos(2\pi x + \pi)
 $$
 
-<DistributionViewer
-  className="mb-5"
-  f={(x) => 1 + Math.cos(2 * Math.PI * x + Math.PI)}
-/>
+<DistributionViewer className="mb-5" f="f8" client:load />
