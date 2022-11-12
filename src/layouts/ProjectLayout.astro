@@ -1,0 +1,22 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { frontmatter } = Astro.props;
+import { Image } from "@astrojs/image/components";
+const remoteImage = "https://placekitten.com/200/300";
+const remoteAlt = "A low-angle view of a forest during the daytime";
+import localImage from "../images/boston.png";
+---
+
+<BaseLayout>
+  <h1
+    class="lg:text-left text-center text-4xl font-bold border-b border-gray-300"
+  >
+    {frontmatter.title}
+  </h1>
+
+  <Image src={localImage} alt="descriptive text" width={300} />
+
+  <div class="prose lg:prose-xl">
+    <slot />
+  </div>
+</BaseLayout>
