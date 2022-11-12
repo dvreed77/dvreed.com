@@ -1,0 +1,31 @@
+---
+title: Understanding Bayes Theorem
+date: "2021-02-14"
+published: true
+layout: ../../layouts/MarkdownLayout.astro
+---
+
+import { Ratio } from "../../components/Ratio";
+
+<span class="text-xs text-gray-600 font-thin">
+  This post leverages concepts and explanations from the Bayes Theorem video by
+  3Blue1Brown <a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">here</a>.
+</span>
+
+Suppose you are given this description of Steve:
+
+> Steve is very shy and withdrawn, invariably helpful but with very little interest in people or in the world of reality. A meek and tidy soul, he has a need for order and structure, and a passion for detail.
+
+Is Steve a _Farmer_ or a _Librarian_?
+
+It is impossible to tackle this problem in a vacuum. You will undoubtedly need to use your past experiences and knowledge of the world.
+
+---
+
+## What is your Prior Knowledge?
+
+Before you saw the description above, what do you know about librarians and farmers? Are there more librarians in the world than farmers?
+
+If there were significantly more librarians in the world than farmers then using that knowledge would improve your chances of being correct.
+
+<Ratio client:load />
