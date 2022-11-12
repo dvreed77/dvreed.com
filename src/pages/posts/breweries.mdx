@@ -1,0 +1,96 @@
+---
+title: Which US cities have the most breweries?
+date: "2018-08-10"
+published: true
+layout: ../../layouts/BaseLayout.astro
+---
+
+import { SimpleTable } from "../../components/SimpleTable";
+
+<SimpleTable client:load />
+
+---
+
+I was recently having a discussion with a friend about which city had the most breweries. I couldn't find anything on the internet that was able to answer that simple question. I decided to use this as an opportunity for a little project.
+
+## Gather Data
+
+I decided to use BeerAdvocate as my source. I was almost certain there was an API for BeerAdvocate, but there wasn't, so I had to scrap their listings page, which was easy enough.
+
+I saved off the HTML files, so I didn't have to scrape more than I needed to.
+
+```python
+for p in range(1510):
+    params = {
+        'start': 20*p,
+        'c_id': 'US'
+    }
+    page = requests.get('https://www.beeradvocate.com/place/list', params=params)
+
+    with open(f'./beer_advocate/page_{p}.html', 'w') as fid:
+        fid.write(str(page.content))
+```
+
+I then used lxml and some xpath magic to pull the relevant data.
+
+```python
+get_name = lambda x: x[0].xpath('./td[1]')[0].text_content()
+print(get_name(p))
+
+get_address = lambda x: x[1].xpath("./td[1]/text()")[0]
+print(get_address(p))
+
+get_zip = lambda x: x[1].xpath("./td[1]/text()")[2].split(', ')[1]
+print(tryf(get_zip, p))
+
+get_city = lambda x: " ".join(x[1].xpath("./td[1]/a[1]/text()"))
+print(tryf(get_city, p))
+
+get_state = lambda x: " ".join(x[1].xpath("./td[1]/a[2]/text()"))
+print(tryf(get_state, p))
+
+get_country = lambda x: " ".join(x[1].xpath("./td[1]/a[3]/text()"))
+print(tryf(get_country, p))
+
+get_score = lambda x: x[0].xpath('./td[2]')[0].text_content()
+print(tryf(get_score, p))
+
+get_ratings = lambda x: x[0].xpath('./td[3]')[0].text_content()
+print(tryf(get_ratings, p))
+
+get_beer_avg = lambda x: x[0].xpath('./td[4]')[0].text_content()
+print(tryf(get_beer_avg, p))
+
+get_num_beers = lambda x: x[0].xpath('./td[5]')[0].text_content()
+print(tryf(get_num_beers, p))
+```
+
+I then ran through all the files, pushing each brewery into a list and finally created a Pandas DataFrame.
+
+```python
+out = []
+for page_num in range(1510):
+    page = get_page(page_num)
+    places = get_places(page)
+    for p in places:
+        out.append({
+            'name': get_name(p),
+            'address': tryf(get_address, p),
+            'city': tryf(get_city, p),
+            'state': tryf(get_state, p),
+            'country': tryf(get_country, p),
+            'zip': tryf(get_zip, p),
+            'score': get_score(p),
+            'ratings': get_ratings(p),
+            'beer_avg': get_beer_avg(p),
+            'num_beers': get_num_beers(p),
+        })
+
+df = pd.DataFrame(out)
+```
+
+Getting the top 30 beer cities was as easy as ...
+
+```python
+df[(df.num_beers != '-')].groupby(['city', 'state']).size().sort_values(ascending=False).head(30)
+```
