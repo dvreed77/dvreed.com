@@ -54,7 +54,7 @@ export function DistributionViewer({ f = "f1", className }: IProps) {
   }, []);
 
   const spec: VisualizationSpec = {
-    width: 1000,
+    width: "container",
     height: 30,
     mark: "rule",
     encoding: {
@@ -73,5 +73,7 @@ export function DistributionViewer({ f = "f1", className }: IProps) {
     table: randomData.map((d) => ({ x: d })),
   };
 
-  return <VegaLite spec={spec} data={barData} actions={false} />;
+  return (
+    <VegaLite spec={spec} data={barData} actions={false} className="w-full" />
+  );
 }
