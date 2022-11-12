@@ -1,0 +1,137 @@
+---
+title: What About Other Distributions?
+date: "2020-08-10"
+published: true
+layout: ../../layouts/MarkdownLayout.astro
+---
+
+import { DistributionViewer } from "../../components/DistributionViewer";
+
+When you need to use randomness in your code, you only have a few tools at your disposal. Uniform sampling is built into Javascript with `Math.random()` and there are other libraries out there to get normally distributed random numbers, and more exotic distributions like Pareto, etc.
+
+What if you want to sample from something else, like a cubic function for example: $f(x) = x^3$? How do you that? The method required is called the [Inverse Transform Sampling Technique](https://en.wikipedia.org/wiki/Inverse_transform_sampling).
+
+For a given probability function $f(x)$, if you integrate this function to get the cumulative distributions function $F(x)$, you can then sample uniformily on the y-axis and the corresponding x position will be sampled from the original function.
+
+In the case of the commonly used probability functions, like Gaussian, etc, there is a nice closed form solution, but for other functions it makes more sense to do a lookup from samples of the CDF.
+
+# Process
+
+The process is fairly simple:
+
+1. For the given Probability Density Function (PDF) $f(x)$, generate N samples
+2. Integrate the function to get the Cumulative Density Function (CDF) $F(x)$
+3. Generate a random variable $y$ from the uniform distribution and do a lookup of the corresponding $x$ value
+
+# Code
+
+Here is an example of how such a function could be implemented in TypeScript.
+
+```typescript
+export function randomF(f: (x: number) => number, nPts = 1000) {
+  const dx = 1 / (nPts - 1);
+
+  const pdfData: [number, number][] = Array.from({
+    length: nPts,
+  }).map((_, idx) => [idx * dx, f(idx * dx)]);
+
+  const cdfData: [number, number][] = pdfData
+    .slice(1)
+    .reduce((a, b) => [...a, [b[0], a[a.length - 1][1] + dx * b[1]]], [[0, 0]]);
+
+  this.pdfData = pdfData;
+  this.cdfData = cdfData;
+
+  const maxD = Math.max(...cdfData.map((d) => d[1]));
+
+  return function () {
+    const x = Math.random() * maxD;
+    const idx = cdfData.findIndex((d) => d[1] > x);
+
+    return cdfData[idx][0];
+  };
+}
+```
+
+## Example Usage
+
+And here is how you could use that function to generate random samples from a cubic function:
+
+```typescript
+const rGen = randomF((x) => x ** 3);
+const sample = rGen();
+```
+
+# Examples
+
+## Uniform
+
+$$
+f(x) = 1
+$$
+
+<DistributionViewer f={(x) => 1} />
+
+## Gaussian
+
+<DistributionViewer
+  className="mb-5"
+  f={(x) => Math.exp(-0.5 * ((x - 0.5) / 0.1) ** 2)}
+/>
+
+---
+
+## Linear
+
+$$
+f(x) = x
+$$
+
+<DistributionViewer className="mb-5" f={(x) => x} />
+
+---
+
+## Polynomials
+
+$$
+f(x) = x^3
+$$
+
+<DistributionViewer className="mb-5" f={(x) => x ** 3} />
+
+$$
+f(x) = x^3 + 0.2
+$$
+
+<DistributionViewer className="mb-5" f={(x) => x ** 3 + 0.2} />
+
+$$
+f(x) = x^2 + (1 - x)^{10}
+$$
+
+<DistributionViewer className="mb-5" f={(x) => x ** 2 + (1 - x) ** 10} />
+
+---
+
+## Pareto Distribution
+
+<DistributionViewer className="mb-5" f={(x) => (x > 0 ? x / x ** 2 : 0)} />
+
+---
+
+## Sinusoids
+
+$$
+f(x) = 1 + \cos(2\pi x)
+$$
+
+<DistributionViewer className="mb-5" f={(x) => 1 + Math.cos(2 * Math.PI * x)} />
+
+$$
+f(x) = 1 + \cos(2\pi x + \pi)
+$$
+
+<DistributionViewer
+  className="mb-5"
+  f={(x) => 1 + Math.cos(2 * Math.PI * x + Math.PI)}
+/>

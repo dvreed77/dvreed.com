@@ -9,6 +9,9 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 import react from "@astrojs/react";
 
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
+
 // https://astro.build/config
 export default defineConfig({
   markdown: {
@@ -21,8 +24,11 @@ export default defineConfig({
       // https://github.com/shikijs/shiki/blob/main/docs/languages.md
       langs: [],
       // Enable word wrap to prevent horizontal scrolling
-      wrap: true
-    }
+      wrap: true,
+    },
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
+    extendDefaultPlugins: true,
   },
-  integrations: [tailwind(), mdx(), react()]
+  integrations: [tailwind(), mdx(), react()],
 });
