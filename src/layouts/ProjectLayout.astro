@@ -16,12 +16,12 @@ console.log("frontmatter", frontmatter.images[0]);
     {frontmatter.title}
   </h1>
 
-  <Image src={localImage} alt="descriptive text" height={300} />
   <Image
     src={frontmatter.images[0]}
     alt="descriptive text"
     height={300}
-    width={1000}
+    aspectRatio={1}
+    fit="contain"
     format={"png"}
   />
 
