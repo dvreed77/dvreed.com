@@ -24,6 +24,8 @@ export function DistributionViewer({ f = "f1", className }: IProps) {
   const [randomData, setRandomData] = React.useState([1, 2, 3]);
 
   const f2 = funcs[f];
+
+  // console.log(pdfData);
   React.useEffect(() => {
     // if (!f) return;
     const rGen = new random2(f2);
@@ -65,6 +67,28 @@ export function DistributionViewer({ f = "f1", className }: IProps) {
     },
     data: { name: "table" }, // note: vega-lite data attribute is a plain object instead of an array
     config: {
+      axisLeft: { domain: false, grid: false, ticks: false, disable: true },
+    },
+  };
+
+  const spec2: VisualizationSpec = {
+    title: { text: "PDF", align: "left" },
+    width: "container",
+    height: 150,
+    mark: "line",
+    encoding: {
+      x: { field: "x", type: "quantitative", scale: { domain: [0, 1] } },
+      y: {
+        field: "y",
+        type: "quantitative",
+        scale: { domain: [0, Math.max(...pdfData.map((d) => d[1])) + 0.1] },
+      },
+      color: { value: "black" },
+      opacity: { value: 0.4 },
+      size: { value: 1 },
+    },
+    data: { name: "table" }, // note: vega-lite data attribute is a plain object instead of an array
+    config: {
       axis: { domain: false, grid: false, ticks: false, disable: true },
     },
   };
@@ -72,8 +96,19 @@ export function DistributionViewer({ f = "f1", className }: IProps) {
   const barData = {
     table: randomData.map((d) => ({ x: d })),
   };
+  const barData2 = {
+    table: pdfData.map((d) => ({ x: d[0], y: d[1] })),
+  };
 
   return (
-    <VegaLite spec={spec} data={barData} actions={false} className="w-full" />
+    <div>
+      <VegaLite
+        spec={spec2}
+        data={barData2}
+        actions={false}
+        className="w-full"
+      />
+      <VegaLite spec={spec} data={barData} actions={false} className="w-full" />
+    </div>
   );
 }
