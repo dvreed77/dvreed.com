@@ -1,59 +1,56 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+import BlogCard from "../components/BlogCard.astro";
 
 const allProjects = await Astro.glob("../pages/projects/*.{md,mdx}");
-
-console.log("DD", allProjects[0].url);
+const allPosts = await Astro.glob("../pages/posts/*.{md,mdx}");
 ---
 
 <Layout title="Welcome to Astro.">
-  <main>
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/blog/">Blog</a>
-    <h1>Welcome to <span class="text-gradient">Reed</span></h1>
+  <main class="max-w-2xl mx-auto">
+    <h1 class="text-gray-700">
+      Welcome to <span
+        class="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent"
+        >dvreed.com</span
+      >
+    </h1>
 
+    <div class="mb-10">
+      <h1 class="text-3xl border-b border-gray-300 mb-5 pb-1 text-gray-700">
+        Projects
+      </h1>
+      <ul role="list" class="link-card-grid">
+        {
+          allProjects.map((post) => (
+            <Card
+              href={post.url}
+              title={post.frontmatter.title}
+              body={post.frontmatter.blurb}
+            />
+          ))
+        }
+      </ul>
+    </div>
+
+    <h1 class="text-3xl border-b border-gray-300 mb-5 pb-1 text-gray-700">
+      Explorations
+    </h1>
     <ul role="list" class="link-card-grid">
       {
-        allProjects.map((post) => (
-          <Card
+        allPosts.map((post) => (
+          <BlogCard
             href={post.url}
             title={post.frontmatter.title}
-            body="Learn how Astro works and explore the official API docs."
+            date={post.frontmatter.date}
           />
         ))
       }
-      <Card
-        href="https://docs.astro.build/"
-        title="Documentation"
-        body="Learn how Astro works and explore the official API docs."
-      />
-      <Card
-        href="https://astro.build/integrations/"
-        title="Integrations"
-        body="Supercharge your project with new frameworks and libraries."
-      />
-      <Card
-        href="https://astro.build/themes/"
-        title="Themes"
-        body="Explore a galaxy of community-built starter themes."
-      />
-      <Card
-        href="https://astro.build/chat/"
-        title="Community"
-        body="Come say hi to our amazing Discord community. ❤️"
-      />
     </ul>
   </main>
 </Layout>
 
 <style>
-  main {
-    margin: auto;
-    padding: 1.5rem;
-    max-width: 60ch;
-  }
   h1 {
     font-size: 3rem;
     font-weight: 800;
