@@ -2,11 +2,6 @@
 import BaseLayout from "./BaseLayout.astro";
 const { frontmatter } = Astro.props;
 import { Picture } from "@astrojs/image/components";
-const remoteImage = "https://placekitten.com/200/300";
-const remoteAlt = "A low-angle view of a forest during the daytime";
-import localImage from "../images/mortgage-calc.png";
-
-console.log("frontmatter", frontmatter.images[0]);
 ---
 
 <BaseLayout>
@@ -27,7 +22,50 @@ console.log("frontmatter", frontmatter.images[0]);
     sizes="100vw"
   />
 
-  <div class="prose lg:prose-xl">
-    <slot />
+  <div class="flex lg:flex-row-reverse flex-col my-5">
+    <aside class="lg:w-2/5">
+      <div class="mb-3">
+        <h2 class="text-gray-800 font-bold border-b border-gray-300">
+          Created
+        </h2>
+        <div class="font-thin text-sm">
+          {
+            frontmatter.startDate === frontmatter.endDate
+              ? frontmatter.startDate
+              : `${frontmatter.startDate} to ${frontmatter.endDate}`
+          }
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <h2 class="text-gray-800 font-bold border-b border-gray-300">Code</h2>
+        <div class="font-thin text-sm">
+          <a href={frontmatter.repoURL}>{frontmatter.repoURL}</a>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <h2 class="text-gray-800 font-bold border-b border-gray-300">
+          Project
+        </h2>
+        <div class="font-thin text-sm">
+          <a href={frontmatter.projectURL}>
+            {frontmatter.projectURL}
+          </a>
+        </div>
+      </div>
+    </aside>
+    <div class="lg:w-3/5 lg:mr-5">
+      <h1
+        class="lg:text-left text-center text-4xl font-bold border-b border-gray-300"
+      >
+        {frontmatter.title}
+      </h1>
+      <div class="mdx">
+        <div class="prose lg:prose-xl">
+          <slot />
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
