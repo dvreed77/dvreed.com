@@ -22,7 +22,7 @@ export const SimpleTable = () => {
   ];
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto not-prose">
       <table className="table w-full">
         <thead>
           <tr>
