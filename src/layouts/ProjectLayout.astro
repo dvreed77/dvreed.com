@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 const { frontmatter } = Astro.props;
-import { Image } from "@astrojs/image/components";
+import { Picture } from "@astrojs/image/components";
 const remoteImage = "https://placekitten.com/200/300";
 const remoteAlt = "A low-angle view of a forest during the daytime";
 import localImage from "../images/mortgage-calc.png";
@@ -16,13 +16,15 @@ console.log("frontmatter", frontmatter.images[0]);
     {frontmatter.title}
   </h1>
 
-  <Image
+  <Picture
     src={frontmatter.images[0]}
     alt="descriptive text"
-    height={300}
-    aspectRatio={1}
-    fit="contain"
+    widths={[400, 800, 1200]}
+    aspectRatio="6:1"
+    fit="cover"
+    position="entropy"
     format={"png"}
+    sizes="100vw"
   />
 
   <div class="prose lg:prose-xl">
