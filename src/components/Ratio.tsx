@@ -1,7 +1,149 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTractor, faBookReader } from "@fortawesome/free-solid-svg-icons";
+import { atom } from "nanostores";
+import { useStore } from "@nanostores/react";
 
+const myState = atom({ a: 0, b: 0, pH: 0 });
+
+const librarianColor = "#d97706";
+const librarianColorLight = "#f59e0b";
+const farmerColor = "#059669";
+const farmerColorLight = "#10b981";
+
+export const Slider1 = () => {
+  const $myState = useStore(myState);
+
+  return (
+    <div className="flex flex-col mb-2">
+      <label
+        htmlFor="myRange"
+        className="italic text-sm font-thin text-gray-700"
+      >
+        Use the slider to adjust the ratio between librarians and farmers
+      </label>
+      <input
+        type="range"
+        min="-7"
+        max="7"
+        onChange={(e) => myState.set({ ...$myState, a: +e.target.value })}
+        // value={$myState.a}
+        // onChange={(e) => console.log(e.target.value)}
+        value={$myState.a}
+        step="1"
+        id="myRange"
+      />
+    </div>
+  );
+};
+
+export const Slider2 = () => {
+  const $myState = useStore(myState);
+  return (
+    <div className="flex flex-col mb-2">
+      <label className="italic text-sm font-thin text-gray-700">
+        Use the slider to adjust the percentage
+      </label>
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+        // onChange={(e) => setPH(+e.target.value)}
+        onChange={(e) => myState.set({ ...$myState, pH: +e.target.value })}
+        value={$myState.pH}
+      />
+    </div>
+  );
+};
+
+export const Total = () => {
+  const svgSize = 500;
+  const $myState = useStore(myState);
+
+  const { pH } = $myState;
+
+  const p1 = 0.5;
+  const pNotH = 1 - pH;
+
+  return (
+    <>
+      <div className="flex flex-row italic items-center text-2xl justify-center">
+        <span>P</span>
+        <span>(</span>
+        <span style={{ color: librarianColor }}>H</span> <span>|</span>{" "}
+        <span>E</span> <span>)</span>
+        <span>=</span>
+        <span className="flex flex-col text-center">
+          <span className="flex flex-row items-center justify-center">
+            <span>P</span>
+            <span>(</span>
+            <span style={{ color: librarianColor }}>H</span>
+            <span>)</span>
+            <span>P</span>
+            <span>(</span>
+            <span>E</span> <span>|</span>
+            <span style={{ color: librarianColor }}>H</span> <span>)</span>
+          </span>
+          <span className="border-b-2 border-black"></span>
+          <span className="flex flex-row items-center">
+            <span>P</span>
+            <span>(</span>
+            <span style={{ color: librarianColor }}>H</span>
+            <span>)</span>
+            <span>P</span>
+            <span>(</span>
+            <span>E</span> <span>|</span>{" "}
+            <span style={{ color: librarianColor }}>H</span> <span>)</span>
+            <span className="m-2">+</span>
+            <span>P</span>
+            <span>(</span>
+            <span style={{ color: farmerColor }}>¬H</span>
+            <span>)</span>
+            <span>P</span>
+            <span>(</span>
+            <span>E</span> <span>|</span>{" "}
+            <span style={{ color: farmerColor }}>¬H</span> <span>)</span>
+          </span>
+        </span>
+      </div>
+      <div className="flex flex-col justify-center">
+        <svg width={svgSize} height={svgSize} className="mx-auto">
+          {/* <g transform={`translate(${svgSize/2},${svgSize/2})`}> */}
+          <rect
+            x={0}
+            y={0}
+            width={p1 * svgSize}
+            height={svgSize}
+            fill={librarianColorLight}
+          />
+          <rect
+            x={p1 * svgSize}
+            y={0}
+            width={svgSize - p1 * svgSize}
+            height={svgSize}
+            fill={farmerColorLight}
+          />
+          <rect
+            x={0}
+            y={svgSize - svgSize * pH}
+            width={p1 * svgSize}
+            height={svgSize * pH}
+            fill={librarianColor}
+          />
+          <rect
+            x={p1 * svgSize}
+            y={svgSize - svgSize * pNotH}
+            width={svgSize - p1 * svgSize}
+            height={svgSize * pNotH}
+            fill={farmerColor}
+          />
+          {/* </g> */}
+        </svg>
+      </div>
+    </>
+  );
+};
 export function Ratio() {
   const [value, setValue] = useState(0);
   const [pH, setPH] = useState(0.5);
@@ -12,32 +154,9 @@ export function Ratio() {
 
   const p1 = ratio[0] ** 2 / (ratio[0] ** 2 + ratio[1] ** 2);
 
-  const svgSize = 500;
-
-  const librarianColor = "#d97706";
-  const librarianColorLight = "#f59e0b";
-  const farmerColor = "#059669";
-  const farmerColorLight = "#10b981";
   return (
     <div className="mt-5">
       <div style={{ minHeight: 250 }}>
-        <div className="flex flex-col mb-2">
-          <label
-            htmlFor="myRange"
-            className="italic text-sm font-thin text-gray-700"
-          >
-            Use the slider to adjust the ratio between librarians and farmers
-          </label>
-          <input
-            type="range"
-            min="-7"
-            max="7"
-            onChange={(e) => setValue(+e.target.value)}
-            value={value}
-            step="1"
-            id="myRange"
-          />
-        </div>
         <div className="flex">
           <div className="flex flex-col mr-3 w-1/3">
             <h4>
@@ -109,20 +228,6 @@ export function Ratio() {
           Thinking of any interactions you have had with librarians, what
           percentage of librarians do you think match this description?
         </span>
-        <div className="flex flex-col mb-2">
-          <label className="italic text-sm font-thin text-gray-700">
-            Use the slider to adjust the percentage
-          </label>
-          <input
-            className="w-1/3"
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            onChange={(e) => setPH(+e.target.value)}
-            value={pH}
-          />
-        </div>
 
         <div className="flex flex-row italic items-center text-2xl">
           <span>P</span>
@@ -168,79 +273,6 @@ export function Ratio() {
       <hr />
       <div>
         <h2>Putting it all together</h2>
-        <div className="flex flex-row italic items-center text-2xl justify-center">
-          <span>P</span>
-          <span>(</span>
-          <span style={{ color: librarianColor }}>H</span> <span>|</span>{" "}
-          <span>E</span> <span>)</span>
-          <span>=</span>
-          <span className="flex flex-col text-center">
-            <span className="flex flex-row items-center justify-center">
-              <span>P</span>
-              <span>(</span>
-              <span style={{ color: librarianColor }}>H</span>
-              <span>)</span>
-              <span>P</span>
-              <span>(</span>
-              <span>E</span> <span>|</span>
-              <span style={{ color: librarianColor }}>H</span> <span>)</span>
-            </span>
-            <span className="border-b-2 border-black"></span>
-            <span className="flex flex-row items-center">
-              <span>P</span>
-              <span>(</span>
-              <span style={{ color: librarianColor }}>H</span>
-              <span>)</span>
-              <span>P</span>
-              <span>(</span>
-              <span>E</span> <span>|</span>{" "}
-              <span style={{ color: librarianColor }}>H</span> <span>)</span>
-              <span className="m-2">+</span>
-              <span>P</span>
-              <span>(</span>
-              <span style={{ color: farmerColor }}>¬H</span>
-              <span>)</span>
-              <span>P</span>
-              <span>(</span>
-              <span>E</span> <span>|</span>{" "}
-              <span style={{ color: farmerColor }}>¬H</span> <span>)</span>
-            </span>
-          </span>
-        </div>
-        <div className="flex flex-col justify-center">
-          <svg width={svgSize} height={svgSize} className="mx-auto">
-            {/* <g transform={`translate(${svgSize/2},${svgSize/2})`}> */}
-            <rect
-              x={0}
-              y={0}
-              width={p1 * svgSize}
-              height={svgSize}
-              fill={librarianColorLight}
-            />
-            <rect
-              x={p1 * svgSize}
-              y={0}
-              width={svgSize - p1 * svgSize}
-              height={svgSize}
-              fill={farmerColorLight}
-            />
-            <rect
-              x={0}
-              y={svgSize - svgSize * pH}
-              width={p1 * svgSize}
-              height={svgSize * pH}
-              fill={librarianColor}
-            />
-            <rect
-              x={p1 * svgSize}
-              y={svgSize - svgSize * pNotH}
-              width={svgSize - p1 * svgSize}
-              height={svgSize * pNotH}
-              fill={farmerColor}
-            />
-            {/* </g> */}
-          </svg>
-        </div>
       </div>
     </div>
   );
