@@ -58,7 +58,7 @@ export const Slider2 = () => {
 };
 
 export const Total = () => {
-  const svgSize = 500;
+  const svgSize = 100;
   const $myState = useStore(myState);
 
   const { pH } = $myState;
@@ -68,7 +68,7 @@ export const Total = () => {
 
   return (
     <>
-      <div className="flex flex-row italic items-center text-2xl justify-center">
+      <div className="flex flex-row italic items-center justify-center">
         <span>P</span>
         <span>(</span>
         <span style={{ color: librarianColor }}>H</span> <span>|</span>{" "}
