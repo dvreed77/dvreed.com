@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTractor, faBookReader } from "@fortawesome/free-solid-svg-icons";
 import { atom } from "nanostores";
 import { useStore } from "@nanostores/react";
+import { BlockMath } from "react-katex";
 
-const myState = atom({ a: 0, b: 0, pH: 0 });
+const myState = atom({ a: 0, b: 0, pH: 0.5 });
 
 const librarianColor = "#d97706";
 const librarianColorLight = "#f59e0b";
@@ -40,117 +41,124 @@ export const Slider1 = () => {
 export const Slider2 = () => {
   const $myState = useStore(myState);
   return (
-    <div className="flex flex-col mb-2">
-      <label className="italic text-sm font-thin text-gray-700">
-        Use the slider to adjust the percentage
-      </label>
+    <div className="flex flex-row">
       <input
+        className="flex-auto"
         type="range"
         min="0"
         max="1"
         step="0.1"
-        // onChange={(e) => setPH(+e.target.value)}
         onChange={(e) => myState.set({ ...$myState, pH: +e.target.value })}
         value={$myState.pH}
       />
+      <div className="ml-2">
+        <BlockMath math={`P(H) = ${$myState.pH.toFixed(1)}`} />
+      </div>
     </div>
   );
 };
 
-export const Total = () => {
+export const Slider3 = () => {
+  const $myState = useStore(myState);
+  return (
+    <div className="flex flex-row">
+      <input
+        className="flex-auto"
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+        onChange={(e) => myState.set({ ...$myState, b: +e.target.value })}
+        value={$myState.b}
+      />
+      <div className="ml-2">
+        <BlockMath math={`P(B|A) = ${$myState.b.toFixed(1)}`} />
+      </div>
+    </div>
+  );
+};
+
+export const Slider4 = () => {
+  const $myState = useStore(myState);
+  return (
+    <div className="flex flex-row">
+      <input
+        className="flex-auto"
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+        onChange={(e) => myState.set({ ...$myState, a: +e.target.value })}
+        value={$myState.a}
+      />
+      <div className="ml-2">
+        <BlockMath math={`P(B|\\bar{A}) = ${$myState.a.toFixed(1)}`} />
+      </div>
+    </div>
+  );
+};
+
+export const Square1 = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const [svgSize, setSvgSize] = useState(0);
-  // const svgSize = 100;
   const $myState = useStore(myState);
 
-  const { pH } = $myState;
+  const { pH, a, b } = $myState;
 
   const p1 = 0.5;
   const pNotH = 1 - pH;
 
   useEffect(() => {
     const el = divRef.current;
-    console.log(el?.clientWidth);
     setSvgSize((el?.clientWidth ?? 0) / 3);
   }, []);
 
   return (
     <>
-      <div
-        ref={divRef}
-        className="flex flex-row italic items-center justify-center"
-      >
-        {/* <span>P</span>
-        <span>(</span>
-        <span style={{ color: librarianColor }}>H</span> <span>|</span>{" "}
-        <span>E</span> <span>)</span>
-        <span>=</span>
-        <span className="flex flex-col text-center">
-          <span className="flex flex-row items-center justify-center">
-            <span>P</span>
-            <span>(</span>
-            <span style={{ color: librarianColor }}>H</span>
-            <span>)</span>
-            <span>P</span>
-            <span>(</span>
-            <span>E</span> <span>|</span>
-            <span style={{ color: librarianColor }}>H</span> <span>)</span>
-          </span>
-          <span className="border-b border-black"></span>
-          <span className="flex flex-row items-center">
-            <span>P</span>
-            <span>(</span>
-            <span style={{ color: librarianColor }}>H</span>
-            <span>)</span>
-            <span>P</span>
-            <span>(</span>
-            <span>E</span> <span>|</span>{" "}
-            <span style={{ color: librarianColor }}>H</span> <span>)</span>
-            <span className="m-2">+</span>
-            <span>P</span>
-            <span>(</span>
-            <span style={{ color: farmerColor }}>¬H</span>
-            <span>)</span>
-            <span>P</span>
-            <span>(</span>
-            <span>E</span> <span>|</span>{" "}
-            <span style={{ color: farmerColor }}>¬H</span> <span>)</span>
-          </span>
-        </span> */}
+      <div ref={divRef}>
+        <div className="flex flex-col justify-center">
+          <svg width={svgSize} height={svgSize} className="mx-auto">
+            <rect
+              x={0}
+              y={0}
+              width={pH * svgSize}
+              height={svgSize}
+              fill={librarianColor}
+            />
+            <rect
+              x={pH * svgSize}
+              y={0}
+              width={svgSize - pH * svgSize}
+              height={svgSize}
+              fill={farmerColor}
+            />
+
+            <rect
+              x={0}
+              y={0}
+              width={pH * svgSize}
+              height={b * svgSize}
+              fill={librarianColorLight}
+            />
+            <rect
+              x={pH * svgSize}
+              y={0}
+              width={svgSize - pH * svgSize}
+              height={a * svgSize}
+              fill={farmerColorLight}
+            />
+          </svg>
+        </div>
       </div>
-      <div className="flex flex-col justify-center">
-        <svg width={svgSize} height={svgSize} className="mx-auto">
-          {/* <g transform={`translate(${svgSize/2},${svgSize/2})`}> */}
-          <rect
-            x={0}
-            y={0}
-            width={p1 * svgSize}
-            height={svgSize}
-            fill={librarianColorLight}
-          />
-          <rect
-            x={p1 * svgSize}
-            y={0}
-            width={svgSize - p1 * svgSize}
-            height={svgSize}
-            fill={farmerColorLight}
-          />
-          <rect
-            x={0}
-            y={svgSize - svgSize * pH}
-            width={p1 * svgSize}
-            height={svgSize * pH}
-            fill={librarianColor}
-          />
-          <rect
-            x={p1 * svgSize}
-            y={svgSize - svgSize * pNotH}
-            width={svgSize - p1 * svgSize}
-            height={svgSize * pNotH}
-            fill={farmerColor}
-          />
-          {/* </g> */}
-        </svg>
+
+      <div>
+        <BlockMath math={`P(H) = ${pH}`} />
+        <BlockMath math={`P(E|H) = ${b}`} />
+        <BlockMath math={`P(H)P(E|H) = ${(b * pH).toFixed(2)}`} />
+        <BlockMath math={`P(E|\\bar{H}) = ${a}`} />
+        <BlockMath
+          math={`P(\\bar{H})P(E|\\bar{H}) = ${(a * (1 - pH)).toFixed(2)}`}
+        />
       </div>
     </>
   );
