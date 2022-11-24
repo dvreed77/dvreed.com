@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTractor, faBookReader } from "@fortawesome/free-solid-svg-icons";
 import { atom } from "nanostores";
 import { useStore } from "@nanostores/react";
-import { BlockMath } from "react-katex";
+import pkg from "react-katex";
 
+const { BlockMath } = pkg;
 const myState = atom({ a: 0, b: 0, pH: 0.5 });
 
 const librarianColor = "#d97706";
