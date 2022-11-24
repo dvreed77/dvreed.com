@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTractor, faBookReader } from "@fortawesome/free-solid-svg-icons";
 import { atom } from "nanostores";
@@ -58,7 +58,9 @@ export const Slider2 = () => {
 };
 
 export const Total = () => {
-  const svgSize = 100;
+  const divRef = useRef<HTMLDivElement>(null);
+  const [svgSize, setSvgSize] = useState(0);
+  // const svgSize = 100;
   const $myState = useStore(myState);
 
   const { pH } = $myState;
@@ -66,10 +68,19 @@ export const Total = () => {
   const p1 = 0.5;
   const pNotH = 1 - pH;
 
+  useEffect(() => {
+    const el = divRef.current;
+    console.log(el?.clientWidth);
+    setSvgSize((el?.clientWidth ?? 0) / 3);
+  }, []);
+
   return (
     <>
-      <div className="flex flex-row italic items-center justify-center">
-        <span>P</span>
+      <div
+        ref={divRef}
+        className="flex flex-row italic items-center justify-center"
+      >
+        {/* <span>P</span>
         <span>(</span>
         <span style={{ color: librarianColor }}>H</span> <span>|</span>{" "}
         <span>E</span> <span>)</span>
@@ -85,7 +96,7 @@ export const Total = () => {
             <span>E</span> <span>|</span>
             <span style={{ color: librarianColor }}>H</span> <span>)</span>
           </span>
-          <span className="border-b-2 border-black"></span>
+          <span className="border-b border-black"></span>
           <span className="flex flex-row items-center">
             <span>P</span>
             <span>(</span>
@@ -105,7 +116,7 @@ export const Total = () => {
             <span>E</span> <span>|</span>{" "}
             <span style={{ color: farmerColor }}>¬H</span> <span>)</span>
           </span>
-        </span>
+        </span> */}
       </div>
       <div className="flex flex-col justify-center">
         <svg width={svgSize} height={svgSize} className="mx-auto">
