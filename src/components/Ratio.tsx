@@ -74,49 +74,90 @@ export const SliderB = () => {
 
 export const Square1 = () => {
   const divRef = useRef<HTMLDivElement>(null);
-  const [svgSize, setSvgSize] = useState(0);
+  const [svgWidth, setSvgWidth] = useState(0);
   const $myState = useStore(myState);
 
   const { pH, a, b } = $myState;
 
   useEffect(() => {
     const el = divRef.current;
-    setSvgSize((el?.clientWidth ?? 0) / 3);
+    setSvgWidth(el?.clientWidth ?? 0);
   }, []);
+
+  const squareSize = svgWidth / 3;
+  const svgHeight = squareSize + 40;
+
+  const pA = Math.max(a * squareSize, 10);
+  const pB = Math.max(b * squareSize, 10);
 
   return (
     <>
       <div ref={divRef}>
         <div className="flex flex-col justify-center">
-          <svg width={svgSize} height={svgSize} className="mx-auto">
-            <rect
-              x={0}
-              y={0}
-              width={pH * svgSize}
-              height={svgSize}
-              fill={librarianColor}
-            />
-            <rect
-              x={pH * svgSize}
-              y={0}
-              width={svgSize - pH * svgSize}
-              height={svgSize}
-              fill={farmerColor}
-            />
-            <rect
-              x={0}
-              y={svgSize * (1 - a)}
-              width={pH * svgSize}
-              height={a * svgSize}
-              fill={librarianColorLight}
-            />
-            <rect
-              x={pH * svgSize}
-              y={svgSize * (1 - b)}
-              width={svgSize - pH * svgSize}
-              height={b * svgSize}
-              fill={farmerColorLight}
-            />
+          <svg width={svgWidth} height={svgHeight} className="mx-auto">
+            <g transform={`translate(${svgWidth / 2}, ${svgHeight / 2})`}>
+              <rect
+                x={-squareSize / 2}
+                y={-squareSize / 2}
+                width={pH * squareSize}
+                height={squareSize}
+                fill={librarianColor}
+              />
+              <rect
+                x={pH * squareSize - squareSize / 2}
+                y={-squareSize / 2}
+                width={(1 - pH) * squareSize}
+                height={squareSize}
+                fill={farmerColor}
+              />
+              <rect
+                x={-squareSize / 2}
+                y={squareSize - pA - squareSize / 2}
+                width={pH * squareSize}
+                height={pA}
+                fill={librarianColorLight}
+              />
+              <rect
+                x={pH * squareSize - squareSize / 2}
+                y={squareSize - pB - squareSize / 2}
+                width={(1 - pH) * squareSize}
+                height={pB}
+                fill={farmerColorLight}
+              />
+              <Bracket
+                x1={-squareSize / 2 - 4}
+                x2={-squareSize / 2 - 4}
+                y1={squareSize / 2}
+                y2={squareSize / 2 - pA}
+              />
+
+              <Bracket
+                x1={squareSize / 2 + 4}
+                x2={squareSize / 2 + 4}
+                y1={squareSize / 2 - pB}
+                y2={squareSize / 2}
+              />
+
+              <text
+                x={-squareSize / 2 - 20}
+                y={squareSize / 2 - pA / 2}
+                textAnchor="end"
+                fontSize={15}
+                alignmentBaseline="central"
+              >
+                P(B|A) = {a.toFixed(2)}
+              </text>
+
+              <text
+                x={squareSize / 2 + 20}
+                y={squareSize / 2 - pB / 2}
+                textAnchor="start"
+                fontSize={15}
+                alignmentBaseline="central"
+              >
+                P(B|Ā) = {b.toFixed(2)}
+              </text>
+            </g>
           </svg>
         </div>
       </div>

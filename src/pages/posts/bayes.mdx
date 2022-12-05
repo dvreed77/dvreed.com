@@ -72,7 +72,7 @@ This is the probability of B happening given that A has happened.
 
 ## Visualize
 
-It can help to try to visualize the probability as large square that can be divided into portions, the probability of hypothesis A happening, $P(A)$ and the probability of A not happening, $P(\bar{A})$. These 2 events are mutually exclusive, and so the entire probability space is covered by these 2 events.
+It can help to try to visualize the probability as large square that can be divided into portions, the probability of hypothesis A happening, $P(\textcolor{#d97706}{A})$ and the probability of A not happening, $P(\textcolor{#059669}{\bar{A}})$. These 2 events are mutually exclusive, and so the entire probability space is covered by these 2 events.
 
 <div class="sticky top-0 py-3 bg-white z-50 backdrop-blur backdrop-filter bg-opacity-75">
   <Square1 client:load />
@@ -103,7 +103,7 @@ You might also know that among those patients diagnosed with liver disease, 7% a
 
 <div class="sticky top-0 py-3 bg-white">
 $$
-P(\textcolor{#d97706}{H}|E) = \frac{P(E|\textcolor{#d97706}{H})P(\textcolor{#d97706}{H})}{P(E|\textcolor{#d97706}{H})P(\textcolor{#d97706}{H}) + P(E|\textcolor{#059669}{\neg H})P(\textcolor{#059669}{\neg H})}
+P(\textcolor{#d97706}{A}|B) = \frac{P(\textcolor{#d97706}{A})P(B|\textcolor{#d97706}{A})}{P(\textcolor{#d97706}{A})P(B|\textcolor{#d97706}{A}) + P(\textcolor{#059669}{\bar{A}})P(B|\textcolor{#059669}{\bar{A}})}
 $$
 </div>
 
