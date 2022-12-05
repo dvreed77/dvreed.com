@@ -7,12 +7,12 @@ published: true
 import L from "../../layouts/MarkdownLayoutWSlots.astro";
 
 import {
-  Ratio,
-  Slider1,
-  Slider2,
-  Slider3,
-  Slider4,
+  SliderH,
+  SliderA,
+  SliderB,
   Square1,
+  Square2,
+  Square3,
 } from "../../components/Ratio";
 
 <L>
@@ -48,6 +48,8 @@ $$
 P(B) = P(A)P(B|A) + P(\bar{A})P(B|\bar{A})
 $$
 
+We should already know $P(A)$ and $P(\bar{A})$ is just $1 - P(A)$. We can find $P(B|A)$ and $P(B|\bar{A})$ from the problem as well.
+
 ---
 
 $$
@@ -70,7 +72,7 @@ This is the probability of B happening given that A has happened.
 
 ## Visualize
 
-It can help to try to visualize the probability as large square that can be divided into 2 main parts, the probability of hypothesis A happening, $P(A)$ and the probability of A not happening, $P(\bar{A})$. These 2 events are mutually exclusive, and so the entire probability space is covered by these 2 events.
+It can help to try to visualize the probability as large square that can be divided into portions, the probability of hypothesis A happening, $P(A)$ and the probability of A not happening, $P(\bar{A})$. These 2 events are mutually exclusive, and so the entire probability space is covered by these 2 events.
 
 <div class="sticky top-0 py-3 bg-white z-50 backdrop-blur backdrop-filter bg-opacity-75">
   <Square1 client:load />
@@ -78,15 +80,19 @@ It can help to try to visualize the probability as large square that can be divi
 
 Lets adjust the probability of A happening, $P(A)$, and see how the probability space changes.
 
-<Slider2 client:load />
+<SliderH client:load />
 
 Next, lets adjust the probability of B happening given that A has happened, $P(B|A)$, and see how the probability space changes.
 
-<Slider3 client:load />
+<SliderA client:load />
+
+<Square2 client:load />
 
 Next, lets adjust the probability of B happening given that $P(\bar{A})$ has happened, $P(B|A)$, and see how the probability space changes.
 
-<Slider4 client:load />
+<SliderB client:load />
+
+<Square3 client:load />
 
 Bayes Theorem Example #1
 You might be interested in finding out a patients probability of having liver disease if they are an alcoholic. “Being an alcoholic” is the test (kind of like a litmus test) for liver disease.
@@ -94,8 +100,6 @@ You might be interested in finding out a patients probability of having liver di
 A could mean the event “Patient has liver disease.” Past data tells you that 10% of patients entering your clinic have liver disease. P(A) = 0.10.
 B could mean the litmus test that “Patient is an alcoholic.” Five percent of the clinics patients are alcoholics. P(B) = 0.05.
 You might also know that among those patients diagnosed with liver disease, 7% are alcoholics. This is your B|A: the probability that a patient is alcoholic, given that they have liver disease, is 7%.
-
-<Slider1 client:load />
 
 <div class="sticky top-0 py-3 bg-white">
 $$
