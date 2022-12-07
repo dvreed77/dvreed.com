@@ -19,12 +19,16 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@heroicons/react": "^2.0.13",
+    "@nanostores/react": "^0.4.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "astro": "^1.6.7",
+    "d3": "^7.7.0",
     "date-fns": "^2.29.3",
+    "nanostores": "^0.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-katex": "^3.0.1",
     "react-vega": "^7.6.0",
     "rehype-katex": "^6.0.2",
     "remark-math": "^5.1.1",
@@ -35,6 +39,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.8",
+    "@types/d3": "^7.4.0",
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.7.0"
   }

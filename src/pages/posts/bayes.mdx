@@ -4,19 +4,108 @@ date: "2021-02-14"
 published: true
 ---
 
-import L from '../../layouts/MarkdownLayoutWSlots.astro';
+import L from "../../layouts/MarkdownLayoutWSlots.astro";
 
-
-import { Ratio } from "../../components/Ratio";
-import { SideBar } from "../../components/SideBar";
+import {
+  SliderH,
+  SliderA,
+  SliderB,
+  Square1,
+  Square2,
+  Square3,
+} from "../../components/Ratio";
 
 <L>
-<span class="text-xs text-gray-600 font-thin">
-  This post leverages concepts and explanations from the Bayes Theorem video by
-  3Blue1Brown <a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">here</a>.
-</span>
+I've always found Bayes Theorem hard to understand. Even after semesters of studying probability you can can eventually get the hang of the math involved, but developing a solid understanding of the real world implcations can be challenging.
 
-<SideBar slot="dave-reed"/>
+## Breakdown
+
+The standard formula you often see is:
+
+$$
+P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+$$
+
+If we break up the formula, there are 4 parts, and 3 quantities that we need to find before we can get the answer.
+
+---
+
+$$
+P(A)
+$$
+
+This is the probability of A happening not knowing anything else about the problem.
+
+---
+
+$$
+P(B)
+$$
+
+This is the probability of B happening not knowing anything else about the problem. Sometimes its not possible to know this directly, but we can find it based on this property:
+
+$$
+P(B) = P(A)P(B|A) + P(\bar{A})P(B|\bar{A})
+$$
+
+We should already know $P(A)$ and $P(\bar{A})$ is just $1 - P(A)$. We can find $P(B|A)$ and $P(B|\bar{A})$ from the problem as well.
+
+---
+
+$$
+P(A|B)
+$$
+
+This is what we are trying find and in words, it can be described as:
+
+> What is the probability of seeing A given that we have seen B?
+
+or maybe:
+
+> What is the probability of A happening given what we know about B?
+
+$$
+P(B|A)
+$$
+
+This is the probability of B happening given that A has happened.
+
+## Visualize
+
+It can help to try to visualize the probability as large square that can be divided into portions, the probability of hypothesis A happening, $P(\textcolor{#d97706}{A})$ and the probability of A not happening, $P(\textcolor{#059669}{\bar{A}})$. These 2 events are mutually exclusive, and so the entire probability space is covered by these 2 events.
+
+<div class="sticky top-0 py-3 bg-white z-50 backdrop-blur backdrop-filter bg-opacity-75">
+  <Square1 client:load />
+</div>
+
+Lets adjust the probability of A happening, $P(A)$, and see how the probability space changes.
+
+<SliderH client:load />
+
+Next, lets adjust the probability of B happening given that A has happened, $P(B|A)$, and see how the probability space changes.
+
+<SliderA client:load />
+
+<Square2 client:load />
+
+Next, lets adjust the probability of B happening given that $P(\bar{A})$ has happened, $P(B|A)$, and see how the probability space changes.
+
+<SliderB client:load />
+
+<Square3 client:load />
+
+Bayes Theorem Example #1
+You might be interested in finding out a patients probability of having liver disease if they are an alcoholic. “Being an alcoholic” is the test (kind of like a litmus test) for liver disease.
+
+A could mean the event “Patient has liver disease.” Past data tells you that 10% of patients entering your clinic have liver disease. P(A) = 0.10.
+B could mean the litmus test that “Patient is an alcoholic.” Five percent of the clinics patients are alcoholics. P(B) = 0.05.
+You might also know that among those patients diagnosed with liver disease, 7% are alcoholics. This is your B|A: the probability that a patient is alcoholic, given that they have liver disease, is 7%.
+
+<div class="sticky top-0 py-3 bg-white">
+$$
+P(\textcolor{#d97706}{A}|B) = \frac{P(\textcolor{#d97706}{A})P(B|\textcolor{#d97706}{A})}{P(\textcolor{#d97706}{A})P(B|\textcolor{#d97706}{A}) + P(\textcolor{#059669}{\bar{A}})P(B|\textcolor{#059669}{\bar{A}})}
+$$
+</div>
 
 Suppose you are given this description of Steve:
 
@@ -33,7 +122,5 @@ It is impossible to tackle this problem in a vacuum. You will undoubtedly need t
 Before you saw the description above, what do you know about librarians and farmers? Are there more librarians in the world than farmers?
 
 If there were significantly more librarians in the world than farmers then using that knowledge would improve your chances of being correct.
-
-<Ratio client:load />
 
 </L>
