@@ -222,11 +222,11 @@ export const Square2 = () => {
 
   useEffect(() => {
     const el = divRef.current;
-    setSvgSize((el?.clientWidth ?? 0) / 5);
+    setSvgSize(el?.clientWidth ?? 0);
   }, []);
 
-  const svgWidth = 800;
-  const s = svgSize - 60;
+  const svgWidth = svgSize;
+  const s = svgSize / 2;
   const width = pH * s;
   const height = Math.max(a * s, 5);
 
@@ -296,11 +296,11 @@ export const Square3 = () => {
 
   useEffect(() => {
     const el = divRef.current;
-    setSvgSize((el?.clientWidth ?? 0) / 5);
+    setSvgSize(el?.clientWidth ?? 0);
   }, []);
 
-  const svgWidth = 800;
-  const s = svgSize - 60;
+  const svgWidth = svgSize;
+  const s = svgSize / 2;
 
   // const width = svgSize - pH * svgSize;
   const width = (1 - pH) * s;
