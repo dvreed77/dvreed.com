@@ -81,7 +81,8 @@ export const Square1 = () => {
 
   useEffect(() => {
     const el = divRef.current;
-    setSvgWidth(el?.clientWidth ?? 0);
+    const a = el?.clientWidth ?? 0;
+    setSvgWidth(Math.min(a, 400));
   }, []);
 
   const squareSize = svgWidth / 3;
@@ -213,28 +214,29 @@ const Bracket = ({
     />
   );
 };
+
 export const Square2 = () => {
   const divRef = useRef<HTMLDivElement>(null);
-  const [svgSize, setSvgSize] = useState(0);
+  const [clientWidth, setClientWidth] = useState(0);
   const $myState = useStore(myState);
 
   const { pH, a } = $myState;
 
   useEffect(() => {
     const el = divRef.current;
-    setSvgSize(el?.clientWidth ?? 0);
+    setClientWidth(el?.clientWidth ?? 0);
   }, []);
 
-  const svgWidth = svgSize;
-  const s = svgSize / 2;
+  const maxWidth = Math.min(clientWidth, 300);
+  const s = maxWidth / 2;
   const width = pH * s;
   const height = Math.max(a * s, 5);
 
   return (
     <div ref={divRef}>
       <div className="flex flex-col justify-center">
-        <svg width={svgWidth} height={svgSize} className="mx-auto">
-          <g transform={`translate(${svgWidth / 2}, ${svgSize / 2})`}>
+        <svg width={clientWidth} height={maxWidth} className="mx-auto">
+          <g transform={`translate(${clientWidth / 2}, ${maxWidth / 2})`}>
             <rect
               x={-width / 2}
               y={-height / 2}
@@ -289,29 +291,27 @@ export const Square2 = () => {
 
 export const Square3 = () => {
   const divRef = useRef<HTMLDivElement>(null);
-  const [svgSize, setSvgSize] = useState(0);
+  const [clientWidth, setClientWidth] = useState(0);
   const $myState = useStore(myState);
 
   const { pH, b } = $myState;
 
   useEffect(() => {
     const el = divRef.current;
-    setSvgSize(el?.clientWidth ?? 0);
+    setClientWidth(el?.clientWidth ?? 0);
   }, []);
 
-  const svgWidth = svgSize;
-  const s = svgSize / 2;
+  const maxWidth = Math.min(clientWidth, 300);
+  const s = maxWidth / 2;
 
-  // const width = svgSize - pH * svgSize;
   const width = (1 - pH) * s;
-  // const height = b * svgSize;
   const height = Math.max(b * s, 5);
 
   return (
     <div ref={divRef}>
       <div className="flex flex-col justify-center">
-        <svg width={svgWidth} height={svgSize} className="mx-auto">
-          <g transform={`translate(${svgWidth / 2}, ${svgSize / 2})`}>
+        <svg width={clientWidth} height={maxWidth} className="mx-auto">
+          <g transform={`translate(${clientWidth / 2}, ${maxWidth / 2})`}>
             <rect
               x={-width / 2}
               y={-height / 2}
@@ -358,6 +358,241 @@ export const Square3 = () => {
             >
               P(Ā)P(B|Ā) = {((1 - pH) * b).toFixed(2)}
             </text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+export const Divide = () => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const [clientWidth, setClientWidth] = useState(0);
+  const $myState = useStore(myState);
+
+  const { pH, a, b } = $myState;
+
+  useEffect(() => {
+    const el = divRef.current;
+    setClientWidth(el?.clientWidth ?? 0);
+  }, []);
+
+  const maxWidth = Math.min(clientWidth, 300);
+
+  const rSize = maxWidth / 4;
+
+  const width1 = pH * rSize;
+  const height1 = Math.max(a * rSize, 5);
+
+  const width2 = (1 - pH) * rSize;
+  const height2 = Math.max(b * rSize, 5);
+
+  let total = (a * pH) / (a * pH + b * (1 - pH));
+
+  console.log(a, pH, b, total);
+
+  return (
+    <div ref={divRef}>
+      <div className="flex flex-col justify-center">
+        <svg width={clientWidth} height={maxWidth} className="mx-auto">
+          <g transform={`translate(${clientWidth / 2}, ${maxWidth / 2})`}>
+            <text
+              textAnchor="end"
+              alignmentBaseline="central"
+              fill="gray"
+              x={-maxWidth / 2 - 10}
+            >
+              P(A|B) =
+            </text>
+            <text
+              textAnchor="start"
+              alignmentBaseline="central"
+              fill="gray"
+              x={maxWidth / 2 + 10}
+            >
+              = {total.toPrecision(2)}
+            </text>
+            <g id="top" transform={`translate(0,${-rSize})`}>
+              <rect
+                x={-width1 / 2}
+                y={-height1 / 2}
+                width={width1}
+                height={height1}
+                fill={librarianColorLight}
+              />
+
+              <text
+                textAnchor="middle"
+                alignmentBaseline="central"
+                fill={librarianColorLight}
+                style={{ mixBlendMode: "exclusion" }}
+              >
+                P(A)P(B|A)
+              </text>
+            </g>
+
+            <line
+              stroke="gray"
+              x1={-maxWidth / 2}
+              x2={maxWidth / 2}
+              y1={0}
+              y2={0}
+            />
+
+            <g id="bottom-left" transform={`translate(${-rSize},${rSize})`}>
+              <rect
+                x={-width1 / 2}
+                y={-height1 / 2}
+                width={width1}
+                height={height1}
+                fill={librarianColorLight}
+              />
+              <text
+                textAnchor="middle"
+                alignmentBaseline="central"
+                fill={librarianColorLight}
+                style={{ mixBlendMode: "exclusion" }}
+              >
+                P(A)P(B|A)
+              </text>
+            </g>
+            <text x={0} y={rSize} fontSize={30} fill="gray">
+              +
+            </text>
+            <g id="bottom-right" transform={`translate(${rSize},${rSize})`}>
+              <rect
+                x={-width2 / 2}
+                y={-height2 / 2}
+                width={width2}
+                height={height2}
+                fill={farmerColorLight}
+              />
+              <text
+                textAnchor="middle"
+                alignmentBaseline="central"
+                fill={farmerColorLight}
+                style={{ mixBlendMode: "exclusion" }}
+              >
+                P(Ā)P(B|Ā)
+              </text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+export const Divide2 = () => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const [clientWidth, setClientWidth] = useState(0);
+
+  let pH = 0.01;
+  let a = 0.9;
+  let b = 0.096;
+
+  useEffect(() => {
+    const el = divRef.current;
+    setClientWidth(el?.clientWidth ?? 0);
+  }, []);
+
+  const maxWidth = Math.min(clientWidth, 300);
+
+  const rSize = maxWidth / 4;
+
+  const width1 = pH * rSize;
+  const height1 = Math.max(a * rSize, 5);
+
+  const width2 = (1 - pH) * rSize;
+  const height2 = Math.max(b * rSize, 5);
+
+  let total = (a * pH) / (a * pH + b * (1 - pH));
+
+  return (
+    <div ref={divRef}>
+      <div className="flex flex-col justify-center">
+        <svg width={clientWidth} height={maxWidth} className="mx-auto">
+          <g transform={`translate(${clientWidth / 2}, ${maxWidth / 2})`}>
+            <text
+              textAnchor="end"
+              alignmentBaseline="central"
+              fill="gray"
+              x={-maxWidth / 2 - 10}
+            >
+              P(A|B) =
+            </text>
+            <text
+              textAnchor="start"
+              alignmentBaseline="central"
+              fill="gray"
+              x={maxWidth / 2 + 10}
+            >
+              = {total.toPrecision(2)}
+            </text>
+            <g id="top" transform={`translate(0,${-rSize})`}>
+              <rect
+                x={-width1 / 2}
+                y={-height1 / 2}
+                width={width1}
+                height={height1}
+                fill={librarianColorLight}
+              />
+
+              <text
+                textAnchor="middle"
+                alignmentBaseline="central"
+                fill={librarianColorLight}
+                style={{ mixBlendMode: "exclusion" }}
+              >
+                P(A)P(B|A)
+              </text>
+            </g>
+
+            <line
+              stroke="gray"
+              x1={-maxWidth / 2}
+              x2={maxWidth / 2}
+              y1={0}
+              y2={0}
+            />
+
+            <g id="bottom-left" transform={`translate(${-rSize},${rSize})`}>
+              <rect
+                x={-width1 / 2}
+                y={-height1 / 2}
+                width={width1}
+                height={height1}
+                fill={librarianColorLight}
+              />
+              <text
+                textAnchor="middle"
+                alignmentBaseline="central"
+                fill={librarianColorLight}
+                style={{ mixBlendMode: "exclusion" }}
+              >
+                P(A)P(B|A)
+              </text>
+            </g>
+            <text x={0} y={rSize} fontSize={30} fill="gray">
+              +
+            </text>
+            <g id="bottom-right" transform={`translate(${rSize},${rSize})`}>
+              <rect
+                x={-width2 / 2}
+                y={-height2 / 2}
+                width={width2}
+                height={height2}
+                fill={farmerColorLight}
+              />
+              <text
+                textAnchor="middle"
+                alignmentBaseline="central"
+                fill={farmerColorLight}
+                style={{ mixBlendMode: "exclusion" }}
+              >
+                P(Ā)P(B|Ā)
+              </text>
+            </g>
           </g>
         </svg>
       </div>
