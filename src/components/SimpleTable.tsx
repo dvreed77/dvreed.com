@@ -28,16 +28,16 @@ export const SimpleTable = () => {
           <tr>
             <th></th>
             <th>City</th>
-            <th>State</th>
             <th>Count</th>
           </tr>
         </thead>
         <tbody>
           {data.map(({ city, state, count }, i) => (
-            <tr>
-              <th>{i}</th>
-              <td>{city}</td>
-              <td>{state}</td>
+            <tr key={i}>
+              <th>{i + 1}</th>
+              <td>
+                {city}, {state}
+              </td>
               <td>{count}</td>
             </tr>
           ))}
