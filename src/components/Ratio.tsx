@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { atom } from "nanostores";
 import { useStore } from "@nanostores/react";
-import * as katex from "react-katex";
 import { path } from "d3";
-const { BlockMath } = katex;
 
 const myState = atom({ a: 0, b: 0, pH: 0.5 });
 
@@ -25,9 +23,6 @@ export const SliderH = () => {
         onChange={(e) => myState.set({ ...$myState, pH: +e.target.value })}
         value={$myState.pH}
       />
-      {/* <div className="ml-2">
-        <BlockMath math={`P(H) = ${$myState.pH.toFixed(1)}`} />
-      </div> */}
     </div>
   );
 };
@@ -45,9 +40,6 @@ export const SliderA = () => {
         onChange={(e) => myState.set({ ...$myState, a: +e.target.value })}
         value={$myState.a}
       />
-      {/* <div className="ml-2">
-        <BlockMath math={`P(B|A) = ${$myState.a.toFixed(1)}`} />
-      </div> */}
     </div>
   );
 };
@@ -65,9 +57,6 @@ export const SliderB = () => {
         onChange={(e) => myState.set({ ...$myState, b: +e.target.value })}
         value={$myState.b}
       />
-      {/* <div className="ml-2">
-        <BlockMath math={`P(B|\\bar{A}) = ${$myState.b.toFixed(1)}`} />
-      </div> */}
     </div>
   );
 };
@@ -388,8 +377,6 @@ export const Divide = () => {
   const height2 = Math.max(b * rSize, 5);
 
   let total = (a * pH) / (a * pH + b * (1 - pH));
-
-  console.log(a, pH, b, total);
 
   return (
     <div ref={divRef}>

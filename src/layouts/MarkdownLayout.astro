@@ -5,11 +5,11 @@ const { frontmatter } = Astro.props;
 
 <BaseLayout title={frontmatter.title}>
   <h1
-    class="lg:text-left text-center text-4xl font-bold border-b border-gray-300"
+    class="lg:text-left text-center text-4xl font-bold border-b border-gray-300 py-8"
   >
     {frontmatter.title}
   </h1>
-  <div class="prose lg:prose-xl">
+  <div class="prose lg:prose-xl mt-8 mb-64">
     <slot />
   </div>
 </BaseLayout>

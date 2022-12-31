@@ -25,7 +25,6 @@ export function DistributionViewer({ f = "f1", className }: IProps) {
 
   const f2 = funcs[f];
 
-  // console.log(pdfData);
   React.useEffect(() => {
     // if (!f) return;
     const rGen = new random2(f2);
