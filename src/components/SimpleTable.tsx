@@ -67,13 +67,18 @@ export const MapViewer = () => {
         },
         layer: [
           {
-            mark: "circle",
+            mark: { type: "circle", tooltip: true },
+
             encoding: {
               color: { value: "red" },
               size: {
                 field: "count",
                 type: "quantitative",
               },
+              tooltip: [
+                { field: "city", type: "nominal", title: "City" },
+                { field: "count", type: "quantitative", title: "# Breweries" },
+              ],
             },
           },
           {
