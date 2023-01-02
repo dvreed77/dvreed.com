@@ -5,8 +5,9 @@ published: true
 layout: ../../layouts/MarkdownLayout.astro
 ---
 
-import { SimpleTable } from "../../components/SimpleTable";
+import { SimpleTable, MapViewer } from "../../components/SimpleTable";
 
+<MapViewer client:load />
 <SimpleTable client:load />
 
 ---

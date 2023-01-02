@@ -1,26 +1,9 @@
-export const SimpleTable = () => {
-  const data = [
-    { city: "Portland", state: "Oregon", count: "80" },
-    { city: "Denver", state: "Colorado", count: "77" },
-    { city: "San Diego", state: "California", count: "74" },
-    { city: "Chicago", state: "Illinois", count: "69" },
-    { city: "Seattle", state: "Washington", count: "67" },
-    { city: "Austin", state: "Texas", count: "43" },
-    { city: "Albuquerque", state: "New Mexico", count: "40" },
-    { city: "San Francisco", state: "California", count: "37" },
-    { city: "Minneapolis", state: "Minnesota", count: "36" },
-    { city: "Indianapolis", state: "Indiana", count: "35" },
-    { city: "Asheville", state: "North Carolina", count: "30" },
-    { city: "Los Angeles", state: "California", count: "29" },
-    { city: "Milwaukee", state: "Wisconsin", count: "28" },
-    { city: "Brooklyn", state: "New York", count: "26" },
-    { city: "Saint Louis", state: "Missouri", count: "26" },
-    { city: "Cincinnati", state: "Ohio", count: "26" },
-    { city: "Nashville", state: "Tennessee", count: "25" },
-    { city: "Columbus", state: "Ohio", count: "25" },
-    { city: "Colorado Springs", state: "Colorado", count: "25" },
-  ];
+import data from "../data/top_breweries.json";
+import states from "../data/us-10m.json";
+import capitals from "../data/us-state-capitals.json";
+import { VegaLite, VisualizationSpec } from "react-vega";
 
+export const SimpleTable = () => {
   return (
     <div className="overflow-x-auto not-prose">
       <table className="table w-full">
@@ -44,5 +27,78 @@ export const SimpleTable = () => {
         </tbody>
       </table>
     </div>
+  );
+};
+
+export const MapViewer = () => {
+  const spec: VisualizationSpec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: 500,
+    projection: {
+      type: "albersUsa",
+    },
+    layer: [
+      {
+        data: {
+          url: "https://raw.githubusercontent.com/vega/vega/main/docs/data/us-10m.json",
+          format: {
+            type: "topojson",
+            feature: "states",
+          },
+        },
+        mark: {
+          type: "geoshape",
+          fill: "lightgray",
+          stroke: "white",
+        },
+      },
+      {
+        data: { name: "breweries" },
+        encoding: {
+          longitude: {
+            field: "lon",
+            type: "quantitative",
+          },
+          latitude: {
+            field: "lat",
+            type: "quantitative",
+          },
+        },
+        layer: [
+          {
+            mark: "circle",
+            encoding: {
+              color: { value: "red" },
+              size: {
+                field: "count",
+                type: "quantitative",
+              },
+            },
+          },
+          {
+            mark: {
+              type: "text",
+              dy: -10,
+            },
+            encoding: {
+              text: { field: "city", type: "nominal" },
+            },
+          },
+        ],
+      },
+    ],
+  };
+
+  return (
+    <VegaLite
+      spec={spec}
+      data={{
+        // states,
+        breweries: data,
+      }}
+      className="w-full"
+      actions={false}
+    />
   );
 };
