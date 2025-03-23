@@ -27,56 +27,37 @@ export const InteractiveBeta: React.FC<InteractiveBetaProps> = ({
   };
 
   return (
-    <div className="interactive-beta">
-      <div className="controls" style={{ marginBottom: '1rem' }}>
-        <div style={{ marginBottom: '1rem' }}>
-          <div style={{ marginBottom: '0.5rem' }}>
+    <div className="interactive-beta w-full max-w-full overflow-x-hidden">
+      <div className="controls mb-4 flex flex-col items-start gap-4">
+        <div className="w-full">
+          <div className="mb-2 text-lg font-medium">
             α: {alpha.toFixed(1)} | β: {beta.toFixed(1)}
           </div>
-          <button
-            onClick={handleSuccess}
-            style={{
-              padding: '0.5rem 1rem',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              marginRight: '1rem'
-            }}
-          >
-            Success (+α)
-          </button>
-          <button
-            onClick={handleFailure}
-            style={{
-              padding: '0.5rem 1rem',
-              backgroundColor: '#f44336',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            Failure (+β)
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={handleSuccess}
+              className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            >
+              Success (+α)
+            </button>
+            <button
+              onClick={handleFailure}
+              className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            >
+              Failure (+β)
+            </button>
+          </div>
         </div>
         <button 
           onClick={handleReset}
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#4C78A8',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            marginTop: '0.5rem'
-          }}
+          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Reset
         </button>
       </div>
-      <BetaDistribution alpha={alpha} beta={beta} />
+      <div className="w-full overflow-x-auto">
+        <BetaDistribution alpha={alpha} beta={beta} />
+      </div>
     </div>
   );
 };

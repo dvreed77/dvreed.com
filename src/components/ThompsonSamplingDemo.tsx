@@ -74,8 +74,12 @@ export const ThompsonSamplingDemo: React.FC = () => {
 
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-    width: 600,
+    width: "container",
     height: 400,
+    autosize: {
+      type: "fit",
+      contains: "padding"
+    },
     data: {
       name: 'values',
       values: [
@@ -168,29 +172,23 @@ export const ThompsonSamplingDemo: React.FC = () => {
   );
 
   return (
-    <div className="thompson-sampling-demo">
-      <div style={{ marginBottom: '1rem' }}>
+    <div className="thompson-sampling-demo w-full max-w-full overflow-x-hidden">
+      <div className="mb-4 flex flex-col gap-4">
         <button
           onClick={sampleAll}
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#4C78A8',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            marginBottom: '1rem'
-          }}
+          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Sample All Hours
         </button>
         {bestHour.lastSample !== null && (
-          <div style={{ marginTop: '0.5rem' }}>
+          <div className="text-lg font-medium">
             Best hour to send: {bestHour.id}:00 (sampled value: {bestHour.lastSample.toFixed(3)})
           </div>
         )}
       </div>
-      <Vega spec={spec} />
+      <div className="w-full overflow-x-auto">
+        <Vega spec={spec} />
+      </div>
     </div>
   );
 };
