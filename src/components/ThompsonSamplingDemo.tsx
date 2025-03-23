@@ -108,11 +108,8 @@ export const ThompsonSamplingDemo: React.FC = () => {
     },
     layer: [
       {
-        mark: { 
-          type: 'line',
-          strokeWidth: 2
-        },
-        transform: [{ calculate: "datum.isSelected ? 'Selected' : 'Not Selected'", as: 'status' }],
+        mark: { type: 'line', strokeWidth: 2 },
+        transform: [{ filter: "!datum.isSelected" }],
         encoding: {
           x: {
             field: 'x',
@@ -139,10 +136,17 @@ export const ThompsonSamplingDemo: React.FC = () => {
               labelFontSize: 12
             },
           },
-          opacity: {
-            condition: { test: "datum.isSelected", value: 1 },
-            value: 0.6
-          }
+          opacity: { value: 0.2 }
+        }
+      },
+      {
+        mark: { type: 'line', strokeWidth: 4 },
+        transform: [{ filter: "datum.isSelected" }],
+        encoding: {
+          x: { field: 'x', type: 'quantitative' },
+          y: { field: 'density', type: 'quantitative' },
+          color: { field: 'hour', type: 'nominal' },
+          opacity: { value: 1 }
         }
       },
       {

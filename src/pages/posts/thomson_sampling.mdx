@@ -1,5 +1,5 @@
 ---
-title: Thomson Sampling
+title: How Thomson Sampling can Optimize Email Send Times
 date: "2025-03-23"
 published: false
 layout: ../../layouts/MarkdownLayout.astro
@@ -8,13 +8,10 @@ layout: ../../layouts/MarkdownLayout.astro
 import { InteractiveBeta } from '../../components/InteractiveBeta';
 import { ThompsonSamplingDemo } from '../../components/ThompsonSamplingDemo';
 
-# From 8 AM to Optimal Engagement: How I Used a Multi-Armed Bandit to Optimize Email Send Times
-
-For years, I've been sending emails at 8 AM—assuming early birds catch the worm. But what if that wasn't the best time for everyone? When I dug into my email engagement metrics, I realized that a one-size-fits-all schedule might be leaving valuable engagement on the table.
 
 ## The Challenge: Timing is Everything
 
-Imagine your inbox as a busy café. At 8 AM, everyone is grabbing a coffee, but perhaps not everyone is ready to sit down and engage. What if some customers prefer a mid-morning buzz or even an early afternoon reminder? Instead of guessing the best time, I wanted a system that could learn from real-world feedback.
+Imagine you're trying to reach a customer at the right time. Perhaps not everyone is ready to engage at 8 AM, when they're grabbing a coffee. What if some customers prefer a mid-morning buzz or even an early afternoon reminder? Instead of guessing the best time, we can use Thomson Sampling to find the optimal time.
 
 ## Enter the Multi-Armed Bandit
 
@@ -33,7 +30,7 @@ The goal is to strike a balance: learn which hour is best while still capitalizi
 
 ## Thompson Sampling: A Smart Way to Choose
 
-I implemented a popular bandit strategy called Thompson Sampling. Here's how it works:
+Thomson Sampling is a strategy that balances exploration and exploitation by using a Beta distribution to model the uncertainty of the success rate for each hour.
 
 ### 1. Starting with Complete Uncertainty
 
@@ -86,20 +83,6 @@ Notice how:
 
 Try clicking "Sample All Hours" multiple times to see how the selection varies due to the random sampling, but tends to favor the better-performing hours.
 
-Try adjusting the α and β values in the visualizations above to see how different patterns of successes and failures shape our beliefs about each time slot's performance.
+## Conclusion
 
-## The Results
-
-After implementing Thompson Sampling:
-1. Our overall email open rates improved by 15%
-2. We discovered that our audience had three distinct peak engagement times:
-   - Early morning (7-8 AM)
-   - Just after lunch (1-2 PM)
-   - Early evening (6-7 PM)
-3. The algorithm automatically adapted to these patterns, sending more emails during these optimal windows
-
-The best part? The system continues to learn and adapt. If our audience's habits change over time, the algorithm will naturally shift to favor the new optimal times.
-
-A Glimpse of the Code in TypeScript
-
-Below is a simplified version of how I implemented Thompson Sampling in my Astro project:
+Thomson Sampling is a powerful strategy for finding the optimal time to send emails. By using a Beta distribution to model the uncertainty of the success rate for each hour, we can balance exploration and exploitation to find the best time to send emails.
