@@ -1,0 +1,88 @@
+---
+title: How Thomson Sampling can Optimize Email Send Times
+date: "2025-03-23"
+published: false
+layout: ../../layouts/MarkdownLayout.astro
+---
+
+import { InteractiveBeta } from '../../components/InteractiveBeta';
+import { ThompsonSamplingDemo } from '../../components/ThompsonSamplingDemo';
+
+
+## The Challenge: Timing is Everything
+
+Imagine you're trying to reach a customer at the right time. Perhaps not everyone is ready to engage at 8 AM, when they're grabbing a coffee. What if some customers prefer a mid-morning buzz or even an early afternoon reminder? Instead of guessing the best time, we can use Thomson Sampling to find the optimal time.
+
+## Enter the Multi-Armed Bandit
+
+A multi-armed bandit is like a row of slot machines—each machine (or "arm") has its own, unknown payout rate. In my case, each hour of the day is an arm:
+- 6 AM might be great for some,
+- 8 AM was my default,
+- 10 AM might be even better, and so on.
+
+Every time I send an email, I'm essentially "pulling an arm." The reward? Whether a customer opens or clicks the email.
+
+## The Exploration vs. Exploitation Dilemma
+- Exploitation means sending emails at the time you currently believe works best.
+- Exploration means trying different hours to gather more data.
+
+The goal is to strike a balance: learn which hour is best while still capitalizing on the best-known option.
+
+## Thompson Sampling: A Smart Way to Choose
+
+Thomson Sampling is a strategy that balances exploration and exploitation by using a Beta distribution to model the uncertainty of the success rate for each hour.
+
+### 1. Starting with Complete Uncertainty
+
+For each hour, we start with a Beta distribution with parameters α=1 and β=1. This represents complete uncertainty - it's saying we believe any success rate between 0 and 1 is equally likely:
+
+<InteractiveBeta initialAlpha={1} initialBeta={1} client:load />
+
+### 2. Learning from Data
+
+As we send emails and observe the results, we update our beliefs:
+- When someone opens an email (success), we add 1 to α
+- When someone doesn't open (failure), we add 1 to β
+
+For example, let's say we sent 5 emails at 8 AM:
+- 3 people opened them (successes)
+- 2 didn't (failures)
+
+Our updated belief about 8 AM's success rate would look like this (α=4, β=3):
+
+<InteractiveBeta initialAlpha={4} initialBeta={3} client:load />
+
+Notice how the distribution has:
+- Shifted to the right (because we saw more successes than failures)
+- Become narrower (because we have more data and thus more certainty)
+
+### 3. Making Decisions
+
+Each time we need to send an email:
+1. For each hour, we take a random sample from its Beta distribution
+2. We choose the hour with the highest sampled value
+
+This naturally balances exploration and exploitation:
+- Hours with higher average success rates are chosen more often
+- Hours with wider distributions (more uncertainty) still have a chance to be picked
+- As we gather more data, the distributions narrow, and we focus more on the best performers
+
+Here's a live demonstration with 5 different hours after 10 experiments. Click "Sample All Hours" to see how Thompson Sampling makes its decision:
+
+<ThompsonSamplingDemo client:load />
+
+In this visualization:
+- Each line represents the Beta distribution for a different hour
+- The dots show the random samples drawn from each distribution
+- The highest sampled value (highlighted) determines which hour to choose next
+
+Notice how:
+- 3 PM (15:00) has the highest success rate (peaked furthest right)
+- 6 PM (18:00) has the lowest success rate (peaked furthest left)
+- Hours with wider distributions have more uncertainty and thus more chance for exploration
+
+Try clicking "Sample All Hours" multiple times to see how the selection varies due to the random sampling, but tends to favor the better-performing hours.
+
+## Conclusion
+
+Thomson Sampling is a powerful strategy for finding the optimal time to send emails. By using a Beta distribution to model the uncertainty of the success rate for each hour, we can balance exploration and exploitation to find the best time to send emails.
