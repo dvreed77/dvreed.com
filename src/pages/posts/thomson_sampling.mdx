@@ -1,0 +1,53 @@
+---
+title: Thomson Sampling
+date: "2025-03-23"
+published: false
+layout: ../../layouts/MarkdownLayout.astro
+---
+import { InteractiveBeta } from '../../components/InteractiveBeta';
+
+# From 8 AM to Optimal Engagement: How I Used a Multi-Armed Bandit to Optimize Email Send Times
+
+For years, I’ve been sending emails at 8 AM—assuming early birds catch the worm. But what if that wasn’t the best time for everyone? When I dug into my email engagement metrics, I realized that a one-size-fits-all schedule might be leaving valuable engagement on the table.
+
+The Challenge: Timing is Everything
+
+Imagine your inbox as a busy café. At 8 AM, everyone is grabbing a coffee, but perhaps not everyone is ready to sit down and engage. What if some customers prefer a mid-morning buzz or even an early afternoon reminder? Instead of guessing the best time, I wanted a system that could learn from real-world feedback.
+
+Enter the Multi-Armed Bandit
+
+A multi-armed bandit is like a row of slot machines—each machine (or “arm”) has its own, unknown payout rate. In my case, each hour of the day is an arm:
+	•	6 AM might be great for some,
+	•	8 AM was my default,
+	•	10 AM might be even better, and so on.
+
+Every time I send an email, I’m essentially “pulling an arm.” The reward? Whether a customer opens or clicks the email.
+
+The Exploration vs. Exploitation Dilemma
+	•	Exploitation means sending emails at the time you currently believe works best.
+	•	Exploration means trying different hours to gather more data.
+
+The goal is to strike a balance: learn which hour is best while still capitalizing on the best-known option.
+
+Thompson Sampling: A Smart Way to Choose
+
+I implemented a popular bandit strategy called Thompson Sampling. Here’s the basic idea:
+	1.	Model Each Hour:
+I started by assigning each hour a Beta distribution (a natural choice when dealing with binary outcomes like “opened” or “not opened”). Initially, each hour had a Beta(1, 1) prior, representing complete uncertainty.
+
+Try adjusting the parameters below to see how the Beta distribution changes shape. This is exactly how our belief about each hour's success probability evolves as we observe more data:
+
+<InteractiveBeta client:load />
+
+	2.	Sampling and Selection:
+For each email campaign:
+	•	I sampled a probability of success (i.e., open rate) for every hour.
+	•	I then picked the hour with the highest sampled value to send the email.
+	3.	Updating Beliefs:
+After sending, I observed whether the email was opened. If it was, I increased the “success” count in that hour’s Beta distribution; if not, I increased the “failure” count.
+
+Over time, the algorithm started favoring the hours with higher open rates—but it never completely stopped exploring other times, in case customer habits shifted.
+
+A Glimpse of the Code in TypeScript
+
+Below is a simplified version of how I implemented Thompson Sampling in my Astro project:
