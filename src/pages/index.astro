@@ -8,6 +8,7 @@ const allProjects = (await getCollection('projects'))
   .sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime());
 
 const allPosts = (await getCollection('posts'))
+  .filter(post => post.data.published !== false)
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 

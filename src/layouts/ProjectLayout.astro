@@ -2,6 +2,9 @@
 import BaseLayout from "./BaseLayout.astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from 'astro:content';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   frontmatter: CollectionEntry<'projects'>['data'];
@@ -10,7 +13,8 @@ interface Props {
 const { frontmatter } = Astro.props;
 ---
 
-<BaseLayout>
+<BaseLayout title={frontmatter.title}>
+  <main class="prose dark:prose-invert max-w-none">
   <h1
     class="lg:text-left text-center text-4xl font-bold border-b border-gray-300"
   >
@@ -26,14 +30,9 @@ const { frontmatter } = Astro.props;
     class="object-cover w-full"
     sizes="100vw"
   />
-
-  <div class="flex lg:flex-row-reverse flex-col my-5">
-    <aside class="lg:w-2/5">
-      <div class="mb-3">
-        <h2 class="text-gray-800 font-bold border-b border-gray-300">
-          Created
-        </h2>
-        <div class="font-thin text-sm">
+  </main>
+  <div class="flex justify-between items-center my-5">
+      <div class="text-gray-600 text-sm">
           {
             frontmatter.startDate === frontmatter.endDate
               ? new Date(frontmatter.startDate).toLocaleDateString('en-US', {
@@ -51,38 +50,37 @@ const { frontmatter } = Astro.props;
                   day: 'numeric'
                 })}`
           }
-        </div>
       </div>
 
-      <div class="mb-3">
-        <h2 class="text-gray-800 font-bold border-b border-gray-300">Code</h2>
-        <div class="font-thin text-sm">
-          <a href={frontmatter.repoURL}>{frontmatter.repoURL}</a>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <h2 class="text-gray-800 font-bold border-b border-gray-300">
-          Project
-        </h2>
-        <div class="font-thin text-sm">
-          <a href={frontmatter.projectURL}>
-            {frontmatter.projectURL}
+      <div class="flex gap-3 items-center">
+        {frontmatter.repoURL && (
+          <a 
+            href={frontmatter.repoURL} 
+            class="text-gray-600 hover:text-gray-900 transition-colors"
+            title="View Code on GitHub"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faGithub} size="lg" />
           </a>
-        </div>
+        )}
+        {frontmatter.projectURL && (
+          <a 
+            href={frontmatter.projectURL} 
+            class="text-gray-600 hover:text-gray-900 transition-colors"
+            title="View Live Project"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faExternalLinkAlt} size="lg" />
+          </a>
+        )}
       </div>
-    </aside>
-    <div class="lg:w-3/5 lg:mr-5">
-      <h1
-        class="lg:text-left text-center text-4xl font-bold border-b border-gray-300"
-      >
-        {frontmatter.title}
-      </h1>
-      <div class="mdx">
-        <div class="prose lg:prose-xl">
-          <slot />
-        </div>
-      </div>
+  </div>
+
+  <div class="mdx">
+    <div class="prose lg:prose-xl max-w-none">
+      <slot />
     </div>
   </div>
 </BaseLayout>
