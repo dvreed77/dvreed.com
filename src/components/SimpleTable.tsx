@@ -67,10 +67,31 @@ export const MapViewer = () => {
         },
         layer: [
           {
-            mark: { type: "circle", tooltip: true },
+            mark: { 
+              type: "circle", 
+              tooltip: true,
+              strokeWidth: 1,
+              opacity: 1
+            },
 
             encoding: {
-              color: { value: "red" },
+              stroke: {
+                field: "count",
+                type: "quantitative",
+                scale: {
+                  scheme: "oranges"
+                }
+              },
+              color: {
+                field: "count",
+                type: "quantitative",
+                scale: {
+                  scheme: "oranges"
+                },
+                legend: {
+                  title: "Number of Breweries"
+                }
+              },
               size: {
                 field: "count",
                 type: "quantitative",
