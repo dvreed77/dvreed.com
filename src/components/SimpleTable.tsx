@@ -34,9 +34,17 @@ export const MapViewer = () => {
   const spec: TopLevelSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     width: "container",
-    height: 500,
+    height: 400,
+    autosize: {
+      type: "fit",
+      contains: "padding"
+    },
+    config: {
+      legend: { disable: true },
+      view: { stroke: null }
+    },
     projection: {
-      type: "albersUsa",
+      type: "albersUsa"
     },
     layer: [
       {
@@ -71,17 +79,11 @@ export const MapViewer = () => {
               type: "circle", 
               tooltip: true,
               strokeWidth: 1,
-              opacity: 1
+              opacity: 1,
+              size: 150
             },
 
             encoding: {
-              stroke: {
-                field: "count",
-                type: "quantitative",
-                scale: {
-                  scheme: "oranges"
-                }
-              },
               color: {
                 field: "count",
                 type: "quantitative",
@@ -89,7 +91,11 @@ export const MapViewer = () => {
                   scheme: "oranges"
                 },
                 legend: {
-                  title: "Number of Breweries"
+                  orient: "bottom",
+                  direction: "horizontal",
+                  tickCount: 2,
+                  title: null,
+                  labelExpr: "datum.value + ' breweries'"
                 }
               },
               size: {
@@ -109,6 +115,14 @@ export const MapViewer = () => {
             },
             encoding: {
               text: { field: "city", type: "nominal" },
+              size: { value: 10 },
+              opacity: {
+                condition: {
+                  test: "width < 500",
+                  value: 0
+                },
+                value: 1
+              },
             },
           },
         ],
@@ -117,7 +131,7 @@ export const MapViewer = () => {
   };
 
   return (
-    <div className="w-full h-[500px] overflow-hidden rounded-lg border border-gray-200">
+    <div className="w-full max-h-[500px] overflow-hidden rounded-lg border border-gray-200">
       <VegaLite
         spec={spec}
         data={{
