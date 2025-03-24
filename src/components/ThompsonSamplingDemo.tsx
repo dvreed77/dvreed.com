@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Vega, VisualizationSpec } from 'react-vega';
+import { type VisualizationSpec } from 'react-vega';
 import { ResponsiveVegaWrapper } from './ResponsiveVegaWrapper';
 
 interface Hour {
@@ -166,6 +166,10 @@ export const ThompsonSamplingDemo: React.FC = () => {
       }
     ],
     title: 'Thompson Sampling Across Different Hours',
+    config: {
+      background: "",
+      view: { fill: "rgba(255, 255, 255, 0.5)" }
+    },
 
   };
 

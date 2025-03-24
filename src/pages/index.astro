@@ -1,15 +1,20 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
 import BlogCard from "../components/BlogCard.astro";
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const allProjects = await Astro.glob("../pages/projects/*.{md,mdx}");
-const allPosts = await Astro.glob("../pages/posts/*.{md,mdx}");
+const allProjects = (await getCollection('projects'))
+  .sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime());
+
+const allPosts = (await getCollection('posts'))
+  .filter(post => post.data.published !== false)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
-<Layout title="Dave Reed">
-  <main class="max-w-2xl mx-auto">
-    <h1 class="text-gray-700">
+<BaseLayout title="Dave Reed">
+  <main>
+    <h1>
       Hi, 👋 I'm <span
         class="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent"
         >Dave</span
@@ -17,38 +22,44 @@ const allPosts = await Astro.glob("../pages/posts/*.{md,mdx}");
     </h1>
 
     <div class="mb-10">
-      <h1 class="text-3xl border-b border-gray-300 mb-5 pb-1 text-gray-700">
-        Projects
-      </h1>
-      <ul role="list" class="link-card-grid">
+      <div class="mb-5">
+        <h1 class="text-3xl border-b border-gray-300 pb-2 pt-4">
+          Projects
+        </h1>
+      </div>
+      <ul role="list" class="grid gap-4 grid-cols-1 md:grid-cols-2">
         {
           allProjects.map((post) => (
             <Card
-              href={post.url}
-              title={post.frontmatter.title}
-              body={post.frontmatter.blurb}
+              href={`/projects/${post.slug}`}
+              title={post.data.title}
+              body={post.data.blurb}
             />
           ))
         }
       </ul>
     </div>
 
-    <h1 class="text-3xl border-b border-gray-300 mb-5 pb-1 text-gray-700">
-      Explorations
-    </h1>
-    <ul role="list" class="link-card-grid">
-      {
-        allPosts.map((post) => (
+    <div class="mb-10">
+      <div class="mb-5">
+        <h1 class="text-3xl border-b border-gray-300 pb-2 pt-4">
+          Explorations
+        </h1>
+      </div>
+      <ul role="list" class="grid gap-4 grid-cols-1 md:grid-cols-2">
+        {
+          allPosts.map((post) => (
           <BlogCard
-            href={post.url}
-            title={post.frontmatter.title}
-            date={post.frontmatter.date}
+            href={`/posts/${post.slug}`}
+            title={post.data.title}
+            date={post.data.date}
           />
         ))
       }
     </ul>
+    </div>
   </main>
-</Layout>
+</BaseLayout>
 
 <style>
   h1 {

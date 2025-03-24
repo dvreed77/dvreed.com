@@ -2,7 +2,6 @@
 title: Understanding Bayes Theorem
 date: "2021-02-14"
 published: true
-layout: ../../layouts/MarkdownLayout.astro
 ---
 
 import {
@@ -15,7 +14,7 @@ import {
   Divide,
 } from "../../components/Ratio";
 
-I've always found Bayes Theorem hard to understand. Even after semesters of studying probability you can can eventually get the hang of the math involved, but developing a solid understanding of the real world implcations can be challenging.
+I've always found Bayes Theorem hard to understand. Even after semesters of studying probability you can eventually get the hang of the math involved, but developing a solid understanding of the real world implications can be challenging.
 
 ## Breakdown
 
@@ -44,15 +43,13 @@ $$
 This is the probability of B happening not knowing anything else about the problem. Sometimes its not possible to know this directly, but we can also find it based on this property:
 
 $$
-P(B) = P(A)P(B|A) + P(\bar{A})P(B|\bar{A})
+P(B) = P(A)P(B\vert A) + P(\bar{A})P(B\vert \bar{A})
 $$
-
-We already know $P(A)$ and $P(\bar{A})$ is just $1 - P(A)$, so we just need find $P(B|A)$ and $P(B|\bar{A})$ from the problem statement.
 
 ---
 
 $$
-P(B|A)
+P(B\vert A)
 $$
 
 This is the probability of B happening given that A has happened.
@@ -60,7 +57,7 @@ This is the probability of B happening given that A has happened.
 ---
 
 $$
-P(A|B)
+P(A\vert B)
 $$
 
 This is what we are trying find and in words, it can be described as:
@@ -78,7 +75,7 @@ or maybe:
 
 It can help to visualize the probability as a large square that can be divided into portions. The square can largely be divided into the probability of hypothesis A happening, $P(\textcolor{#d97706}{A})$ and the probability of A not happening, $P(\textcolor{#059669}{\bar{A}})$. These 2 events are obviously, mutually exclusive, and so the entire probability space is covered by these 2 events.
 
-<div class="sticky top-0 py-3 bg-white z-50 backdrop-blur backdrop-filter bg-opacity-75">
+<div class="sticky top-0 py-3 z-50 backdrop-blur backdrop-filter bg-opacity-75">
   <Square1 client:load />
 </div>
 
@@ -86,13 +83,13 @@ Lets adjust the probability of A happening, $P(A)$, and see how the probability 
 
 <SliderH client:load />
 
-Then, by looking only at the left, we can think about the probability of B happening given A, $P(B|A)$, and the product of these 2 together give us the are of the square in the lower left corner.
+Then, by looking only at the left, we can think about the probability of B happening given A, $P(B\vert A)$, and the product of these 2 together give us the area of the square in the lower left corner.
 
 <SliderA client:load />
 
 <Square2 client:load />
 
-We can then look at the right to determine $P(B)P(B|A)$.
+We can then look at the right to determine $P(B)P(B\vert A)$.
 
 <SliderB client:load />
 
@@ -115,9 +112,9 @@ Take a moment to think how likely it is that your family member has the defect. 
 Lets take this information and figure out the odds using Bayes Theorem.
 
 - $P(A)$ = 0.01
-- $P(B|A)$ = 0.90
-- $P(B|\bar{A})$ = 0.096
+- $P(B\vert A)$ = 0.90
+- $P(B\vert \bar{A})$ = 0.096
 
-$P(A|X)$ = (.9 \* .01) / (.9 \* .01 + .096 \* .99) = 0.0865 (8.65%).
+$P(A\vert B)$ = (.9 * .01) / (.9 * .01 + .096 * .99) = 0.0865 (8.65%).
 
 This is only an 8.65% chance that your family member has the defect. This is much lower than you probably thought.

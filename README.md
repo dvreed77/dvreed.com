@@ -1,36 +1,28 @@
-# Welcome to [Astro](https://astro.build)
+# dvreed.com - Personal Website
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/s/github/withastro/astro/tree/latest/examples/basics)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
+Welcome to my personal website repository! This site serves as a platform to showcase my projects and share my explorations through blog posts. Built with [Astro](https://astro.build), it combines modern web technologies with a clean, efficient design.
 
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
+The website is organized into two main sections:
+
+1. **Projects** - A showcase of my technical projects and developments
+2. **Explorations** - Blog posts where I dive deep into various topics
+
+### Project Structure
 
 ```
 /
-├── public/
-│   └── favicon.svg
 ├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/     # Reusable UI components
+│   ├── content/
+│   │   ├── posts/     # Blog post content (MDX)
+│   │   └── projects/  # Project descriptions (MDX)
+│   ├── layouts/       # Page layouts
+│   └── pages/         # Route definitions
+└── public/           # Static assets
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
 
 ## 🧞 Commands
 
@@ -45,6 +37,6 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`    | Run CLI commands like `astro add`, `astro preview` |
 | `npm run astro --help` | Get help using the Astro CLI                       |
 
-## 👀 Want to learn more?
+## 🌐 Visit the Site
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Check out the live site at [dvreed.com](https://dvreed.com) to explore my projects and read my latest posts.

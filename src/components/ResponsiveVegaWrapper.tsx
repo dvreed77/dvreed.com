@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Vega, VisualizationSpec } from 'react-vega';
+import { Vega, type VisualizationSpec } from 'react-vega';
 
 interface ResponsiveVegaWrapperProps {
   spec: VisualizationSpec;
@@ -56,7 +56,7 @@ export const ResponsiveVegaWrapper: React.FC<ResponsiveVegaWrapperProps> = ({
 
   return (
     <div ref={containerRef} className="w-full">
-      <Vega spec={responsiveSpec} />
+      <Vega spec={responsiveSpec} actions={false} />
     </div>
   );
 };

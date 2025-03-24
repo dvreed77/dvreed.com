@@ -1,7 +1,7 @@
 import data from "../data/top_breweries.json";
 import states from "../data/us-10m.json";
-import capitals from "../data/us-state-capitals.json";
-import { VegaLite, VisualizationSpec } from "react-vega";
+import type { TopLevelSpec } from "vega-lite";
+import { VegaLite } from "react-vega";
 
 export const SimpleTable = () => {
   return (
@@ -9,19 +9,19 @@ export const SimpleTable = () => {
       <table className="table w-full">
         <thead>
           <tr>
-            <th></th>
-            <th>City</th>
-            <th>Count</th>
+            <th className="text-left"></th>
+            <th className="text-left">City</th>
+            <th className="text-right">Count</th>
           </tr>
         </thead>
         <tbody>
           {data.map(({ city, state, count }, i) => (
             <tr key={i}>
-              <th>{i + 1}</th>
-              <td>
+              <th className="text-left">{i + 1}</th>
+              <td className="text-left">
                 {city}, {state}
               </td>
-              <td>{count}</td>
+              <td className="text-right">{count}</td>
             </tr>
           ))}
         </tbody>
@@ -31,17 +31,26 @@ export const SimpleTable = () => {
 };
 
 export const MapViewer = () => {
-  const spec: VisualizationSpec = {
+  const spec: TopLevelSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     width: "container",
-    height: 500,
+    height: 400,
+    autosize: {
+      type: "fit",
+      contains: "padding"
+    },
+    config: {
+      legend: { disable: true },
+      view: { stroke: null, fill: "rgba(255, 255, 255, 0.5)" },
+      background: ""
+    },
     projection: {
-      type: "albersUsa",
+      type: "albersUsa"
     },
     layer: [
       {
         data: {
-          url: "https://raw.githubusercontent.com/vega/vega/main/docs/data/us-10m.json",
+          values: states,
           format: {
             type: "topojson",
             feature: "states",
@@ -49,8 +58,8 @@ export const MapViewer = () => {
         },
         mark: {
           type: "geoshape",
-          fill: "lightgray",
-          stroke: "white",
+          fill: "#d1d5db",
+          stroke: "#f3f4f6",
         },
       },
       {
@@ -67,10 +76,29 @@ export const MapViewer = () => {
         },
         layer: [
           {
-            mark: { type: "circle", tooltip: true },
+            mark: { 
+              type: "circle", 
+              tooltip: true,
+              strokeWidth: 1,
+              opacity: 1,
+              size: 150
+            },
 
             encoding: {
-              color: { value: "red" },
+              color: {
+                field: "count",
+                type: "quantitative",
+                scale: {
+                  scheme: "oranges"
+                },
+                legend: {
+                  orient: "top-right",
+                  direction: "horizontal",
+                  values: [30, 90],
+                  title: null,
+                  labelExpr: "datum.value + ' breweries'"
+                }
+              },
               size: {
                 field: "count",
                 type: "quantitative",
@@ -88,6 +116,7 @@ export const MapViewer = () => {
             },
             encoding: {
               text: { field: "city", type: "nominal" },
+              size: { value: 10 }
             },
           },
         ],
@@ -96,14 +125,22 @@ export const MapViewer = () => {
   };
 
   return (
-    <VegaLite
-      spec={spec}
-      data={{
-        // states,
-        breweries: data,
-      }}
-      className="w-full"
-      actions={false}
-    />
+    <div className="w-full max-h-[500px] overflow-hidden rounded-lg border border-gray-200">
+      <VegaLite
+        spec={spec}
+        data={{
+          breweries: data.map(d => {
+            const coords = {
+              ...d,
+              lon: parseFloat(d.lon),
+              lat: parseFloat(d.lat)
+            };
+            return coords;
+          }),
+        }}
+        className="w-full"
+        actions={false}
+      />
+    </div>
   );
 };
