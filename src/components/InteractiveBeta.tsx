@@ -29,10 +29,10 @@ export const InteractiveBeta: React.FC<InteractiveBetaProps> = ({
   return (
     <div className="interactive-beta w-full max-w-full overflow-x-hidden">
       <div className="controls mb-4 space-y-4">
-        <div className="text-lg font-medium text-center sm:text-left">
+        <div className="text-lg font-medium text-center">
           α: {alpha.toFixed(1)} | β: {beta.toFixed(1)}
         </div>
-        <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+        <div className="flex flex-wrap justify-center gap-2 m-2">
           <button
             onClick={handleSuccess}
             className="flex-1 sm:flex-none rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"

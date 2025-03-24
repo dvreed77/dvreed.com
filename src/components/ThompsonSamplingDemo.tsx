@@ -179,15 +179,17 @@ export const ThompsonSamplingDemo: React.FC = () => {
 
   return (
     <div className="thompson-sampling-demo w-full max-w-full overflow-x-hidden px-4 sm:px-6 lg:px-8">
-      <div className="mb-4 max-w-3xl mx-auto space-y-4">
-        <button
+      <div className="mb-4 max-w-3xl mx-auto space-y-4 m-2">
+        <div className="flex justify-center">
+          <button
           onClick={sampleAll}
           className="w-full sm:w-auto px-6 py-3 text-center text-base sm:text-lg font-medium text-white bg-[#4169e1] rounded-lg hover:bg-[#2851db] focus:outline-none focus:ring-2 focus:ring-[#4169e1] focus:ring-offset-2 transition-colors duration-200"
         >
           Sample All Hours
         </button>
+        </div>
         {bestHour.lastSample !== null && (
-          <div className="text-base sm:text-lg font-medium text-gray-900">
+          <div className="text-base sm:text-lg font-medium text-gray-900 text-center">
             Best hour to send: {bestHour.id}:00 (sampled value: {bestHour.lastSample.toFixed(3)})
           </div>
         )}
