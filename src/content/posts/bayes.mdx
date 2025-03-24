@@ -14,32 +14,51 @@ import {
   Divide,
 } from "../../components/Ratio";
 
-I've always found Bayes Theorem hard to understand. Even after semesters of studying probability you can can eventually get the hang of the math involved, but developing a solid understanding of the real world implcations can be challenging.
+I've always found Bayes Theorem hard to understand. Even after semesters of studying probability you can eventually get the hang of the math involved, but developing a solid understanding of the real world implications can be challenging.
 
 ## Breakdown
 
 The standard formula you often see is:
 
+$$
+P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+$$
 
 If we break up the formula, there are 4 parts, and 3 quantities that we need to find before we can get the answer.
 
 ---
 
+$$
+P(A)
+$$
 
 This is the probability of A happening not knowing anything else about the problem.
 
 ---
 
+$$
+P(B)
+$$
+
 This is the probability of B happening not knowing anything else about the problem. Sometimes its not possible to know this directly, but we can also find it based on this property:
 
+$$
+P(B) = P(A)P(B\vert A) + P(\bar{A})P(B\vert \bar{A})
+$$
 
 ---
 
+$$
+P(B\vert A)
+$$
 
 This is the probability of B happening given that A has happened.
 
 ---
 
+$$
+P(A\vert B)
+$$
 
 This is what we are trying find and in words, it can be described as:
 
@@ -54,7 +73,7 @@ or maybe:
 <div>
 ## Visualize
 
-It can help to visualize the probability as a large square that can be divided into portions. The square can largely be divided into the probability of hypothesis A happening, and the probability of A not happening,  These 2 events are obviously, mutually exclusive, and so the entire probability space is covered by these 2 events.
+It can help to visualize the probability as a large square that can be divided into portions. The square can largely be divided into the probability of hypothesis A happening, $P(\textcolor{#d97706}{A})$ and the probability of A not happening, $P(\textcolor{#059669}{\bar{A}})$. These 2 events are obviously, mutually exclusive, and so the entire probability space is covered by these 2 events.
 
 <div class="sticky top-0 py-3 bg-white z-50 backdrop-blur backdrop-filter bg-opacity-75">
   <Square1 client:load />
@@ -64,13 +83,13 @@ Lets adjust the probability of A happening, $P(A)$, and see how the probability 
 
 <SliderH client:load />
 
-Then, by looking only at the left, we can think about the probability of B happening given A, $P(B|A)$, and the product of these 2 together give us the are of the square in the lower left corner.
+Then, by looking only at the left, we can think about the probability of B happening given A, $P(B\vert A)$, and the product of these 2 together give us the area of the square in the lower left corner.
 
 <SliderA client:load />
 
 <Square2 client:load />
 
-We can then look at the right to determine $P(B)P(B|A)$.
+We can then look at the right to determine $P(B)P(B\vert A)$.
 
 <SliderB client:load />
 
@@ -91,5 +110,11 @@ The doctor tells you that 1% of people have this certain genetic defect. He also
 Take a moment to think how likely it is that your family member has the defect. You probably think that is very high, greater than 50% at least right?
 
 Lets take this information and figure out the odds using Bayes Theorem.
+
+- $P(A)$ = 0.01
+- $P(B\vert A)$ = 0.90
+- $P(B\vert \bar{A})$ = 0.096
+
+$P(A\vert B)$ = (.9 * .01) / (.9 * .01 + .096 * .99) = 0.0865 (8.65%).
 
 This is only an 8.65% chance that your family member has the defect. This is much lower than you probably thought.

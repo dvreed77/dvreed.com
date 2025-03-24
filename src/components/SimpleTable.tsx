@@ -1,7 +1,7 @@
 import data from "../data/top_breweries.json";
 import states from "../data/us-10m.json";
-import capitals from "../data/us-state-capitals.json";
-import { VegaLite, VisualizationSpec } from "react-vega";
+import type { TopLevelSpec } from "vega-lite";
+import { VegaLite } from "react-vega";
 
 export const SimpleTable = () => {
   return (
@@ -31,7 +31,7 @@ export const SimpleTable = () => {
 };
 
 export const MapViewer = () => {
-  const spec: VisualizationSpec = {
+  const spec: TopLevelSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     width: "container",
     height: 500,
@@ -41,7 +41,7 @@ export const MapViewer = () => {
     layer: [
       {
         data: {
-          url: "https://raw.githubusercontent.com/vega/vega/main/docs/data/us-10m.json",
+          values: states,
           format: {
             type: "topojson",
             feature: "states",
@@ -96,14 +96,22 @@ export const MapViewer = () => {
   };
 
   return (
-    <VegaLite
-      spec={spec}
-      data={{
-        // states,
-        breweries: data,
-      }}
-      className="w-full"
-      actions={false}
-    />
+    <div className="w-full h-[500px] overflow-hidden rounded-lg border border-gray-200">
+      <VegaLite
+        spec={spec}
+        data={{
+          breweries: data.map(d => {
+            const coords = {
+              ...d,
+              lon: parseFloat(d.lon),
+              lat: parseFloat(d.lat)
+            };
+            return coords;
+          }),
+        }}
+        className="w-full"
+        actions={false}
+      />
+    </div>
   );
 };
