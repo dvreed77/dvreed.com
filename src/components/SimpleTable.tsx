@@ -91,9 +91,9 @@ export const MapViewer = () => {
                   scheme: "oranges"
                 },
                 legend: {
-                  orient: "bottom",
+                  orient: "top-right",
                   direction: "horizontal",
-                  tickCount: 2,
+                  values: [30, 90],
                   title: null,
                   labelExpr: "datum.value + ' breweries'"
                 }
@@ -115,14 +115,7 @@ export const MapViewer = () => {
             },
             encoding: {
               text: { field: "city", type: "nominal" },
-              size: { value: 10 },
-              opacity: {
-                condition: {
-                  test: "width < 500",
-                  value: 0
-                },
-                value: 1
-              },
+              size: { value: 10 }
             },
           },
         ],
