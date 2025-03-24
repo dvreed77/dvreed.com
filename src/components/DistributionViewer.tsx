@@ -1,6 +1,6 @@
 import React from "react";
 import { random2 } from "./randomF";
-import { VegaLite, VisualizationSpec } from "react-vega";
+import { VegaLite, type VisualizationSpec } from "react-vega";
 
 interface IProps {
   f: string;

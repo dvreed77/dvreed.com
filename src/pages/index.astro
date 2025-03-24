@@ -2,9 +2,10 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import BlogCard from "../components/BlogCard.astro";
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 const allProjects = await Astro.glob("../pages/projects/*.{md,mdx}");
-const allPosts = await Astro.glob("../pages/posts/*.{md,mdx}");
+const allPosts = await getCollection('posts');
 ---
 
 <Layout title="Dave Reed">
@@ -40,9 +41,9 @@ const allPosts = await Astro.glob("../pages/posts/*.{md,mdx}");
       {
         allPosts.map((post) => (
           <BlogCard
-            href={post.url}
-            title={post.frontmatter.title}
-            date={post.frontmatter.date}
+            href={`/posts/${post.slug}`}
+            title={post.data.title}
+            date={post.data.date}
           />
         ))
       }

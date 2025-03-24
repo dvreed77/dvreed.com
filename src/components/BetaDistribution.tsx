@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { VisualizationSpec } from 'react-vega';
+import type { VisualizationSpec } from 'react-vega';
 import { ResponsiveVegaWrapper } from './ResponsiveVegaWrapper';
 
 interface BetaDistributionProps {

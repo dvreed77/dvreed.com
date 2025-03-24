@@ -12,9 +12,6 @@ import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 
 // https://astro.build/config
-import image from "@astrojs/image";
-
-// https://astro.build/config
 export default defineConfig({
   markdown: {
     shikiConfig: {
@@ -37,8 +34,6 @@ export default defineConfig({
     tailwind(),
     mdx(),
     react(),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-    }),
+
   ],
 });

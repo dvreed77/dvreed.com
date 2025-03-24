@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 const { frontmatter } = Astro.props;
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 ---
 
 <BaseLayout>
@@ -11,14 +11,13 @@ import { Picture } from "@astrojs/image/components";
     {frontmatter.title}
   </h1>
 
-  <Picture
+  <Image
     src={frontmatter.images[0]}
     alt="descriptive text"
-    widths={[400, 800, 1200]}
-    aspectRatio="6:1"
-    fit="cover"
-    position="entropy"
-    format={"png"}
+    width={1200}
+    height={200}
+    format="png"
+    class="object-cover w-full"
     sizes="100vw"
   />
 

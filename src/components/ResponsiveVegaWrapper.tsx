@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Vega, VisualizationSpec } from 'react-vega';
+import { Vega, type VisualizationSpec } from 'react-vega';
 
 interface ResponsiveVegaWrapperProps {
   spec: VisualizationSpec;

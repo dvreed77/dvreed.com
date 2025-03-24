@@ -11,10 +11,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/image": "^0.11.4",
-    "@astrojs/mdx": "^0.11.6",
-    "@astrojs/react": "^1.2.2",
-    "@astrojs/tailwind": "^2.1.2",
+
+    "@astrojs/mdx": "^4.2.1",
+    "@astrojs/react": "^4.2.1",
+    "@astrojs/tailwind": "^6.0.1",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -22,7 +22,7 @@
     "@nanostores/react": "^0.4.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
-    "astro": "^1.6.7",
+    "astro": "^5.5.4",
     "d3": "^7.7.0",
     "date-fns": "^2.29.3",
     "nanostores": "^0.7.1",
