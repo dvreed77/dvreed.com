@@ -60,13 +60,15 @@ export function DistributionViewer({ f = "f1", className }: IProps) {
     mark: "rule",
     encoding: {
       x: { field: "x", type: "quantitative", scale: { domain: [0, 1] } },
-      color: { value: "black" },
-      opacity: { value: 0.4 },
+      color: { value: "#34d399" },
+      opacity: { value: 0.8 },
       size: { value: 0.2 },
     },
     data: { name: "table" }, // note: vega-lite data attribute is a plain object instead of an array
     config: {
       axisLeft: { domain: false, grid: false, ticks: false, disable: true },
+      background: "",
+      view: { fill: "rgba(255, 255, 255, 0.5)" }
     },
   };
 
@@ -82,13 +84,15 @@ export function DistributionViewer({ f = "f1", className }: IProps) {
         type: "quantitative",
         scale: { domain: [0, Math.max(...pdfData.map((d) => d[1])) + 0.1] },
       },
-      color: { value: "black" },
-      opacity: { value: 0.4 },
-      size: { value: 1 },
+      color: { value: "#34d399" },
+      opacity: { value: 0.8 },
+      size: { value: 2 },
     },
     data: { name: "table" }, // note: vega-lite data attribute is a plain object instead of an array
     config: {
       axis: { domain: false, grid: false, ticks: false, disable: true },
+      background: "",
+      view: { fill: "rgba(255, 255, 255, 0.5)" }
     },
   };
 

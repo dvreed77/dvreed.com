@@ -41,7 +41,8 @@ export const MapViewer = () => {
     },
     config: {
       legend: { disable: true },
-      view: { stroke: null }
+      view: { stroke: null, fill: "rgba(255, 255, 255, 0.5)" },
+      background: ""
     },
     projection: {
       type: "albersUsa"
@@ -57,8 +58,8 @@ export const MapViewer = () => {
         },
         mark: {
           type: "geoshape",
-          fill: "lightgray",
-          stroke: "white",
+          fill: "#d1d5db",
+          stroke: "#f3f4f6",
         },
       },
       {

@@ -74,9 +74,13 @@ export const BetaDistribution: React.FC<BetaDistributionProps> = ({ alpha = 2, b
         title: 'Density'
       }
     },
-    title: `Beta Distribution (α=${alpha}, β=${beta})`
+    title: `Beta Distribution (α=${alpha}, β=${beta})`,
+    config: {
+      background: "",
+      view: { fill: "rgba(255, 255, 255, 0.5)" }
+    },
   }), [alpha, beta]);
-
+  
   return (
     <ResponsiveVegaWrapper 
       spec={spec}

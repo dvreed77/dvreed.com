@@ -7,7 +7,7 @@ config.autoAddCss = false;
 const { title } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" class="bg-gray-100">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -23,6 +23,12 @@ const { title } = Astro.props;
     <style is:global>
       .katex {
         font-size: 1em;
+      }
+      pre {
+        background-color: transparent !important;
+      }
+      code {
+        background-color: transparent !important;
       }
     </style>
   </head>

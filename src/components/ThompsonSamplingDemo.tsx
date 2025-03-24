@@ -166,6 +166,10 @@ export const ThompsonSamplingDemo: React.FC = () => {
       }
     ],
     title: 'Thompson Sampling Across Different Hours',
+    config: {
+      background: "",
+      view: { fill: "rgba(255, 255, 255, 0.5)" }
+    },
 
   };
 

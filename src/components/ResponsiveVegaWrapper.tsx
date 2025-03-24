@@ -56,7 +56,7 @@ export const ResponsiveVegaWrapper: React.FC<ResponsiveVegaWrapperProps> = ({
 
   return (
     <div ref={containerRef} className="w-full">
-      <Vega spec={responsiveSpec} />
+      <Vega spec={responsiveSpec} actions={false} />
     </div>
   );
 };
