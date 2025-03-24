@@ -9,19 +9,19 @@ export const SimpleTable = () => {
       <table className="table w-full">
         <thead>
           <tr>
-            <th></th>
-            <th>City</th>
-            <th>Count</th>
+            <th className="text-left"></th>
+            <th className="text-left">City</th>
+            <th className="text-right">Count</th>
           </tr>
         </thead>
         <tbody>
           {data.map(({ city, state, count }, i) => (
             <tr key={i}>
-              <th>{i + 1}</th>
-              <td>
+              <th className="text-left">{i + 1}</th>
+              <td className="text-left">
                 {city}, {state}
               </td>
-              <td>{count}</td>
+              <td className="text-right">{count}</td>
             </tr>
           ))}
         </tbody>
