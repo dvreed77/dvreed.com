@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { Vega, VisualizationSpec } from 'react-vega';
+import { VisualizationSpec } from 'react-vega';
+import { ResponsiveVegaWrapper } from './ResponsiveVegaWrapper';
 
 interface BetaDistributionProps {
   alpha: number;
@@ -38,8 +39,7 @@ function lnGamma(z: number): number {
 export const BetaDistribution: React.FC<BetaDistributionProps> = ({ alpha = 2, beta = 2 }) => {
   const spec: VisualizationSpec = useMemo(() => ({
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-    width: 500,
-    height: 300,
+
     data: {
       name: 'values',
       values: Array.from({ length: 101 }, (_, i) => {
@@ -54,6 +54,12 @@ export const BetaDistribution: React.FC<BetaDistributionProps> = ({ alpha = 2, b
       type: 'line',
       color: '#4C78A8',
       strokeWidth: 2
+    },
+    width: 400,
+    height: 250,
+    autosize: {
+      type: "fit-x",
+      contains: "padding"
     },
     encoding: {
       x: {
@@ -71,5 +77,12 @@ export const BetaDistribution: React.FC<BetaDistributionProps> = ({ alpha = 2, b
     title: `Beta Distribution (α=${alpha}, β=${beta})`
   }), [alpha, beta]);
 
-  return <Vega spec={spec} />;
+  return (
+    <ResponsiveVegaWrapper 
+      spec={spec}
+      aspectRatio={1.6}
+      minWidth={300}
+      maxWidth={600}
+    />
+  );
 };

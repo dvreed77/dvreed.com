@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Vega, VisualizationSpec } from 'react-vega';
+import { ResponsiveVegaWrapper } from './ResponsiveVegaWrapper';
 
 interface Hour {
   id: number;
@@ -74,8 +75,9 @@ export const ThompsonSamplingDemo: React.FC = () => {
 
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-    width: 600,
-    height: 400,
+
+    width: 400,
+    height: 250,
     autosize: {
       type: "fit-x",
       contains: "padding"
@@ -172,24 +174,27 @@ export const ThompsonSamplingDemo: React.FC = () => {
   );
 
   return (
-    <div className="thompson-sampling-demo w-full max-w-full overflow-x-hidden">
-      <div className="mb-4">
+    <div className="thompson-sampling-demo w-full max-w-full overflow-x-hidden px-4 sm:px-6 lg:px-8">
+      <div className="mb-4 max-w-3xl mx-auto space-y-4">
         <button
           onClick={sampleAll}
-          className="w-full rounded-lg bg-[#4169e1] px-4 py-3 text-center text-lg font-medium text-white hover:bg-[#2851db] focus:outline-none focus:ring-2 focus:ring-[#4169e1] focus:ring-offset-2"
+          className="w-full sm:w-auto px-6 py-3 text-center text-base sm:text-lg font-medium text-white bg-[#4169e1] rounded-lg hover:bg-[#2851db] focus:outline-none focus:ring-2 focus:ring-[#4169e1] focus:ring-offset-2 transition-colors duration-200"
         >
           Sample All Hours
         </button>
         {bestHour.lastSample !== null && (
-          <div className="text-lg font-medium">
+          <div className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100">
             Best hour to send: {bestHour.id}:00 (sampled value: {bestHour.lastSample.toFixed(3)})
           </div>
         )}
       </div>
-      <div className="w-full overflow-x-auto" style={{ minWidth: 0 }}>
-        <div style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
-          <Vega spec={spec} />
-        </div>
+      <div className="w-full max-w-3xl mx-auto">
+        <ResponsiveVegaWrapper 
+          spec={spec}
+          aspectRatio={1.6}
+          minWidth={300}
+          maxWidth={600}
+        />
       </div>
     </div>
   );
