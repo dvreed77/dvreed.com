@@ -183,7 +183,7 @@ export const ThompsonSamplingDemo: React.FC = () => {
           Sample All Hours
         </button>
         {bestHour.lastSample !== null && (
-          <div className="text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100">
+          <div className="text-base sm:text-lg font-medium text-gray-900">
             Best hour to send: {bestHour.id}:00 (sampled value: {bestHour.lastSample.toFixed(3)})
           </div>
         )}
