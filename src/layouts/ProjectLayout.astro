@@ -1,7 +1,13 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-const { frontmatter } = Astro.props;
 import { Image } from "astro:assets";
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  frontmatter: CollectionEntry<'projects'>['data'];
+}
+
+const { frontmatter } = Astro.props;
 ---
 
 <BaseLayout>
@@ -30,8 +36,20 @@ import { Image } from "astro:assets";
         <div class="font-thin text-sm">
           {
             frontmatter.startDate === frontmatter.endDate
-              ? frontmatter.startDate
-              : `${frontmatter.startDate} to ${frontmatter.endDate}`
+              ? new Date(frontmatter.startDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })
+              : `${new Date(frontmatter.startDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })} to ${new Date(frontmatter.endDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}`
           }
         </div>
       </div>
