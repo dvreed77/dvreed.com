@@ -74,10 +74,10 @@ export const ThompsonSamplingDemo: React.FC = () => {
 
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-    width: "container",
+    width: 600,
     height: 400,
     autosize: {
-      type: "fit",
+      type: "fit-x",
       contains: "padding"
     },
     data: {
@@ -173,10 +173,10 @@ export const ThompsonSamplingDemo: React.FC = () => {
 
   return (
     <div className="thompson-sampling-demo w-full max-w-full overflow-x-hidden">
-      <div className="mb-4 flex flex-col gap-4">
+      <div className="mb-4">
         <button
           onClick={sampleAll}
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="w-full rounded-lg bg-[#4169e1] px-4 py-3 text-center text-lg font-medium text-white hover:bg-[#2851db] focus:outline-none focus:ring-2 focus:ring-[#4169e1] focus:ring-offset-2"
         >
           Sample All Hours
         </button>
@@ -186,8 +186,10 @@ export const ThompsonSamplingDemo: React.FC = () => {
           </div>
         )}
       </div>
-      <div className="w-full overflow-x-auto">
-        <Vega spec={spec} />
+      <div className="w-full overflow-x-auto" style={{ minWidth: 0 }}>
+        <div style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
+          <Vega spec={spec} />
+        </div>
       </div>
     </div>
   );

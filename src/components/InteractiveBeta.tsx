@@ -28,29 +28,25 @@ export const InteractiveBeta: React.FC<InteractiveBetaProps> = ({
 
   return (
     <div className="interactive-beta w-full max-w-full overflow-x-hidden">
-      <div className="controls mb-4 flex flex-col items-start gap-4">
-        <div className="w-full">
-          <div className="mb-2 text-lg font-medium">
-            α: {alpha.toFixed(1)} | β: {beta.toFixed(1)}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={handleSuccess}
-              className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-            >
-              Success (+α)
-            </button>
-            <button
-              onClick={handleFailure}
-              className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-            >
-              Failure (+β)
-            </button>
-          </div>
+      <div className="controls mb-4 flex items-center gap-2">
+        <div className="text-lg font-medium whitespace-nowrap">
+          α: {alpha.toFixed(1)} | β: {beta.toFixed(1)}
         </div>
+        <button
+          onClick={handleSuccess}
+          className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 whitespace-nowrap"
+        >
+          Success (+α)
+        </button>
+        <button
+          onClick={handleFailure}
+          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 whitespace-nowrap"
+        >
+          Failure (+β)
+        </button>
         <button 
           onClick={handleReset}
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 whitespace-nowrap"
         >
           Reset
         </button>
