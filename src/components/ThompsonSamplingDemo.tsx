@@ -76,10 +76,8 @@ export const ThompsonSamplingDemo: React.FC = () => {
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
 
-    width: 400,
-    height: 250,
     autosize: {
-      type: "fit-x",
+      type: "fit",
       contains: "padding"
     },
     data: {
@@ -199,7 +197,7 @@ export const ThompsonSamplingDemo: React.FC = () => {
           spec={spec}
           aspectRatio={1.6}
           minWidth={300}
-          maxWidth={600}
+          maxWidth={1200}
         />
       </div>
     </div>

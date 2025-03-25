@@ -86,7 +86,7 @@ export const BetaDistribution: React.FC<BetaDistributionProps> = ({ alpha = 2, b
       spec={spec}
       aspectRatio={1.6}
       minWidth={300}
-      maxWidth={600}
+      maxWidth={1200}
     />
   );
 };

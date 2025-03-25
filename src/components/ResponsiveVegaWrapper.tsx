@@ -48,6 +48,7 @@ export const ResponsiveVegaWrapper: React.FC<ResponsiveVegaWrapperProps> = ({
     ...spec,
     width,
     height: width / aspectRatio,
+    // Override any existing autosize config
     autosize: {
       type: "fit",
       contains: "padding"
