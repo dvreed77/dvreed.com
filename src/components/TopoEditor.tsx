@@ -13,6 +13,7 @@ interface Point {
 
 export default function TopoEditor() {
   const svgRef = useRef<SVGSVGElement>(null);
+  const [tooltipData, setTooltipData] = useState<{ x: number; y: number; point: Point | null }>({ x: 0, y: 0, point: null });
   const [points, setPoints] = useState<Point[]>([
     // Left rectangle
     { id: 0, x: 50, y: 50 },
@@ -96,19 +97,14 @@ export default function TopoEditor() {
       .attr('stroke-width', 1)
       .attr('cursor', 'move')
       .on('mouseover', (event, d) => {
-        tooltip.transition()
-          .duration(200)
-          .style('opacity', .9);
-        tooltip.html(
-          `x: ${d.x}<br/>y: ${d.y}<br/>id: ${d.id}${d.sharedWith ? '<br/>shared with: ' + d.sharedWith.join(', ') : ''}`
-        )
-          .style('left', (event.pageX + 10) + 'px')
-          .style('top', (event.pageY - 28) + 'px');
+        setTooltipData({
+          x: event.pageX + 10,
+          y: event.pageY - 28,
+          point: d
+        });
       })
       .on('mouseout', () => {
-        tooltip.transition()
-          .duration(500)
-          .style('opacity', 0);
+        setTooltipData(prev => ({ ...prev, point: null }));
       });
 
     // Add drag behavior
@@ -150,9 +146,7 @@ export default function TopoEditor() {
     nodeElements.call(drag);
 
     // Cleanup on unmount
-    return () => {
-      d3.select('.tooltip').remove();
-    };
+    return () => {};
   }, [points]);
 
   return (
