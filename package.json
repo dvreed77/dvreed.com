@@ -28,6 +28,7 @@
     "astro": "^5.5.4",
     "d3": "^7.7.0",
     "date-fns": "^2.29.3",
+    "jsondiffpatch": "^0.7.2",
     "katex": "^0.16.9",
     "nanostores": "^0.7.1",
     "react": "^18.2.0",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "@types/d3": "^7.4.0",
+    "@types/topojson-client": "^3.1.5",
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.7.0"
   }

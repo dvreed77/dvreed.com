@@ -15,6 +15,11 @@ export default defineConfig({
     react(),
     tailwind()
   ],
+  vite: {
+    optimizeDeps: {
+      exclude: ['@astrojs/markdown-remark']
+    }
+  },
   markdown: {
     shikiConfig: {
       theme: "min-light",
