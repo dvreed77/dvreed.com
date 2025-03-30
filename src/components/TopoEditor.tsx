@@ -1,31 +1,37 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 import * as topology from 'topojson-server';
-import type { Feature, FeatureCollection } from 'geojson';
+import type { Feature, FeatureCollection, Polygon } from 'geojson';
+import type { Topology } from 'topojson-specification';
+import type { Path } from './types';
+import { pathToGeoJSON } from './utils';
 
-interface Point {
+interface TopoNode {
   id: number;
   x: number;
   y: number;
-  sharedWith?: number[]; // IDs of points that share this position
+  arcIndices: number[]; // Indices of arcs this node belongs to
 }
 
-export default function TopoEditor() {
+interface IProps {
+  paths: Path[]
+}
+export default function TopoEditor({ paths }: IProps) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [tooltipData, setTooltipData] = useState<{ x: number; y: number; point: Point | null }>({ x: 0, y: 0, point: null });
-  const [points, setPoints] = useState<Point[]>([
-    // Left rectangle
-    { id: 0, x: 50, y: 50 },
-    { id: 1, x: 150, y: 50 },
-    { id: 2, x: 150, y: 250 },
-    { id: 3, x: 50, y: 250 },
-    // Right rectangle
-    { id: 4, x: 150, y: 50 },  // Shared with point 1
-    { id: 5, x: 250, y: 50 },
-    { id: 6, x: 250, y: 250 },
-    { id: 7, x: 150, y: 250 }  // Shared with point 2
-  ]);
+
+
+  const geojson = useMemo(() => pathToGeoJSON(paths), [paths]); 
+  const topo = useMemo(() => topology.topology({
+    paths: geojson
+  }), [geojson]);
+  
+
+  // Store the TopoJSON topology
+  const [topoData, setTopoData] = useState<Topology | null>(null);
+  
+  // Store nodes extracted from topology
+  const [nodes, setNodes] = useState<TopoNode[]>([]);
 
   // Find shared points and update their sharedWith property
   useEffect(() => {
@@ -117,6 +123,7 @@ export default function TopoEditor() {
         setPoints(prev => prev.map(p => {
           // If this is the dragged point or a point that shares position with it
           if (p.id === d.id || d.sharedWith?.includes(p.id)) {
+            console.log('Updating point', p.id, 'to', { x: newX, y: newY });
             return { ...p, x: newX, y: newY };
           }
           return p;
