@@ -11,7 +11,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.1",
@@ -45,7 +46,11 @@
     "@tailwindcss/typography": "^0.5.9",
     "@types/d3": "^7.4.0",
     "@types/topojson-client": "^3.1.5",
+    "@types/topojson-server": "^3.0.4",
     "prettier": "^2.7.1",
-    "prettier-plugin-astro": "^0.7.0"
+    "prettier-plugin-astro": "^0.7.0",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1",
+    "vitest": "^3.0.9"
   }
 }
