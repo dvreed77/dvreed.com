@@ -1,6 +1,7 @@
 import type { Path } from "../types";
 import type { FeatureCollection, Feature, GeoJsonProperties, GeometryObject, Polygon, GeometryCollection } from "geojson";
-import type { Topology, GeometryObject as TopoGeometryObject, Polygon as TopoPolygon, ArcIndexes, Arc } from "topojson-specification";
+import type { Topology, GeometryObject as TopoGeometryObject, Polygon as TopoPolygon, ArcIndexes, Arc, Objects, GeometryCollection as TopoGeometryCollection } from "topojson-specification";
+import * as topojson from "topojson-client";
 
 function toFeature(path: Path): Feature<Polygon> {
 
@@ -26,78 +27,122 @@ export const pathToGeoJSON = (paths: Path[]): FeatureCollection<Polygon> => {
   }
 }
 
-type MyPoint = {
+function isTopoPolygon(geometry: TopoGeometryObject): geometry is TopoPolygon {
+    return geometry.type === "Polygon";
+}
+
+export const extractArcIndices = (topo: Topology<Objects<GeoJsonProperties>>) => {
+    const collection = topo.objects.rectangles as TopoGeometryCollection;
+    return collection.geometries
+        .filter(isTopoPolygon)
+        .map(g => g.arcs);
+}
+
+export type MyPoint = {
     id: number,
     x: number,
     y: number
 }
 
-type MyArc = {
+export type MyArc = {
     id: number,
-    points: MyPoint[]
-}
-
-type MyNode = {
-    point: MyPoint,
-    arcIds: number[]
+    pointIds: number[]
 }
 
 type Dir = 1 | -1;
 
-function convertArc(arc: Arc, idx: number, dir: Dir): MyArc[] {
-    return arc.map((arc, i) => ({
-        id: idx,
-
-        points: arc.map(p => ({ id: i, x: p[0], y: p[1] }))
-    }));
+export function arcsToTopoArcs(arcs: MyArc[], nodes: MyPoint[]): Arc[] {
+    return arcs.map(arc => {
+        // Convert point IDs to coordinates
+        return arc.pointIds.map(id => {
+            const point = nodes.find(n => n.id === id);
+            if (!point) throw new Error(`Point with id ${id} not found`);
+            return [point.x, point.y] as [number, number];
+        });
+    });
 }
 
-export const topoToNodes = (topo: Topology): any[] => {
-  
-    // const arcs = topo.arcs;
+export function topoToGeoJSON(topo: Topology<Objects<GeoJsonProperties>>): Path[] {
+    // console.log('Converting TopoJSON to GeoJSON:');
+    // console.log('Topo:', topo);
+    // console.log('Nodes:', nodes);
+    // Convert topology back to GeoJSON feature collection
+    const featureCollection = topojson.feature(topo, topo.objects.rectangles) as FeatureCollection<Polygon>;
+    
+    // Convert features to our Path format
+    // console.log('FeatureCollection:', featureCollection);
+    
+    return featureCollection.features.map((feature, id) => {
+        // Get the coordinates from the feature
+        const coordinates = feature.geometry.coordinates[0]; // First array contains outer ring
+        
+        // Convert coordinates to our format
+        // Note: We use the nodes array to get the exact positions that may have been updated
+        // console.log(`Feature ${id} coordinates:`, coordinates);
+        
+        return {
+            id,
+            coordinates: coordinates.map(coord => coord as [number, number])
+        };
+    });
+}
 
-    // const topoPaths: any[] = [];
+export function convertArcs(arcs: Arc[]): [MyPoint[], MyArc[]] {
+    
+    const nodes = new Map<string, MyPoint>();
 
-    const geometries = topo.objects.rectangles as TopoGeometryObject & { geometries?: TopoPolygon[] };
-
-    const d = geometries.geometries?.map(g => {
-        const arcIndices = g.arcs;
-
-        if (arcIndices.length !== 1) {
-            throw new Error("Arc indices must be of length 1. I'm not sure what do if they aren't");
-        }
-
-        const arcIndex: ArcIndexes = arcIndices[0];
-
-        const arcs: [number, Dir][] = arcIndex.map((idx: number) => {
-            const dir = idx < 0 ? -1 : 1;
-            const arcIndex = idx < 0 ? topo.arcs.length + idx : idx;
-
-            return [arcIndex, dir];
-        }); 
-
-        for (let i = 0; i < arcs.length; i++) {
-            const [thisArcIndex, thisDir] = arcs[i];
-            const [nextArcIndex, nextDir] = arcs[(i + 1) % arcs.length];
-            
-            const thisArcPoints = thisDir === 1 ? topo.arcs[thisArcIndex] : topo.arcs[thisArcIndex].reverse();
-            const nextArcPoints = nextDir === 1 ? topo.arcs[nextArcIndex] : topo.arcs[nextArcIndex].reverse();
-
-            if (thisArcPoints[thisArcPoints.length - 1] !== nextArcPoints[0]) {
-                throw new Error("Arcs must be connected");
+    const newArcs = arcs.map((arc, i) => ({
+        id: i,
+        pointIds: arc.map(p => {
+            const key = `${p[0]},${p[1]}`;
+            // console.log("PPP", p, nodes, nodes.get(key))
+            const node = nodes.get(key);
+            if (node) {
+                return node.id;
             }
+            const newNode = { id: nodes.size, x: p[0], y: p[1] };
+            nodes.set(key, newNode);
+            return newNode.id;
+        })
+    }));
+
+    return [Array.from(nodes.values()), newArcs];
+}
+
+export function arcsToPath(arcIndex: number[], arcs: MyArc[], nodes: MyPoint[]): [number, number][] {
+    const result: [number, number][] = [];
+    
+    for (let i = 0; i < arcIndex.length; i++) {
+        const idx = arcIndex[i];
+        const isReverse = idx < 0;
+        const arcIdx = (idx < 0 ? arcs.length - idx -1 : idx) % arcs.length;
+
+        const arc = arcs[arcIdx];
+        
+        // Get point IDs for current arc, reversing if needed
+        let pIds = isReverse ? [...arc.pointIds].reverse() : [...arc.pointIds];
+        
+        // If not the first arc, validate connection with previous arc
+        if (i > 0) {
+            const prevArc = result[result.length - 1];
+            if (!prevArc) throw new Error('Previous arc point not found');
+            
+            const [prevX, prevY] = prevArc;
+            const [currentX, currentY] = [nodes[pIds[0]].x, nodes[pIds[0]].y];
+            
+            if (prevX !== currentX || prevY !== currentY) {
+                throw new Error(`Arc ${i} does not connect with previous arc at point [${currentX}, ${currentY}]`);
+            }
+            
+            // Skip the first point as it's the same as the last point of previous arc
+            pIds = pIds.slice(1);
         }
         
-
-
-
-
-
-
-        console.log("BBBB", arcs);
-        // const coordinates = arcs[arcIndex];
-        // return coordinates;
-    })
-
-
+        // Add points to result
+        pIds.forEach(pid => {
+            result.push([nodes[pid].x, nodes[pid].y] as [number, number]);
+        });
+    }
+    
+    return result;
 }

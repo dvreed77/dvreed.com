@@ -2,13 +2,37 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopoEditorComponent from '../components/TopoEditor.tsx';
 import NodeEditor from '../components/NodeEditor.tsx';
+import type { Path } from '@/components/types';
+
+const paths: Path[] = [
+  {
+    id: 0,
+    coordinates: [
+      [50, 50],
+      [150, 50],
+      [150, 250],
+      [50, 250],
+      [50, 50]
+    ]
+  },
+  {
+    id: 1,
+    coordinates: [
+      [150, 50],
+      [250, 50],
+      [250, 250],
+      [150, 250],
+      [150, 50]
+    ]
+  }
+]
 ---
 
 <BaseLayout title="Topo Editor Demo">
   <main class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-4">Topo Editor Demo</h1>
     <div class="max-w-2xl">
-      <TopoEditorComponent client:load />
+      <TopoEditorComponent client:load paths={paths} />
     </div>
     <div class="max-w-2xl">
       <NodeEditor client:load />
