@@ -17,9 +17,74 @@ interface IProps {
   paths: Path[];
 }
 
-export default function TopoEditor({ paths: inputPaths }: IProps) {
+export function TopoEditor({ paths: inputPaths }: IProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const [width, setWidth] = useState(500);
   const [currentPaths, setCurrentPaths] = useState<Path[]>(inputPaths);
+
+  // Calculate bounding box of all paths
+  const bbox = useMemo(() => {
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+
+    inputPaths.forEach(path => {
+      path.coordinates.forEach(([x, y]) => {
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+      });
+    });
+
+    return { minX, minY, maxX, maxY };
+  }, [inputPaths]);
+
+  // Calculate dimensions and transformations
+  const dimensions = useMemo(() => {
+    const padding = 70; // Padding around the content
+    const bboxWidth = bbox.maxX - bbox.minX;
+    const bboxHeight = bbox.maxY - bbox.minY;
+    const scale = Math.min(
+      (500 - padding * 2) / bboxWidth,
+      (500 - padding * 2) / bboxHeight
+    );
+
+    // Center the content
+    const translateX = (500 - bboxWidth * scale) / 2 - bbox.minX * scale;
+    const translateY = (500 - bboxHeight * scale) / 2 - bbox.minY * scale;
+
+    return { scale, translateX, translateY };
+  }, [bbox]);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.clientWidth;
+        const newWidth = Math.min(
+          Math.max(containerWidth, 320),
+          800
+        );
+        setWidth(newWidth);
+      }
+    };
+
+    // Initial width calculation
+    updateWidth();
+
+    // Add resize listener
+    const resizeObserver = new ResizeObserver(updateWidth);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    // Cleanup
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   // Convert input paths to topology
   const geojson = useMemo(() => pathToGeoJSON(inputPaths), [inputPaths]); 
@@ -74,13 +139,15 @@ export default function TopoEditor({ paths: inputPaths }: IProps) {
   }, []);
 
   return (
-    <svg 
-      ref={svgRef} 
-      width={500} 
-      height={500} 
-      viewBox="0 0 500 500"
-      style={{ border: '1px solid #ccc' }}
-    >
+    <div ref={containerRef} style={{ width: '100%' }}>
+      <svg 
+        ref={svgRef} 
+        width={width} 
+        height={width} 
+        viewBox="0 0 500 500"
+        style={{ border: '1px solid #ccc', maxWidth: '100%' }}
+      >
+        <g transform={`translate(${dimensions.translateX},${dimensions.translateY}) scale(${dimensions.scale})`}>
       {/* Render paths */}
       <g>
         {currentPaths.map((path, i) => (
@@ -112,6 +179,8 @@ export default function TopoEditor({ paths: inputPaths }: IProps) {
           />
         ))}
       </g>
-    </svg>
+        </g>
+      </svg>
+    </div>
   );
 }

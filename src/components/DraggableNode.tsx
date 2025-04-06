@@ -15,7 +15,8 @@ export default function DraggableNode({ id, x, y, onDrag }: Props) {
     const drag = d3.drag<SVGCircleElement, unknown>()
       .on('drag', (event) => {
         onDrag(id, event.x, event.y);
-      });
+      })
+      .touchable(true);
 
     d3.select(nodeRef.current).call(drag);
   }, [id, onDrag]);
@@ -26,7 +27,8 @@ export default function DraggableNode({ id, x, y, onDrag }: Props) {
       cx={x}
       cy={y}
       r={4}
-      style={{ cursor: 'move' }}
+      style={{ cursor: 'move', touchAction: 'none' }}
+      onTouchStart={(e) => e.preventDefault()}
     />
   );
 }
