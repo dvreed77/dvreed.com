@@ -1,0 +1,104 @@
+---
+title: Building an Interactive TopoJSON Editor with React
+date: "2025-04-06"
+published: true
+---
+
+import { TopoEditor } from '../../components/TopoEditor';
+
+## The Challenge: Efficient Topology Representation
+
+When working with geographic data or connected shapes, we often face a common challenge: how do we efficiently represent shared boundaries? Take a look at these three connected rectangles:
+
+import StaticShapes from '../../components/StaticShapes';
+import { demoShapes } from '../../components/demoShapes';
+
+<StaticShapes />
+
+In a standard GeoJSON format, we'd represent each rectangle as a separate polygon with its own set of coordinates. This means the shared edges between rectangles A and B, or B and C, are stored twice! As your data grows, this redundancy becomes significant.
+
+## Enter TopoJSON: A Smarter Way
+
+[TopoJSON](https://github.com/topojson/topojson) is a clever extension of GeoJSON that solves this by introducing the concept of arcs - unique line segments that can be shared between shapes. Instead of storing the same edge twice, we store it once and reference it from both shapes. This approach was developed by Mike Bostock (creator of D3.js) and is now widely used in mapping and data visualization.
+
+If you want to dive deeper, check out these resources:
+- [TopoJSON Format Specification](https://github.com/topojson/topojson-specification)
+- [How To Infer Topology](https://bost.ocks.org/mike/topology/) - A visual explanation of how TopoJSON works
+
+Here's how it works:
+
+1. Each unique line segment becomes an "arc"
+2. Shapes are defined by referencing these arcs
+3. When an edge is shared, both shapes simply reference the same arc
+
+This approach has two major benefits:
+
+### 1. Storage Efficiency
+By storing each edge only once, TopoJSON can significantly reduce file size. For example, in our three-rectangle demo below, the vertical edge between rectangles A and B is stored just once, even though it's part of both shapes.
+
+### 2. Guaranteed Topology Preservation
+This is where TopoJSON really shines in interactive editing. Think about what happens when you modify shapes with shared edges:
+
+**With GeoJSON:**
+- Each shape stores its own copy of the shared edge
+- To move a shared edge, you need to modify multiple shapes
+- If you don't update all shapes exactly the same way, gaps or overlaps appear
+- Maintaining perfect alignment is practically impossible in interactive editing
+
+**With TopoJSON:**
+- Shared edges are stored as single arcs
+- Moving an arc automatically updates all shapes that reference it
+- Topology is preserved by design - no gaps or overlaps can occur
+- Perfect alignment is guaranteed because there's only one source of truth
+
+## Interactive Demo
+
+To demonstrate these concepts, I've built an interactive editor using React and D3.js. The editor maintains topology while allowing direct manipulation of shapes - something that would be much more complex with regular GeoJSON.
+
+
+<div className="hidden md:block">
+  Try it yourself! Drag the nodes to modify the shapes. Notice how the shared edges stay connected:
+</div>
+
+<div className="block md:hidden p-4 my-4 bg-blue-50 border-l-4 border-blue-500 dark:bg-blue-950 dark:border-blue-400 text-blue-700 dark:text-blue-300 [&>p]:my-0">
+  This interactive demo works best on desktop. Please visit this page on a larger screen to try the topology editor.
+</div>
+
+<div className="hidden md:block">
+<TopoEditor client:load paths={demoShapes} />
+</div>
+
+Let's break down how our editor works:
+
+1. **Initial Conversion**: When we first load the shapes, we convert them from GeoJSON to TopoJSON:
+   - Find all unique edges (arcs)
+   - Create a topology that references these arcs
+   - Store shared points as nodes
+
+2. **Interactive Editing**: When you drag a node:
+   - Update the node's position
+   - All arcs that use this node automatically update
+   - The shapes update because they reference these arcs
+
+3. **Maintaining Topology**: The magic happens because:
+   - Nodes are shared between arcs
+   - Arcs are shared between shapes
+   - Moving one node affects everything connected to it
+
+This maintains the topological relationships no matter how you edit the shapes.
+
+## Why This Matters
+
+Beyond just being a neat visualization, this approach has real-world applications:
+
+1. **Map Data**: Countries, states, and counties share borders. TopoJSON makes this efficient.
+2. **CAD/Design**: When designing floor plans or mechanical parts, connected elements need to stay connected.
+3. **Interactive Editors**: Users can modify complex, connected shapes while maintaining their relationships.
+
+## Whats Next?
+
+1. **Adding/Removing nodes**: Allow users to add new nodes and connect them to existing arcs, or remove nodes and disconnect arcs.
+2. **Overlay on Map**: Add a map overlay to visualize the shapes and their relationships.
+3. **Saving and Loading**: Implement a way to save the current state and load it later.
+
+Stay tuned for more updates!

@@ -11,12 +11,13 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.2.1",
-    "@astrojs/react": "^4.0.0",
-    "@astrojs/tailwind": "^6.0.0",
+    "@astrojs/mdx": "^4.2.3",
+    "@astrojs/react": "^4.2.3",
+    "@astrojs/tailwind": "^6.0.2",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
@@ -25,9 +26,10 @@
     "@nanostores/react": "^0.4.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
-    "astro": "^5.5.4",
+    "astro": "^5.6.1",
     "d3": "^7.7.0",
     "date-fns": "^2.29.3",
+    "jsondiffpatch": "^0.7.2",
     "katex": "^0.16.9",
     "nanostores": "^0.7.1",
     "react": "^18.2.0",
@@ -43,7 +45,12 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "@types/d3": "^7.4.0",
+    "@types/topojson-client": "^3.1.5",
+    "@types/topojson-server": "^3.0.4",
     "prettier": "^2.7.1",
-    "prettier-plugin-astro": "^0.7.0"
+    "prettier-plugin-astro": "^0.7.0",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1",
+    "vitest": "^3.0.9"
   }
 }
