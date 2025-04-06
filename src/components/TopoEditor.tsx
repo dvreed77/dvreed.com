@@ -60,7 +60,7 @@ export default function TopoEditor({ paths: inputPaths }: IProps) {
     // Convert back to paths and update state
     const newPaths = topoToGeoJSON(newTopo);
     setCurrentPaths(newPaths);
-    console.log('Current paths updated:', newPaths);
+    // console.log('Current paths updated:', newPaths);
   }, [nodes, arcs, topo]);
 
 
