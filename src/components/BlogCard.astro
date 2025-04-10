@@ -3,10 +3,11 @@ export interface Props {
   title: string;
   date: string;
   href: string;
+  body?: string;
 }
 import { format } from "date-fns";
 
-const { href, title, date } = Astro.props;
+const { href, title, date, body } = Astro.props;
 ---
 
 <li class="link-card">
@@ -14,7 +15,12 @@ const { href, title, date } = Astro.props;
     <h2>
       {title}
     </h2>
-    <p>
+    {body && (
+      <p>
+        {body}
+      </p>
+    )}
+    <p class="date">
       {format(new Date(date), "MMMM d, yyyy")}
     </p>
   </a>
@@ -53,6 +59,11 @@ const { href, title, date } = Astro.props;
     margin-top: 0.5rem;
     margin-bottom: 0;
     color: #444;
+  }
+  
+  .date {
+    font-size: 0.85rem;
+    color: #777;
   }
   .link-card:is(:hover, :focus-within) {
     background-position: 0;
