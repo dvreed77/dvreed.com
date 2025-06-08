@@ -1,0 +1,103 @@
+---
+// src/pages/map.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Mapbox Map">
+  <head>
+    <meta charset="utf-8" />
+    <title>Display a map on a webpage</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
+    <style>
+      body { margin: 0; padding: 0; }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <script>
+      declare var mapboxgl: any;
+      document.addEventListener('DOMContentLoaded', function () {
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZHZyZWVkNzciLCJhIjoibVMzYlVGdyJ9.dYzBhVYkCw1GRZwDxlCsng'; // Replace with your access token
+        const map = new mapboxgl.Map({
+          container: 'map', // container ID
+          style: 'mapbox://styles/mapbox/standard', // style URL
+          center: [-58.3816, -34.6037], // Buenos Aires [lng, lat]
+          zoom: 9, // starting zoom
+          minZoom: 8,
+          maxBounds: [
+            [-59.262, -35.329], // Southwest coordinates (lng, lat) - Approx 50-mile radius from BA
+            [-57.501, -33.879]  // Northeast coordinates (lng, lat) - Approx 50-mile radius from BA
+          ]
+        });
+
+        // Add navigation control (zoom and compass)
+        map.addControl(new mapboxgl.NavigationControl());
+
+        // Add geolocate control to the map.
+        map.addControl(
+          new mapboxgl.GeolocateControl({
+              positionOptions: {
+                  enableHighAccuracy: true
+              },
+              trackUserLocation: true,
+              showUserHeading: true
+          })
+        );
+
+        const lines = [
+            '/route_2025-05-29_1.20pm.geojson',
+            '/route_2025-05-28_5.31pm.geojson',
+            '/route_2025-05-28_2.29pm.geojson',
+            '/route_2025-05-28_12.07pm.geojson',
+            '/route_2025-05-26_9.06am.geojson',
+            '/route_2025-05-26_1.55pm.geojson',
+            '/route_2025-05-25_1.07pm.geojson',
+            '/route_2025-05-24_9.06am.geojson',
+            '/route_2025-05-24_3.07pm.geojson',
+            '/route_2025-05-24_12.24pm.geojson',
+            '/route_2025-05-24_11.25am.geojson',
+            '/route_2025-05-24_10.30am.geojson',
+            '/route_2025-05-23_5.27pm.geojson',
+            '/route_2025-05-23_12.35pm.geojson',
+            '/route_2025-05-23_10.01am.geojson',
+        ]
+
+        map.on('load', () => {
+  lines.forEach((line, idx) => {
+    const sourceId = `line-source-${idx}`;
+    const layerId = `line-layer-${idx}`;
+
+    map.addSource(sourceId, {
+      type: 'geojson',
+      data: line, // path to your GeoJSON file
+    });
+
+    map.addLayer({
+      id: layerId,
+      type: 'line',
+      source: sourceId,
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': '#FF0000',
+        'line-width': 3,
+      },
+    });
+  });
+});
+      });
+    </script>
+  </body>
+</BaseLayout>

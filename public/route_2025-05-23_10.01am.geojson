@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "tracks",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "Route 2025-05-23 10:01am" }, "geometry": { "type": "LineString", "coordinates": [ [ -58.437591, -34.586024 ], [ -58.436597, -34.586908 ], [ -58.434926, -34.588006 ], [ -58.431867, -34.586205 ], [ -58.428382, -34.588502 ], [ -58.428604, -34.588773 ] ] } }
+]
+}
